@@ -3,10 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { overviewSections } from "@/lib/docs";
-import { chapters } from "@/lib/learn";
+import { chapters, learnUi } from "@/lib/learn";
+import { useLang } from "./LanguageProvider";
 
 export function DocsSidebar() {
   const pathname = usePathname();
+  const { lang } = useLang();
+  const ui = learnUi[lang];
   const onOverview = pathname === "/docs";
   const onLearn = pathname.startsWith("/docs/learn");
 
@@ -20,7 +23,7 @@ export function DocsSidebar() {
             onOverview ? "text-wow-700" : "text-ink hover:text-wow-700"
           }`}
         >
-          Overview
+          {ui.overview}
         </Link>
         <div className="mt-1 space-y-0.5 border-l border-wow-100 pl-3">
           {overviewSections.map((s) => (
@@ -43,9 +46,9 @@ export function DocsSidebar() {
             onLearn ? "text-wow-700" : "text-ink hover:text-wow-700"
           }`}
         >
-          Learn
+          {ui.learn}
           <span className="ml-2 rounded-full bg-spark-300/40 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-spark-600">
-            for kids
+            {ui.forKids}
           </span>
         </Link>
         <div className="mt-1 space-y-0.5 border-l border-wow-100 pl-3">
@@ -62,7 +65,7 @@ export function DocsSidebar() {
                 }`}
               >
                 <span className="mr-1.5 text-xs text-wow-400">{i + 1}.</span>
-                {c.title}
+                {c.title[lang]}
               </Link>
             );
           })}
