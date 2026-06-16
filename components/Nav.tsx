@@ -3,15 +3,20 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { WowLogo } from "./WowLogo";
-
-const links = [
-  { href: "/docs", label: "Docs", exact: true },
-  { href: "/docs/learn", label: "Learn", exact: false },
-  { href: "/playground", label: "Playground", exact: false },
-];
+import { LangToggle } from "./LangToggle";
+import { useLang } from "./LanguageProvider";
+import { t } from "@/lib/i18n";
 
 export function Nav() {
   const pathname = usePathname();
+  const { lang, setLang } = useLang();
+  const nav = t[lang].nav;
+
+  const links = [
+    { href: "/docs", label: nav.docs },
+    { href: "/docs/learn", label: nav.learn },
+    { href: "/playground", label: nav.playground },
+  ];
 
   return (
     <header className="sticky top-0 z-50 border-b border-wow-100/70 bg-cream/80 backdrop-blur-md">
@@ -22,7 +27,7 @@ export function Nav() {
             const onLearn = pathname.startsWith("/docs/learn");
             const active =
               link.href === "/docs"
-                ? pathname === "/docs" || (pathname.startsWith("/docs") && !onLearn)
+                ? pathname.startsWith("/docs") && !onLearn
                 : pathname.startsWith(link.href);
             return (
               <Link
@@ -46,6 +51,9 @@ export function Nav() {
           >
             GitHub
           </a>
+          <div className="ml-1 sm:ml-2">
+            <LangToggle lang={lang} onChange={setLang} />
+          </div>
         </div>
       </nav>
     </header>

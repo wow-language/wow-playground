@@ -3,8 +3,8 @@
 import { Fragment, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { runWow } from "@/lib/runner";
 import { examples, defaultExample } from "@/lib/examples";
-import { t, exampleMeta, dir, type Lang } from "@/lib/i18n";
-import { LangToggle } from "@/components/LangToggle";
+import { t, exampleMeta, dir } from "@/lib/i18n";
+import { useLang } from "@/components/LanguageProvider";
 
 type Tab = "output" | "targets";
 
@@ -27,7 +27,7 @@ function Kbd({ children }: { children: ReactNode }) {
 }
 
 export default function Playground() {
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang } = useLang();
   const [code, setCode] = useState(defaultExample.code);
   const [output, setOutput] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
@@ -36,19 +36,8 @@ export default function Playground() {
   const [tab, setTab] = useState<Tab>("output");
   const taRef = useRef<HTMLTextAreaElement>(null);
 
-  const L = t[lang];
+  const L = t[lang].pg;
   const d = dir(lang);
-
-  // restore the saved language preference
-  useEffect(() => {
-    const saved = localStorage.getItem("wow-lang") as Lang | null;
-    if (saved === "en" || saved === "roman" || saved === "ur") setLang(saved);
-  }, []);
-
-  const changeLang = (l: Lang) => {
-    setLang(l);
-    localStorage.setItem("wow-lang", l);
-  };
 
   const run = useCallback(() => {
     const res = runWow(code);
@@ -96,14 +85,11 @@ export default function Playground() {
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-8">
-      <header className="mb-6 flex flex-wrap items-start justify-between gap-4" dir={d}>
-        <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-ink">
-            {L.title}
-          </h1>
-          <p className="mt-1 text-muted">{fill(L.subtitle, { run: runWord })}</p>
-        </div>
-        <LangToggle lang={lang} onChange={changeLang} />
+      <header className="mb-6" dir={d}>
+        <h1 className="text-3xl font-extrabold tracking-tight text-ink">
+          {L.title}
+        </h1>
+        <p className="mt-1 text-muted">{fill(L.subtitle, { run: runWord })}</p>
       </header>
 
       {/* example chips */}
