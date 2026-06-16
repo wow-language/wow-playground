@@ -19,7 +19,7 @@ const sections = [
   { id: "keywords", label: "Keywords" },
   { id: "operators", label: "Operators" },
   { id: "loops", label: "Loops" },
-  { id: "kaam", label: "Functions" },
+  { id: "banao", label: "Functions" },
   { id: "phir", label: "phir pipelines" },
   { id: "auzaar", label: "Auzaar toolbox" },
   { id: "targets", label: "Targets" },
@@ -107,14 +107,14 @@ har p mein phal {
             />
           </Section>
 
-          <Section id="kaam" title="Functions — apna kaam banao">
+          <Section id="banao" title="Functions — apna function banao">
             <p className="text-muted">
-              <Code>kaam</Code> se ek function banta hai, aur <Code>do</Code> se
-              value wapas milti hai. Default parameters bhi de sakte hain.
+              <Code>banao</Code> se ek function banta hai, aur <Code>bhejo</Code>{" "}
+              se value wapas milti hai. Default parameters bhi de sakte hain.
             </p>
             <CodeBlock
-              code={`kaam jama(a, b = 0) {
-    do a + b
+              code={`banao jama(a, b = 0) {
+    bhejo a + b
 }
 
 bol jama(3, 4)

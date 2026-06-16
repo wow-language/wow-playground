@@ -185,7 +185,7 @@ export default function Playground() {
 
       <p className="mt-4 text-center text-xs text-muted">
         Preview interpreter core language chalata hai (bol, agar/warna, loops,
-        kaam/do, auzaar, phir). Poora compiler — teeno targets ke saath — WASM
+        banao/bhejo, auzaar, phir). Poora compiler — teeno targets ke saath — WASM
         ke zariye jald aa raha hai.
       </p>
     </div>

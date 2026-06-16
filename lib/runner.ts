@@ -3,7 +3,7 @@
   ------------------------------------------------------------------
   This is a PREVIEW runner so the playground gives kids the instant
   "type code, see output" loop today. It covers the core language:
-  bol, variables, math, agar/warna, the loops, kaam/do, a useful set
+  bol, variables, math, agar/warna, the loops, banao/bhejo, a useful set
   of auzaar tools, string interpolation, and phir pipelines.
 
   It is NOT the real compiler. The production path — per the plan — is
@@ -94,7 +94,7 @@ type Stmt =
   | { kind: "bol"; expr: string }
   | { kind: "assign"; targets: string[]; expr: string }
   | { kind: "expr"; expr: string }
-  | { kind: "do"; expr: string }
+  | { kind: "bhejo"; expr: string }
   | { kind: "roko" }
   | { kind: "aage" }
   | { kind: "if"; branches: { cond: string | null; body: Stmt[] }[] }
@@ -102,7 +102,7 @@ type Stmt =
   | { kind: "forEach"; varName: string; list: string; body: Stmt[] }
   | { kind: "times"; count: string; body: Stmt[] }
   | { kind: "while"; cond: string; body: Stmt[] }
-  | { kind: "kaam"; name: string; params: Param[]; body: Stmt[] };
+  | { kind: "banao"; name: string; params: Param[]; body: Stmt[] };
 
 function parseBlock(lines: Line[]): Stmt[] {
   return parseUntilClose(lines, 0, false).stmts;
@@ -183,11 +183,11 @@ function parseHead(
   if (head.startsWith("jabtak "))
     return { stmt: { kind: "while", cond: head.slice(7).trim(), body }, next: closeIdx + 1 };
 
-  if (head.startsWith("kaam ")) {
-    const m = head.slice(5).match(/^(\w+)\s*\((.*)\)$/);
-    if (!m) throw new WowError("'kaam' ka naam ya () theek nahi.");
+  if (head.startsWith("banao ")) {
+    const m = head.slice(6).match(/^(\w+)\s*\((.*)\)$/);
+    if (!m) throw new WowError("'banao' ka naam ya () theek nahi.");
     return {
-      stmt: { kind: "kaam", name: m[1], params: parseParams(m[2]), body },
+      stmt: { kind: "banao", name: m[1], params: parseParams(m[2]), body },
       next: closeIdx + 1,
     };
   }
@@ -214,7 +214,7 @@ function parseSimple(text: string): Stmt {
   if (text === "aage") return { kind: "aage" };
   if (text.startsWith("bol ")) return { kind: "bol", expr: text.slice(4).trim() };
   if (text === "bol") return { kind: "bol", expr: '""' };
-  if (text.startsWith("do ")) return { kind: "do", expr: text.slice(3).trim() };
+  if (text.startsWith("bhejo ")) return { kind: "bhejo", expr: text.slice(6).trim() };
 
   const eq = topLevelAssign(text);
   if (eq !== -1) {
@@ -274,7 +274,7 @@ function execStmt(s: Stmt, scope: Scope, ctx: Ctx) {
     case "expr":
       evalExpr(s.expr, scope, ctx);
       return;
-    case "do":
+    case "bhejo":
       throw new ReturnSignal(evalExpr(s.expr, scope, ctx));
     case "roko":
       throw new BreakSignal();
@@ -323,7 +323,7 @@ function execStmt(s: Stmt, scope: Scope, ctx: Ctx) {
         if (loopBody(s.body, child(scope), ctx)) break;
       }
       return;
-    case "kaam":
+    case "banao":
       scope.funcs[s.name] = { params: s.params, body: s.body };
       return;
   }

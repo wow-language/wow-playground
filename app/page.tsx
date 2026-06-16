@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CodeBlock } from "@/components/CodeBlock";
 
-const heroCode = `kaam salam(naam = "dost") {
+const heroCode = `banao salam(naam = "dost") {
     bol "Salam {naam}! Kaise ho?"
 }
 
@@ -19,7 +19,7 @@ const features = [
   {
     emoji: "🇵🇰",
     title: "Roman Urdu mein",
-    body: "Keywords aap ki zubaan mein — bol, agar, har, kaam. Jaise aap baat karte hain, waise hi code likhein.",
+    body: "Keywords aap ki zubaan mein — bol, agar, har, banao. Jaise aap baat karte hain, waise hi code likhein.",
   },
   {
     emoji: "🎯",

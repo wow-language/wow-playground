@@ -68,11 +68,11 @@ mila: 8
 mila: 9`,
   },
   {
-    id: "kaam",
-    title: "Apna kaam banao",
+    id: "banao",
+    title: "Function banao",
     blurb: "Write a function and call it.",
     emoji: "🛠️",
-    code: `kaam salam(naam = "dost") {
+    code: `banao salam(naam = "dost") {
     bol "Salam {naam}! Kaise ho?"
 }
 

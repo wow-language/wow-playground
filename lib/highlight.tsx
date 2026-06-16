@@ -2,8 +2,8 @@ import { Fragment, type ReactNode } from "react";
 
 const KEYWORDS = new Set([
   "bol", "rakho", "agar", "warna", "har", "se", "tak", "baar", "jabtak",
-  "roko", "aage", "kaam", "do", "sahi", "ghalat", "khali", "aur", "ya",
-  "nahi", "lao", "koshish", "pakdo", "pucho", "mein", "phir", "shuru",
+  "roko", "aage", "banao", "bhejo", "sahi", "ghalat", "khali", "aur", "ya",
+  "nahi", "lao", "koshish", "pakro", "pucho", "mein", "phir", "shuru",
   "chalao", "pin_set", "pin_likho", "pin_parho", "intezar", "server",
   "rasta", "jawab", "file_parho", "file_likho", "GET", "POST", "output",
   "on", "off",

@@ -12,11 +12,11 @@ export const keywordRows: Row[] = [
   { code: "jabtak x < 10 { }", meaning: "jab tak — while" },
   { code: "roko", meaning: "loop se bahar niklo (break)" },
   { code: "aage", meaning: "agle chakkar par jao (continue)" },
-  { code: "kaam naam() { }", meaning: "ek kaam (function) banao" },
-  { code: "do nateeja", meaning: "value wapas do (return)" },
+  { code: "banao naam() { }", meaning: "ek function banao" },
+  { code: "bhejo nateeja", meaning: "value wapas bhejo (return)" },
   { code: 'pucho "..."', meaning: "user se input maango" },
   { code: "lao express", meaning: "library import karo" },
-  { code: "koshish { } pakdo ghalti { }", meaning: "try / catch" },
+  { code: "koshish { } pakro ghalti { }", meaning: "try / catch" },
 ];
 
 export const operatorRows: Row[] = [
