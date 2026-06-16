@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+/*
+  wow design system
+  --------------------------------------------------------------
+  Warm, friendly, and a little bit elegant — like Urdu itself.
+  Pakistan green as the anchor, a warm amber for the "wow" spark,
+  on a soft cream paper so it never feels cold or clinical.
+*/
+
+@theme {
+  /* paper + ink */
+  --color-cream: #fdf8f0;
+  --color-paper: #fffdf9;
+  --color-ink: #1a2e22;
+  --color-muted: #5b6b60;
+
+  /* the green of و */
+  --color-wow-50: #ecfdf3;
+  --color-wow-100: #d1fadf;
+  --color-wow-200: #a6f0c5;
+  --color-wow-300: #6fe0a3;
+  --color-wow-400: #34c77d;
+  --color-wow-500: #16a563;
+  --color-wow-600: #0c834f;
+  --color-wow-700: #0a6841;
+  --color-wow-800: #0b5235;
+  --color-wow-900: #0a432d;
+
+  /* the amber spark of amazement */
+  --color-spark-300: #ffd98a;
+  --color-spark-400: #ffc24d;
+  --color-spark-500: #f9a826;
+  --color-spark-600: #e08a10;
+
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-urdu: "Noto Nastaliq Urdu", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.75rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* a soft sunrise glow behind the hero */
+.glow-bg {
+  background:
+    radial-gradient(60rem 40rem at 75% -10%, rgba(249, 168, 38, 0.14), transparent 60%),
+    radial-gradient(50rem 40rem at 10% 0%, rgba(22, 165, 99, 0.12), transparent 55%);
+}
+
+/* gentle float for the big و glyph */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(-2deg); }
+}
+.animate-floaty {
+  animation: floaty 6s ease-in-out infinite;
+}
+
+/* simple, readable code blocks */
+.code-card {
+  background: #0b2018;
+  color: #e7f5ee;
+  border-radius: var(--radius-xl);
+}
+
+/* tiny wow-style syntax tint helpers (used by the static highlighter) */
+.tok-kw { color: #6fe0a3; }
+.tok-str { color: #ffd98a; }
+.tok-num { color: #8fd3ff; }
+.tok-com { color: #5f7d6c; font-style: italic; }
+.tok-fn { color: #ffc24d; }
