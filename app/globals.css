@@ -15,17 +15,17 @@
   --color-ink: #1a2e22;
   --color-muted: #5b6b60;
 
-  /* the green of و */
-  --color-wow-50: #ecfdf3;
-  --color-wow-100: #d1fadf;
-  --color-wow-200: #a6f0c5;
-  --color-wow-300: #6fe0a3;
-  --color-wow-400: #34c77d;
-  --color-wow-500: #16a563;
-  --color-wow-600: #0c834f;
-  --color-wow-700: #0a6841;
-  --color-wow-800: #0b5235;
-  --color-wow-900: #0a432d;
+  /* the green of و — tuned toward Pakistan flag green, not minty cyan */
+  --color-wow-50: #e9f7ee;
+  --color-wow-100: #c8eed4;
+  --color-wow-200: #9fe0b4;
+  --color-wow-300: #66c98c;
+  --color-wow-400: #2faa66;
+  --color-wow-500: #138a4e;
+  --color-wow-600: #046a38;
+  --color-wow-700: #04532c;
+  --color-wow-800: #053f23;
+  --color-wow-900: #04331c;
 
   /* the amber spark of amazement */
   --color-spark-300: #ffd98a;
@@ -78,6 +78,6 @@ body {
 /* tiny wow-style syntax tint helpers (used by the static highlighter) */
 .tok-kw { color: #6fe0a3; }
 .tok-str { color: #ffd98a; }
-.tok-num { color: #8fd3ff; }
+.tok-num { color: #a6f0c5; }
 .tok-com { color: #5f7d6c; font-style: italic; }
 .tok-fn { color: #ffc24d; }

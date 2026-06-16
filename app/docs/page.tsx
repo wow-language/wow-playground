@@ -158,9 +158,9 @@ bol nateeja`}
               Wahi <Code>.wow</Code> file teen jagah chal sakti hai. Sirf target
               badlo.
             </p>
-            <div className="overflow-hidden rounded-xl border border-wow-100">
+            <div className="overflow-hidden rounded-xl border border-wow-200">
               <table className="w-full text-left text-sm">
-                <thead className="bg-wow-50 text-wow-800">
+                <thead className="bg-wow-700 text-white">
                   <tr>
                     <th className="px-4 py-3 font-bold">Command</th>
                     <th className="px-4 py-3 font-bold">Banta hai</th>
