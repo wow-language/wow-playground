@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { CodeBlock } from "@/components/CodeBlock";
 import { RefTable } from "@/components/RefTable";
 import {
@@ -11,201 +12,176 @@ import {
 
 export const metadata: Metadata = {
   title: "Docs — wow",
-  description: "wow language reference: keywords, operators, the auzaar toolbox, and the three targets.",
+  description:
+    "The wow language reference: keywords, operators, the auzaar toolbox, the three targets, and error messages.",
 };
-
-const sections = [
-  { id: "shuruaat", label: "Shuruaat" },
-  { id: "keywords", label: "Keywords" },
-  { id: "operators", label: "Operators" },
-  { id: "loops", label: "Loops" },
-  { id: "banao", label: "Functions" },
-  { id: "phir", label: "phir pipelines" },
-  { id: "auzaar", label: "Auzaar toolbox" },
-  { id: "targets", label: "Targets" },
-  { id: "ghalti", label: "Error messages" },
-];
 
 export default function DocsPage() {
   return (
-    <div className="mx-auto max-w-6xl px-5 py-12">
-      <div className="lg:grid lg:grid-cols-[14rem_1fr] lg:gap-12">
-        {/* sidebar */}
-        <aside className="hidden lg:block">
-          <nav className="sticky top-24 space-y-1">
-            <p className="px-3 pb-2 text-xs font-bold uppercase tracking-widest text-wow-600">
-              Reference
-            </p>
-            {sections.map((s) => (
-              <a
-                key={s.id}
-                href={`#${s.id}`}
-                className="block rounded-lg px-3 py-1.5 text-sm font-medium text-muted transition-colors hover:bg-wow-50 hover:text-wow-700"
-              >
-                {s.label}
-              </a>
-            ))}
-          </nav>
-        </aside>
+    <div className="min-w-0 space-y-16">
+      <header>
+        <p className="text-sm font-bold uppercase tracking-widest text-wow-600">
+          Reference
+        </p>
+        <h1 className="mt-1 text-4xl font-extrabold tracking-tight text-ink">
+          Overview
+        </h1>
+        <p className="mt-3 max-w-2xl text-lg text-muted">
+          The whole language at a glance — every keyword, operator, and built-in
+          tool. New to coding? Start with the{" "}
+          <Link href="/docs/learn" className="font-semibold text-wow-700 underline decoration-wow-200 underline-offset-2">
+            Learn track
+          </Link>{" "}
+          instead, which teaches the concepts step by step.
+        </p>
+      </header>
 
-        {/* content */}
-        <div className="min-w-0 space-y-16">
-          <header>
-            <h1 className="text-4xl font-extrabold tracking-tight text-ink">
-              wow ka manual
-            </h1>
-            <p className="mt-3 max-w-xl text-lg text-muted">
-              Poori zubaan ek nazar mein. Har lafz Roman Urdu mein, taake aap
-              jaisa sochte hain waisa hi likh sakein.
-            </p>
-          </header>
-
-          <Section id="shuruaat" title="Shuruaat — your first program">
-            <p className="text-muted">
-              Har program ke andar <Code>bol</Code> sab se zyada kaam aata hai —
-              yeh kuch print karta hai. String ke andar{" "}
-              <Code>{"{ }"}</Code> ke darmiyan koi bhi value daal sakte hain.
-            </p>
-            <CodeBlock
-              caption="salam.wow"
-              code={`naam = "Ahmad"
+      <Section id="getting-started" title="Getting started">
+        <p className="text-muted">
+          Every line is one instruction, and the most useful one is{" "}
+          <Code>bol</Code> — it prints to the screen. You can drop any value into
+          text with curly braces <Code>{"{ }"}</Code>.
+        </p>
+        <CodeBlock
+          caption="hello.wow"
+          code={`naam = "Ahmad"
 umar = 12
 
 bol "Salam {naam}!"
-bol "Tumhari umar {umar} saal hai."`}
-            />
-          </Section>
+bol "You are {umar} years old."`}
+        />
+      </Section>
 
-          <Section id="keywords" title="Keywords">
-            <p className="text-muted">
-              Sab se zyada istemal hone wale lafz sab se chhote hain.
-            </p>
-            <RefTable rows={keywordRows} head={["wow", "kya karta hai"]} />
-          </Section>
+      <Section id="keywords" title="Keywords">
+        <p className="text-muted">
+          The actions you reach for most have the shortest words.
+        </p>
+        <RefTable rows={keywordRows} head={["wow", "What it does"]} />
+      </Section>
 
-          <Section id="operators" title="Operators">
-            <RefTable rows={operatorRows} head={["wow", "matlab"]} />
-          </Section>
+      <Section id="operators" title="Operators">
+        <p className="text-muted">
+          Words for logic, symbols for maths — whichever reads more clearly.
+        </p>
+        <RefTable rows={operatorRows} head={["wow", "Meaning"]} />
+      </Section>
 
-          <Section id="loops" title="Loops — bar bar">
-            <p className="text-muted">
-              Numbers par, list par, ya bas N dafa — teeno tarah ke loop.
-            </p>
-            <CodeBlock
-              code={`har i 1 se 5 tak {
-    bol "Ginti: {i}"
+      <Section id="loops" title="Loops">
+        <p className="text-muted">
+          Over a range, over a list, or just a fixed number of times.
+        </p>
+        <CodeBlock
+          code={`har i 1 se 5 tak {
+    bol "Count: {i}"
 }
 
-phal = ["aam", "kela", "seb"]
-har p mein phal {
-    bol "Phal: {p}"
+fruits = ["aam", "kela", "seb"]
+har f mein fruits {
+    bol "Fruit: {f}"
 }
 
 3 baar {
     bol "wow!"
 }`}
-            />
-          </Section>
+        />
+      </Section>
 
-          <Section id="banao" title="Functions — apna function banao">
-            <p className="text-muted">
-              <Code>banao</Code> se ek function banta hai, aur <Code>bhejo</Code>{" "}
-              se value wapas milti hai. Default parameters bhi de sakte hain.
-            </p>
-            <CodeBlock
-              code={`banao jama(a, b = 0) {
+      <Section id="functions" title="Functions">
+        <p className="text-muted">
+          Define one with <Code>banao</Code>, send a value back with{" "}
+          <Code>bhejo</Code>. Default parameters are supported.
+        </p>
+        <CodeBlock
+          code={`banao jama(a, b = 0) {
     bhejo a + b
 }
 
 bol jama(3, 4)
 bol jama(10)`}
-            />
-          </Section>
+        />
+      </Section>
 
-          <Section id="phir" title="phir — pipelines">
-            <p className="text-muted">
-              <Code>phir</Code> (yani &quot;then&quot;) bائیں taraf ki value ko
-              daائیں taraf ke kaam ko de deta hai. Plain Urdu ki tarah parhta
-              hai: list, phir bare chuno, phir tarteeb.
-            </p>
-            <CodeBlock
-              code={`numbers = [1, 5, 3, 8, 2, 9]
+      <Section id="phir" title="phir pipelines">
+        <p className="text-muted">
+          <Code>phir</Code> (&quot;then&quot;) passes the value on its left into
+          the tool on its right, so a chain reads like a sentence.
+        </p>
+        <CodeBlock
+          code={`numbers = [1, 5, 3, 8, 2, 9]
 
-nateeja = numbers
+result = numbers
     phir chuno(x > 4)
     phir tarteeb
     phir pehla
 
-bol nateeja`}
-            />
-          </Section>
+bol result`}
+        />
+      </Section>
 
-          <Section id="auzaar" title="Auzaar — built-in toolbox">
-            <p className="text-muted">
-              <Code>auzaar</Code> khud-ba-khud load ho jata hai — <Code>lao</Code>{" "}
-              likhne ki zaroorat nahi. Rozmarra ke kaam ek chhote lafz mein.
-            </p>
-            <h3 className="pt-2 text-lg font-bold text-ink">Collections</h3>
-            <RefTable rows={collectionRows} head={["wow", "kya karta hai"]} />
-            <h3 className="pt-2 text-lg font-bold text-ink">Strings</h3>
-            <RefTable rows={stringRows} head={["wow", "kya karta hai"]} />
-            <h3 className="pt-2 text-lg font-bold text-ink">Math</h3>
-            <RefTable rows={mathRows} head={["wow", "kya karta hai"]} />
-          </Section>
+      <Section id="auzaar" title="auzaar — built-in toolbox">
+        <p className="text-muted">
+          <Code>auzaar</Code> loads automatically — no <Code>lao</Code> needed.
+          Everyday operations are one short word away.
+        </p>
+        <h3 className="pt-2 text-lg font-bold text-ink">Collections</h3>
+        <RefTable rows={collectionRows} head={["wow", "What it does"]} />
+        <h3 className="pt-2 text-lg font-bold text-ink">Strings</h3>
+        <RefTable rows={stringRows} head={["wow", "What it does"]} />
+        <h3 className="pt-2 text-lg font-bold text-ink">Math</h3>
+        <RefTable rows={mathRows} head={["wow", "What it does"]} />
+      </Section>
 
-          <Section id="targets" title="Teen targets">
-            <p className="text-muted">
-              Wahi <Code>.wow</Code> file teen jagah chal sakti hai. Sirf target
-              badlo.
-            </p>
-            <div className="overflow-hidden rounded-xl border border-wow-200">
-              <table className="w-full text-left text-sm">
-                <thead className="bg-wow-700 text-white">
-                  <tr>
-                    <th className="px-4 py-3 font-bold">Command</th>
-                    <th className="px-4 py-3 font-bold">Banta hai</th>
-                    <th className="px-4 py-3 font-bold">Chalta hai</th>
-                  </tr>
-                </thead>
-                <tbody className="font-[family-name:var(--font-mono)] text-xs">
-                  <tr className="border-t border-wow-100">
-                    <td className="px-4 py-3">wow build x.wow</td>
-                    <td className="px-4 py-3">C program</td>
-                    <td className="px-4 py-3">Desktop 🖥️</td>
-                  </tr>
-                  <tr className="border-t border-wow-100">
-                    <td className="px-4 py-3">--target arduino</td>
-                    <td className="px-4 py-3">.ino sketch</td>
-                    <td className="px-4 py-3">Arduino 🔌</td>
-                  </tr>
-                  <tr className="border-t border-wow-100">
-                    <td className="px-4 py-3">--target node</td>
-                    <td className="px-4 py-3">Node.js app</td>
-                    <td className="px-4 py-3">Web 🌐</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </Section>
+      <Section id="targets" title="Three targets">
+        <p className="text-muted">
+          The same <Code>.wow</Code> file can run in three places — just change
+          the target.
+        </p>
+        <div className="overflow-hidden rounded-xl border border-wow-200">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-wow-700 text-white">
+              <tr>
+                <th className="px-4 py-3 font-bold">Command</th>
+                <th className="px-4 py-3 font-bold">Produces</th>
+                <th className="px-4 py-3 font-bold">Runs on</th>
+              </tr>
+            </thead>
+            <tbody className="font-[family-name:var(--font-mono)] text-xs">
+              <tr className="border-t border-wow-100">
+                <td className="px-4 py-3">wow build x.wow</td>
+                <td className="px-4 py-3">C program</td>
+                <td className="px-4 py-3">Desktop 🖥️</td>
+              </tr>
+              <tr className="border-t border-wow-100 bg-wow-50/50">
+                <td className="px-4 py-3">--target arduino</td>
+                <td className="px-4 py-3">.ino sketch</td>
+                <td className="px-4 py-3">Arduino 🔌</td>
+              </tr>
+              <tr className="border-t border-wow-100">
+                <td className="px-4 py-3">--target node</td>
+                <td className="px-4 py-3">Node.js app</td>
+                <td className="px-4 py-3">Web 🌐</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </Section>
 
-          <Section id="ghalti" title="Ghalti? Roman Urdu mein samjho">
-            <p className="text-muted">
-              Jab koi mistake ho, wow seedha point par batata hai ke kya theek
-              karna hai.
-            </p>
-            <CodeBlock
-              caption="compiler output"
-              code={`Ghalti: 'agar' ke baad condition chahiye
-  --> mera_code.wow:5:4
+      <Section id="errors" title="Error messages">
+        <p className="text-muted">
+          When something is wrong, wow points at the exact spot and explains it
+          in plain Roman Urdu.
+        </p>
+        <CodeBlock
+          caption="compiler output"
+          code={`Ghalti: 'agar' ke baad condition chahiye
+  --> my_code.wow:5:4
    |
  5 |     agar {
    |          ^ yahan condition honi chahiye
    |
    = madad: agar x > 5 { ... } likho`}
-            />
-          </Section>
-        </div>
-      </div>
+        />
+      </Section>
     </div>
   );
 }
@@ -221,9 +197,7 @@ function Section({
 }) {
   return (
     <section id={id} className="scroll-mt-24 space-y-4">
-      <h2 className="text-2xl font-extrabold tracking-tight text-ink">
-        {title}
-      </h2>
+      <h2 className="text-2xl font-extrabold tracking-tight text-ink">{title}</h2>
       {children}
     </section>
   );

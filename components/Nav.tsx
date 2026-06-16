@@ -5,8 +5,9 @@ import { usePathname } from "next/navigation";
 import { WowLogo } from "./WowLogo";
 
 const links = [
-  { href: "/docs", label: "Docs" },
-  { href: "/playground", label: "Playground" },
+  { href: "/docs", label: "Docs", exact: true },
+  { href: "/docs/learn", label: "Learn", exact: false },
+  { href: "/playground", label: "Playground", exact: false },
 ];
 
 export function Nav() {
@@ -18,7 +19,11 @@ export function Nav() {
         <WowLogo />
         <div className="flex items-center gap-1 sm:gap-2">
           {links.map((link) => {
-            const active = pathname.startsWith(link.href);
+            const onLearn = pathname.startsWith("/docs/learn");
+            const active =
+              link.href === "/docs"
+                ? pathname === "/docs" || (pathname.startsWith("/docs") && !onLearn)
+                : pathname.startsWith(link.href);
             return (
               <Link
                 key={link.href}
