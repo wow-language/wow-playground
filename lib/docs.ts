@@ -77,3 +77,12 @@ export const mathRows: Row[] = [
   { code: "power(n, p)", meaning: "n to the power p" },
   { code: "absolute(n)", meaning: "absolute value" },
 ];
+
+export const esp32Rows: Row[] = [
+  { code: "wifi_jodo(ssid, password)", meaning: "Connect to a WiFi network" },
+  { code: "wifi_ip()", meaning: "Get the board's IP address as a string" },
+  { code: "server_rasta(path, handler)", meaning: "Register a GET route — handler is a banao function" },
+  { code: "server_shuru(port)", meaning: "Start the web server on the given port" },
+  { code: "server_parho()", meaning: "Process incoming requests — call this inside chalao" },
+  { code: "jawab_bhejo(code, type, body)", meaning: "Send an HTTP response (status code, content-type, body)" },
+];

@@ -8,6 +8,7 @@ import {
   collectionRows,
   stringRows,
   mathRows,
+  esp32Rows,
 } from "@/lib/docs";
 
 export const metadata: Metadata = {
@@ -154,7 +155,7 @@ bol result`}
               <tr className="border-t border-wow-100 bg-wow-50/50">
                 <td className="px-4 py-3">--target arduino</td>
                 <td className="px-4 py-3">.ino sketch</td>
-                <td className="px-4 py-3">Arduino 🔌</td>
+                <td className="px-4 py-3">Arduino / ESP32 🔌</td>
               </tr>
               <tr className="border-t border-wow-100">
                 <td className="px-4 py-3">--target node</td>
@@ -164,6 +165,42 @@ bol result`}
             </tbody>
           </table>
         </div>
+
+        <h3 className="pt-4 text-lg font-bold text-ink">Arduino / ESP32</h3>
+        <p className="text-muted">
+          The Arduino target supports both classic Arduino boards and ESP32
+          modules. On an ESP32 you get six extra built-ins for WiFi and a
+          built-in web server — no libraries to import, wow handles it
+          automatically.
+        </p>
+        <RefTable rows={esp32Rows} head={["wow", "What it does"]} />
+        <p className="text-muted text-sm">
+          When your sketch uses any WiFi built-in, wow automatically emits{" "}
+          <Code>#define AUZAAR_ESP32</Code> at the top of the generated{" "}
+          <Code>.ino</Code> file so the runtime header picks up the right WiFi
+          and WebServer code regardless of toolchain settings.
+        </p>
+        <CodeBlock
+          caption="esp32_server.wow"
+          code={`SSID = "apna_wifi"
+PASSWORD = "apna_password"
+
+banao ghar() {
+    jawab_bhejo(200, "text/html", "<h1>Salam Duniya!</h1>")
+}
+
+banao shuru() {
+    wifi_jodo(SSID, PASSWORD)
+    bol("Jud gaya! IP:")
+    bol(wifi_ip())
+    server_rasta("/", ghar)
+    server_shuru(80)
+}
+
+banao chalao() {
+    server_parho()
+}`}
+        />
       </Section>
 
       <Section id="errors" title="Error messages">
