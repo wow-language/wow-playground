@@ -7,6 +7,8 @@ const KEYWORDS = new Set([
   "chalao", "pin_set", "pin_likho", "pin_parho", "intezar", "server",
   "rasta", "jawab", "file_parho", "file_likho", "GET", "POST", "output",
   "on", "off",
+  // ESP32 WiFi / WebServer built-ins
+  "wifi_jodo", "wifi_ip", "server_rasta", "server_shuru", "server_parho", "jawab_bhejo",
 ]);
 
 /**
