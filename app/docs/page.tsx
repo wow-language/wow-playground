@@ -8,6 +8,8 @@ import {
   collectionRows,
   stringRows,
   mathRows,
+  objectRows,
+  objectAuzaarRows,
   esp32Rows,
 } from "@/lib/docs";
 
@@ -130,6 +132,54 @@ bol result`}
         <RefTable rows={stringRows} head={["wow", "What it does"]} />
         <h3 className="pt-2 text-lg font-bold text-ink">Math</h3>
         <RefTable rows={mathRows} head={["wow", "What it does"]} />
+      </Section>
+
+      <Section id="objects" title="Objects — structured data">
+        <p className="text-muted">
+          Objects group related values under named keys. Use dot access or
+          the Urdu possessives <Code>ka</Code> / <Code>ki</Code> / <Code>kay</Code>{" "}
+          for safe access that returns <Code>khali</Code> instead of crashing.
+          Objects are available on the <strong>C</strong> and <strong>Node</strong> targets;
+          Arduino gives a friendly "memory kam hai" error.
+        </p>
+        <CodeBlock
+          caption="shaks.wow"
+          code={`shaks = { naam: "Ahmad", umar: 14, shahar: "Karachi" }
+
+bol "Salam {shaks.naam}!"
+bol "Umar: {shaks ka umar}"
+
+shaks.umar = 15
+bol "Agla saal: {shaks.umar}"
+
+# Safe access — returns khali if key doesn't exist
+bol shaks ka email
+
+# Only assigns if currently khali
+shaks.email ?= "ahmad@example.com"
+bol shaks.email
+
+# Nested objects
+shaks.adres = { shahar: "Karachi", gali: "Model Town" }
+bol shaks.adres.shahar
+bol shaks ka adres ka gali
+
+# List of objects
+log = [
+    { naam: "Ahmad", umar: 10 },
+    { naam: "Sara",  umar: 12 },
+]
+har p mein log {
+    bol "{p.naam}: {p ka umar} saal"
+}`}
+        />
+        <h3 className="pt-2 text-lg font-bold text-ink">Syntax quick-reference</h3>
+        <RefTable rows={objectRows} head={["wow", "What it does"]} />
+        <h3 className="pt-2 text-lg font-bold text-ink">Object auzaar</h3>
+        <p className="text-muted text-sm">
+          These four functions work on C and Node targets. On Arduino, objects are not supported.
+        </p>
+        <RefTable rows={objectAuzaarRows} head={["wow", "What it does"]} />
       </Section>
 
       <Section id="targets" title="Three targets">

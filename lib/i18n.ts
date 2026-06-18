@@ -236,4 +236,9 @@ export const exampleMeta: Record<string, Record<Lang, { title: string; blurb: st
     roman: { title: "Function banao", blurb: "Aik function likho aur call karo." },
     ur: { title: "فنکشن بناؤ", blurb: "ایک فنکشن لکھو اور اسے بلاؤ۔" },
   },
+  shaks: {
+    en: { title: "Objects", blurb: "Group related values and access them safely." },
+    roman: { title: "Objects (shaks)", blurb: "Mutaalliq values ko ek jagah rakhna aur safely access karna." },
+    ur: { title: "آبجیکٹس", blurb: "متعلق ویلیوز کو ایک جگہ رکھنا اور محفوظ طریقے سے access کرنا۔" },
+  },
 };

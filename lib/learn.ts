@@ -597,6 +597,147 @@ bol nateeja`,
       },
     ],
   },
+  {
+    slug: "objects",
+    emoji: "📦",
+    title: L("Objects — grouping things together", "Objects — cheezein saath rakhna", "آبجیکٹس — چیزیں ساتھ رکھنا"),
+    concept: L(
+      "An object groups related values under one name so you can describe a thing — a person, a card, a score — in one place.",
+      "Object mutaalliq values ko ek naam ke neeche jama karta hai taake aap ek cheez — insaan, card, score — ko ek jagah bayan kar sakein.",
+      "آبجیکٹ متعلق ویلیوز کو ایک نام کے نیچے جمع کرتا ہے تاکہ آپ ایک چیز — انسان، کارڈ، اسکور — کو ایک جگہ بیان کر سکیں۔"
+    ),
+    blocks: [
+      {
+        t: "p",
+        text: L(
+          "So far we have stored one thing in a box — a number, a word, a list. But sometimes one thing has many parts: a person has a name, an age, and a city. An object lets you keep all of those together under one name.",
+          "Ab tak hum ek dabbe mein ek cheez rakhte aaye hain — number, lafz, list. Lekin kabhi ek cheez ke kai hisse hote hain: ek insaan ka naam, umar, aur shahar hota hai. Object yeh sab ek naam ke neeche rakhne deta hai.",
+          "اب تک ہم ایک ڈبے میں ایک چیز رکھتے آئے ہیں — نمبر، لفظ، list۔ لیکن کبھی ایک چیز کے کئی حصے ہوتے ہیں: ایک انسان کا نام، عمر، اور شہر ہوتا ہے۔ آبجیکٹ یہ سب ایک نام کے نیچے رکھنے دیتا ہے۔"
+        ),
+      },
+      {
+        t: "code",
+        code: `shaks = { naam: "Ahmad", umar: 14, shahar: "Karachi" }
+
+bol shaks.naam
+bol shaks.umar`,
+      },
+      {
+        t: "p",
+        text: L(
+          'The curly braces { } create the object. Inside, each key: value pair describes one fact about the thing. A dot after the variable name lets you pick out one piece: shaks.naam gives you "Ahmad".',
+          'Curly braces { } object banate hain. Andar, har key: value pair cheez ke baare mein ek haqeeqat bayan karta hai. Variable ke baad dot ek hissa nikalne deta hai: shaks.naam aap ko "Ahmad" deta hai.',
+          'Curly braces { } آبجیکٹ بناتے ہیں۔ اندر، ہر key: value pair چیز کے بارے میں ایک حقیقت بیان کرتا ہے۔ ویری ایبل کے بعد dot ایک حصہ نکالنے دیتا ہے: shaks.naam آپ کو "Ahmad" دیتا ہے۔'
+        ),
+      },
+      {
+        t: "h",
+        text: L("Updating and adding properties", "Properties update aur add karna", "properties اپ ڈیٹ اور شامل کرنا"),
+      },
+      {
+        t: "code",
+        code: `shaks = { naam: "Ahmad", umar: 14 }
+
+# Update an existing property
+shaks.umar = 15
+bol "Agla saal: {shaks.umar}"
+
+# Add a new property that didn't exist before
+shaks.email = "ahmad@example.com"
+bol shaks.email`,
+      },
+      {
+        t: "p",
+        text: L(
+          "You can update or add any property the same way you set a regular variable — just write shaks.something = value.",
+          "Aap kisi bhi property ko waise hi update ya add kar sakte hain jaise regular variable set karte hain — bas shaks.kuch = value likho.",
+          "آپ کسی بھی property کو ویسے ہی اپ ڈیٹ یا شامل کر سکتے ہیں جیسے regular ویری ایبل سیٹ کرتے ہیں — بس shaks.kuch = value لکھو۔"
+        ),
+      },
+      {
+        t: "h",
+        text: L("Safe access with ka / ki / kay", "Ka / ki / kay se safe access", "ka / ki / kay سے safe access"),
+      },
+      {
+        t: "p",
+        text: L(
+          "A plain dot crashes the program if the object is empty (khali). The Urdu possessives ka, ki, and kay give you a safe alternative that returns khali instead of crashing. Pick whichever sounds natural for the noun.",
+          "Saada dot program crash kar deta hai agar object khali ho. Urdu possessives ka, ki, aur kay ek safe option dete hain jo crash ki jagah khali wapas karte hain. Jo noun ke liye prakritik lage woh chunein.",
+          "سادہ dot پروگرام crash کر دیتا ہے اگر آبجیکٹ خالی ہو۔ اردو possessives ka، ki، اور kay ایک safe آپشن دیتے ہیں جو crash کی جگہ khali واپس کرتے ہیں۔ جو noun کے لیے فطری لگے وہ چنیں۔"
+        ),
+      },
+      {
+        t: "code",
+        code: `shaks = { naam: "Ahmad", umar: 14 }
+
+# Safe: returns khali if the key doesn't exist
+bol shaks ka email
+
+# Safe dot — same thing, different style
+bol shaks?.email
+
+# Only assign if currently khali
+shaks.email ?= "ahmad@example.com"
+bol shaks.email`,
+      },
+      {
+        t: "tip",
+        text: L(
+          "ka is masculine, ki is feminine, kay is plural or general. They all do the same thing in code — pick the one that reads most naturally in the sentence.",
+          "ka mard ke liye, ki aurat ke liye, kay jamah ya aam ke liye. Sab code mein ek hi kaam karte hain — jo jumle mein sabse qudrati lage woh chunein.",
+          "ka مذکر کے لیے، ki مؤنث کے لیے، kay جمع یا عام کے لیے۔ سب کوڈ میں ایک ہی کام کرتے ہیں — جو جملے میں سب سے قدرتی لگے وہ چنیں۔"
+        ),
+      },
+      {
+        t: "h",
+        text: L("Lists of objects", "Objects ki list", "آبجیکٹس کی list"),
+      },
+      {
+        t: "p",
+        text: L(
+          "One of the most useful patterns in programming is a list of objects — for example, a class roll with each student's name and score.",
+          "Programming mein sab se mufeed pattern object ki list hai — maslan, class roll jisme har student ka naam aur score ho.",
+          "پروگرامنگ میں سب سے مفید pattern آبجیکٹ کی list ہے — مثلاً، کلاس رول جس میں ہر اسٹوڈنٹ کا نام اور اسکور ہو۔"
+        ),
+      },
+      {
+        t: "code",
+        code: `log = [
+    { naam: "Ahmad", score: 88 },
+    { naam: "Sara",  score: 95 },
+    { naam: "Bilal", score: 72 },
+]
+
+har taliba mein log {
+    bol "{taliba.naam}: {taliba.score}"
+}`,
+      },
+      {
+        t: "h",
+        text: L("Object auzaar", "Object ke auzaar", "آبجیکٹ کے اوزار"),
+      },
+      {
+        t: "code",
+        code: `shaks = { naam: "Ahmad", umar: 14, shahar: "Karachi" }
+
+bol mafta(shaks)            # keys
+bol qeemtain(shaks)         # values
+bol key_hai(shaks, "naam")  # sahi
+bol key_hai(shaks, "email") # ghalat
+
+naya = hata(shaks, "umar")
+bol mafta(naya)             # naam aur shahar — umar hata diya`,
+      },
+      {
+        t: "try",
+        text: L(
+          "Make an object for your favourite book with at least three properties (title, author, year). Print a sentence like \"Title ki Author ne year mein likhi\" using those properties.",
+          "Apni pasandida kitaab ka object banao jis mein kam az kam teen properties hon (title, author, year). Unhe use karte hue aisa jumla print karo: \"Title ki Author ne year mein likhi\".",
+          "اپنی پسندیدہ کتاب کا آبجیکٹ بناؤ جس میں کم از کم تین properties ہوں (title، author، year)۔ انہیں استعمال کرتے ہوئے ایسا جملہ پرنٹ کرو: \"Title کی Author نے year میں لکھی\"۔"
+        ),
+      },
+    ],
+  },
 ];
 
 export const chapterBySlug = (slug: string) => chapters.find((c) => c.slug === slug);

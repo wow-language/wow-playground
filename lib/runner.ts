@@ -4,7 +4,8 @@
   This is a PREVIEW runner so the playground gives kids the instant
   "type code, see output" loop today. It covers the core language:
   bol, variables, math, agar/warna, the loops, banao/bhejo, a useful set
-  of auzaar tools, string interpolation, and phir pipelines.
+  of auzaar tools, string interpolation, phir pipelines, and — since
+  Phase 7 — objects with dot / possessive (ka / ki / kay) access.
 
   It is NOT the real compiler. The production path — per the plan — is
   the Rust toolchain compiled to WebAssembly, which compiles a .wow
@@ -93,6 +94,9 @@ type Param = { name: string; def: string | null };
 type Stmt =
   | { kind: "bol"; expr: string }
   | { kind: "assign"; targets: string[]; expr: string }
+  | { kind: "propAssign"; objExpr: string; prop: string; expr: string }
+  | { kind: "propNullAssign"; objExpr: string; prop: string; expr: string }
+  | { kind: "varNullAssign"; name: string; expr: string }
   | { kind: "expr"; expr: string }
   | { kind: "bhejo"; expr: string }
   | { kind: "roko" }
@@ -122,7 +126,10 @@ function parseUntilClose(
       i++;
       continue;
     }
-    if (text.endsWith("{")) {
+    // A line ending with { is a block head — UNLESS it looks like an object literal
+    // assignment (e.g. `x = { ... }` where the whole line ends with `}`).
+    // Real block heads only end with `{` and have no matching `}` on the same line.
+    if (text.endsWith("{") && !isSingleLineObject(text)) {
       const parsed = parseHead(text.slice(0, -1).trim(), lines, i);
       stmts.push(parsed.stmt);
       i = parsed.next;
@@ -132,6 +139,17 @@ function parseUntilClose(
     i++;
   }
   return { stmts, next: i };
+}
+
+// Returns true if this line is an assignment whose RHS is a complete object literal.
+function isSingleLineObject(text: string): boolean {
+  // Must also end with }
+  if (!text.endsWith("}")) return false;
+  // Quick structural check: contains `= {` at the statement level
+  const eqIdx = topLevelAssign(text);
+  if (eqIdx === -1) return false;
+  const rhs = text.slice(eqIdx + 1).trim();
+  return rhs.startsWith("{");
 }
 
 function parseHead(
@@ -209,6 +227,17 @@ function parseParams(s: string): Param[] {
   });
 }
 
+// Scan for `?=` outside of strings. Returns index of `?`, or -1.
+function findNullCoalesce(text: string): number {
+  let inStr = false;
+  for (let i = 0; i < text.length - 1; i++) {
+    if (text[i] === '"') { inStr = !inStr; continue; }
+    if (inStr) continue;
+    if (text[i] === "?" && text[i + 1] === "=") return i;
+  }
+  return -1;
+}
+
 function parseSimple(text: string): Stmt {
   if (text === "roko") return { kind: "roko" };
   if (text === "aage") return { kind: "aage" };
@@ -216,10 +245,39 @@ function parseSimple(text: string): Stmt {
   if (text === "bol") return { kind: "bol", expr: '""' };
   if (text.startsWith("bhejo ")) return { kind: "bhejo", expr: text.slice(6).trim() };
 
+  // ?= null-coalescing assign (must be checked before = to avoid false match)
+  const qeq = findNullCoalesce(text);
+  if (qeq !== -1) {
+    const target = text.slice(0, qeq).trim();
+    const expr = text.slice(qeq + 2).trim();
+    const dot = target.lastIndexOf(".");
+    if (dot !== -1) {
+      return {
+        kind: "propNullAssign",
+        objExpr: target.slice(0, dot).trim(),
+        prop: target.slice(dot + 1).trim(),
+        expr,
+      };
+    }
+    return { kind: "varNullAssign", name: target, expr };
+  }
+
   const eq = topLevelAssign(text);
   if (eq !== -1) {
-    const targets = text.slice(0, eq).split(",").map((s) => s.trim());
-    return { kind: "assign", targets, expr: text.slice(eq + 1).trim() };
+    const lhs = text.slice(0, eq).trim();
+    const expr = text.slice(eq + 1).trim();
+    // Dotted assignment: shaks.umar = 15
+    const dot = lhs.lastIndexOf(".");
+    if (dot !== -1) {
+      return {
+        kind: "propAssign",
+        objExpr: lhs.slice(0, dot).trim(),
+        prop: lhs.slice(dot + 1).trim(),
+        expr,
+      };
+    }
+    const targets = lhs.split(",").map((s) => s.trim());
+    return { kind: "assign", targets, expr };
   }
   return { kind: "expr", expr: text };
 }
@@ -231,12 +289,12 @@ function topLevelAssign(text: string): number {
     const c = text[i];
     if (c === '"') inStr = !inStr;
     if (inStr) continue;
-    if (c === "(" || c === "[") depth++;
-    else if (c === ")" || c === "]") depth--;
+    if (c === "(" || c === "[" || c === "{") depth++;
+    else if (c === ")" || c === "]" || c === "}") depth--;
     else if (c === "=" && depth === 0) {
       if (text[i + 1] === "=") return -1;
       const prev = text[i - 1];
-      if (prev === "!" || prev === "<" || prev === ">") return -1;
+      if (prev === "!" || prev === "<" || prev === ">" || prev === "?") return -1;
       return i;
     }
   }
@@ -268,6 +326,31 @@ function execStmt(s: Stmt, scope: Scope, ctx: Ctx) {
       else {
         const arr = Array.isArray(val) ? val : [val];
         s.targets.forEach((t, idx) => setVar(scope, t, arr[idx]));
+      }
+      return;
+    }
+    case "propAssign": {
+      const obj = evalExpr(s.objExpr, scope, ctx);
+      if (obj === null || obj === undefined || typeof obj !== "object" || Array.isArray(obj))
+        throw new WowError(`Property assign: '${s.objExpr}' ek object nahi hai.`);
+      (obj as Record<string, unknown>)[s.prop] = evalExpr(s.expr, scope, ctx);
+      return;
+    }
+    case "propNullAssign": {
+      const obj = evalExpr(s.objExpr, scope, ctx);
+      if (obj === null || obj === undefined || typeof obj !== "object" || Array.isArray(obj))
+        throw new WowError(`Property assign: '${s.objExpr}' ek object nahi hai.`);
+      const existing = (obj as Record<string, unknown>)[s.prop];
+      if (existing === null || existing === undefined) {
+        (obj as Record<string, unknown>)[s.prop] = evalExpr(s.expr, scope, ctx);
+      }
+      return;
+    }
+    case "varNullAssign": {
+      let existing: unknown = null;
+      try { existing = lookupVar(scope, s.name); } catch { existing = null; }
+      if (existing === null || existing === undefined) {
+        setVar(scope, s.name, evalExpr(s.expr, scope, ctx));
       }
       return;
     }
@@ -402,13 +485,12 @@ type Tok = { t: "num" | "str" | "id" | "op" | "punc"; v: string };
 function tokenize(src: string): Tok[] {
   const toks: Tok[] = [];
   let i = 0;
-  const ops = ["==", "!=", ">=", "<=", "=>", ">", "<", "+", "-", "*", "/", "%"];
+  // 2-char ops checked first, then 1-char
+  const ops2 = ["==", "!=", ">=", "<=", "=>", "?."];
+  const ops1 = [">", "<", "+", "-", "*", "/", "%"];
   while (i < src.length) {
     const c = src[i];
-    if (c === " " || c === "\t") {
-      i++;
-      continue;
-    }
+    if (c === " " || c === "\t") { i++; continue; }
     if (c === '"') {
       let j = i + 1;
       while (j < src.length && src[j] !== '"') j++;
@@ -416,6 +498,7 @@ function tokenize(src: string): Tok[] {
       i = j + 1;
       continue;
     }
+    // Numbers (including floats like 3.14)
     if (/[0-9]/.test(c) || (c === "." && /[0-9]/.test(src[i + 1] ?? ""))) {
       let j = i;
       while (j < src.length && /[0-9.]/.test(src[j])) j++;
@@ -430,16 +513,25 @@ function tokenize(src: string): Tok[] {
       i = j;
       continue;
     }
-    if ("()[],".includes(c)) {
+    // Punctuation including object literal chars and dot (for property access)
+    if ("()[],{}:.".includes(c)) {
       toks.push({ t: "punc", v: c });
       i++;
       continue;
     }
+    // 2-char operators
     const two = src.slice(i, i + 2);
-    const matched = ops.find((o) => o.length === 2 && o === two) ?? ops.find((o) => o.length === 1 && o === c);
-    if (matched) {
-      toks.push({ t: "op", v: matched });
-      i += matched.length;
+    const matched2 = ops2.find((o) => o === two);
+    if (matched2) {
+      toks.push({ t: "op", v: matched2 });
+      i += 2;
+      continue;
+    }
+    // 1-char operators
+    const matched1 = ops1.find((o) => o === c);
+    if (matched1) {
+      toks.push({ t: "op", v: matched1 });
+      i++;
       continue;
     }
     throw new WowError(`Samajh nahi aaya: "${c}"`);
@@ -448,19 +540,20 @@ function tokenize(src: string): Tok[] {
 }
 
 // word-operator precedence (higher binds tighter)
+// ka / ki / kay are high-prec safe property access (like ?.)
 const BINOP: Record<string, number> = {
   ya: 1,
   aur: 2,
   "==": 3, "!=": 3, ">": 3, "<": 3, ">=": 3, "<=": 3,
   "+": 4, "-": 4,
   "*": 5, "/": 5, "%": 5,
+  ka: 6, ki: 6, kay: 6,
 };
 
 function evalExpr(src: string, scope: Scope, ctx: Ctx): unknown {
   const toks = tokenize(src);
   const p = new Parser(toks, scope, ctx);
-  const v = p.parseExpr(0);
-  return v;
+  return p.parseExpr(0);
 }
 
 class Parser {
@@ -474,14 +567,10 @@ class Parser {
     this.ctx = ctx;
   }
 
-  peek(): Tok | undefined {
-    return this.toks[this.pos];
-  }
-  next(): Tok | undefined {
-    return this.toks[this.pos++];
-  }
+  peek(): Tok | undefined { return this.toks[this.pos]; }
+  next(): Tok | undefined { return this.toks[this.pos++]; }
 
-  // word-ternary: A agar COND warna B  (lowest precedence, handled here)
+  // word-ternary: A agar COND warna B  (lowest precedence)
   parseExpr(minPrec: number): unknown {
     let left = this.parseBinary(minPrec);
     const t = this.peek();
@@ -501,22 +590,41 @@ class Parser {
     while (true) {
       const t = this.peek();
       if (!t) break;
-      const op = t.t === "op" ? t.v : t.t === "id" && (t.v === "aur" || t.v === "ya") ? t.v : null;
+      const op =
+        t.t === "op"
+          ? t.v
+          : t.t === "id" && (t.v === "aur" || t.v === "ya" || t.v === "ka" || t.v === "ki" || t.v === "kay")
+          ? t.v
+          : null;
       if (op === null) break;
       const prec = BINOP[op];
       if (prec === undefined || prec < minPrec) break;
       this.next();
-      // short-circuit logicals
+
+      // Short-circuit logicals
       if (op === "aur") {
         const r = this.parseBinary(prec + 1);
         left = truthy(left) ? truthy(r) : false;
         continue;
       }
+      // ya returns the first truthy value (like JS ||), not a boolean
       if (op === "ya") {
         const r = this.parseBinary(prec + 1);
-        left = truthy(left) ? true : truthy(r);
+        left = truthy(left) ? left : r;
         continue;
       }
+      // Urdu possessive safe-access: `shaks ka naam` — right side is the key name
+      if (op === "ka" || op === "ki" || op === "kay") {
+        const keyTok = this.peek();
+        if (!keyTok || keyTok.t !== "id")
+          throw new WowError(`'${op}' ke baad property naam chahiye.`);
+        this.next();
+        if (left === null || left === undefined) { left = null; continue; }
+        const obj = left as Record<string, unknown>;
+        left = Object.prototype.hasOwnProperty.call(obj, keyTok.v) ? obj[keyTok.v] : null;
+        continue;
+      }
+
       const right = this.parseBinary(prec + 1);
       left = applyOp(op, left, right);
     }
@@ -548,7 +656,36 @@ class Parser {
       this.next();
       return !truthy(this.parseUnary());
     }
-    return this.parsePrimary();
+    const val = this.parsePrimary();
+    return this.parseSuffix(val);
+  }
+
+  // Handles postfix `.prop` and `?.prop` chains after any primary expression.
+  parseSuffix(val: unknown): unknown {
+    while (true) {
+      const t = this.peek();
+      if (t?.v === ".") {
+        this.next();
+        const propTok = this.next();
+        if (!propTok || propTok.t !== "id")
+          throw new WowError("'.' ke baad property naam chahiye.");
+        if (val === null || val === undefined)
+          throw new WowError(`Khali object se '${propTok.v}' access nahi ho sakta.`);
+        const obj = val as Record<string, unknown>;
+        val = Object.prototype.hasOwnProperty.call(obj, propTok.v) ? obj[propTok.v] : null;
+      } else if (t?.v === "?.") {
+        this.next();
+        const propTok = this.next();
+        if (!propTok || propTok.t !== "id")
+          throw new WowError("'?.' ke baad property naam chahiye.");
+        if (val === null || val === undefined) return null;
+        const obj = val as Record<string, unknown>;
+        val = Object.prototype.hasOwnProperty.call(obj, propTok.v) ? obj[propTok.v] : null;
+      } else {
+        break;
+      }
+    }
+    return val;
   }
 
   parsePrimary(): unknown {
@@ -573,11 +710,28 @@ class Parser {
       if (this.next()?.v !== "]") throw new WowError("']' chahiye.");
       return items;
     }
+    // Object literal: { key: value, ... }
+    if (t.v === "{") {
+      const obj: Record<string, unknown> = {};
+      while (this.peek()?.v !== "}") {
+        if (Object.keys(obj).length > 0) {
+          if (this.next()?.v !== ",") throw new WowError("Object mein ',' chahiye.");
+        }
+        // Skip optional trailing comma before }
+        if (this.peek()?.v === "}") break;
+        const key = this.next();
+        if (!key || key.t !== "id") throw new WowError("Object key naam chahiye.");
+        if (this.next()?.v !== ":") throw new WowError("Key ke baad ':' chahiye.");
+        obj[key.v] = this.parseExpr(0);
+      }
+      if (this.next()?.v !== "}") throw new WowError("'}' chahiye.");
+      return obj;
+    }
     if (t.t === "id") {
       if (t.v === "sahi") return true;
       if (t.v === "ghalat") return false;
       if (t.v === "khali") return null;
-      // call?
+      // function call
       if (this.peek()?.v === "(") {
         const args = this.readArgs();
         return this.invoke(t.v, args);
@@ -603,15 +757,14 @@ class Parser {
     return args;
   }
 
-  // capture tokens for one argument up to top-level , or ) — keep both a
-  // lazily-evaluable expression AND its immediate value.
+  // capture tokens for one argument up to top-level , or )
   readOneArg(): ArgSpec {
     const start = this.pos;
     let depth = 0;
     while (this.pos < this.toks.length) {
       const t = this.toks[this.pos];
-      if (t.v === "(" || t.v === "[") depth++;
-      else if (t.v === ")" || t.v === "]") {
+      if (t.v === "(" || t.v === "[" || t.v === "{") depth++;
+      else if (t.v === ")" || t.v === "]" || t.v === "}") {
         if (depth === 0) break;
         depth--;
       } else if (t.v === "," && depth === 0) break;
@@ -692,10 +845,7 @@ function interpolate(raw: string, scope: Scope, ctx: Ctx): string {
     const c = raw[i];
     if (c === "{") {
       const end = raw.indexOf("}", i);
-      if (end === -1) {
-        out += raw.slice(i);
-        break;
-      }
+      if (end === -1) { out += raw.slice(i); break; }
       const inner = raw.slice(i + 1, end).trim();
       out += wowStr(evalExpr(inner, scope, ctx));
       i = end + 1;
@@ -715,6 +865,12 @@ function callAuzaar(name: string, args: ArgSpec[], scope: Scope, ctx: Ctx): unkn
     const x = resolveArg(args[i]);
     if (!Array.isArray(x)) throw new WowError(`'${name}' ko list chahiye.`);
     return x;
+  };
+  const obj = (i: number): Record<string, unknown> => {
+    const x = resolveArg(args[i]);
+    if (x === null || typeof x !== "object" || Array.isArray(x))
+      throw new WowError(`'${name}' ko object chahiye.`);
+    return x as Record<string, unknown>;
   };
 
   switch (name) {
@@ -762,6 +918,21 @@ function callAuzaar(name: string, args: ArgSpec[], scope: Scope, ctx: Ctx): unkn
       const r: number[] = [];
       for (let k = a; k <= b; k++) r.push(k);
       return r;
+    }
+    // objects (Phase 7)
+    case "mafta":
+      return Object.keys(obj(0));
+    case "qeemtain":
+      return Object.values(obj(0));
+    case "key_hai": {
+      const o = resolveArg(args[0]);
+      if (o === null || typeof o !== "object" || Array.isArray(o)) return false;
+      return Object.prototype.hasOwnProperty.call(o, String(v(1)));
+    }
+    case "hata": {
+      const copy = { ...obj(0) };
+      delete copy[String(v(1))];
+      return copy;
     }
     // strings
     case "toro":
@@ -811,8 +982,8 @@ function splitArgs(s: string): string[] {
   for (const c of s) {
     if (c === '"') inStr = !inStr;
     if (!inStr) {
-      if (c === "(" || c === "[") depth++;
-      else if (c === ")" || c === "]") depth--;
+      if (c === "(" || c === "[" || c === "{") depth++;
+      else if (c === ")" || c === "]" || c === "}") depth--;
       else if (c === "," && depth === 0) {
         out.push(cur.trim());
         cur = "";
@@ -836,6 +1007,10 @@ function wowStr(v: unknown): string {
   if (v === false) return "ghalat";
   if (v === null || v === undefined) return "khali";
   if (Array.isArray(v)) return "[" + v.map(wowStr).join(", ") + "]";
+  if (typeof v === "object") {
+    const entries = Object.entries(v as Record<string, unknown>);
+    return "{ " + entries.map(([k, val]) => `${k}: ${wowStr(val)}`).join(", ") + " }";
+  }
   if (typeof v === "number" && Number.isInteger(v)) return String(v);
   return String(v);
 }

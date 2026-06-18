@@ -9,6 +9,7 @@ export const overviewSections = [
   { id: "functions", label: "Functions" },
   { id: "phir", label: "phir pipelines" },
   { id: "auzaar", label: "auzaar toolbox" },
+  { id: "objects", label: "Objects" },
   { id: "targets", label: "Targets" },
   { id: "errors", label: "Error messages" },
 ];
@@ -76,6 +77,23 @@ export const mathRows: Row[] = [
   { code: "square_root(n)", meaning: "square root" },
   { code: "power(n, p)", meaning: "n to the power p" },
   { code: "absolute(n)", meaning: "absolute value" },
+];
+
+export const objectRows: Row[] = [
+  { code: 'shaks = { naam: "Ahmad", umar: 14 }', meaning: "Create an object with key-value pairs" },
+  { code: "shaks.naam", meaning: "Dot access — crashes if shaks is khali" },
+  { code: "shaks ka naam", meaning: "Safe possessive access — returns khali if missing (use ki / kay for feminine / plural)" },
+  { code: "shaks?.naam", meaning: "Safe dot — same as ka / ki / kay" },
+  { code: "shaks.umar = 15", meaning: "Update a property in place" },
+  { code: 'shaks.email ?= "default"', meaning: "Only assign if the property is currently khali" },
+  { code: "shaks ka adres ka gali", meaning: "Chain safe access through nested objects" },
+];
+
+export const objectAuzaarRows: Row[] = [
+  { code: "mafta(obj)", meaning: "List of all keys" },
+  { code: "qeemtain(obj)", meaning: "List of all values" },
+  { code: 'key_hai(obj, "naam")', meaning: "sahi if the key exists, ghalat otherwise" },
+  { code: 'hata(obj, "umar")', meaning: "New object without the given key (original is unchanged)" },
 ];
 
 export const esp32Rows: Row[] = [
