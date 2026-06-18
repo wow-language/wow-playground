@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { CodeBlock } from "@/components/CodeBlock";
 import { useLang } from "@/components/LanguageProvider";
@@ -21,11 +22,152 @@ salam("Ahmad")`;
 
 const featureEmojis = ["🇵🇰", "🎯", "💬", "🧰"];
 
+type OsId = "mac" | "linux" | "windows";
+
+const installOptions: { id: OsId; label: string; emoji: string; steps: { caption: string; cmd: string }[]; guide: string }[] = [
+  {
+    id: "mac",
+    label: "macOS",
+    emoji: "🍎",
+    steps: [
+      { caption: "Homebrew (recommended)", cmd: "brew install wow-language/tap/wow" },
+      { caption: "or via curl", cmd: "curl -fsSL https://raw.githubusercontent.com/wow-language/wow/main/install.sh | sh" },
+    ],
+    guide: "https://github.com/wow-language/wow#installation",
+  },
+  {
+    id: "linux",
+    label: "Linux",
+    emoji: "🐧",
+    steps: [
+      { caption: "curl one-liner", cmd: "curl -fsSL https://raw.githubusercontent.com/wow-language/wow/main/install.sh | sh" },
+    ],
+    guide: "https://github.com/wow-language/wow#installation",
+  },
+  {
+    id: "windows",
+    label: "Windows",
+    emoji: "🪟",
+    steps: [
+      { caption: "PowerShell", cmd: "irm https://raw.githubusercontent.com/wow-language/wow/main/install.ps1 | iex" },
+    ],
+    guide: "https://github.com/wow-language/wow#installation",
+  },
+];
+
 const targets = [
   { emoji: "🖥️", name: "Desktop", sub: "C program", tint: "from-wow-100 to-wow-50" },
   { emoji: "🔌", name: "Arduino", sub: ".ino sketch", tint: "from-spark-300/40 to-spark-300/10" },
   { emoji: "🌐", name: "Web", sub: "Node.js server", tint: "from-wow-100 to-wow-50" },
 ];
+
+function InstallSection() {
+  const [active, setActive] = useState<OsId>("mac");
+  const option = installOptions.find((o) => o.id === active)!;
+
+  return (
+    <section className="border-b border-wow-100 bg-wow-50/60 py-10">
+      <div className="mx-auto max-w-6xl px-5">
+        <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:gap-10">
+          {/* Left: heading */}
+          <div className="shrink-0 text-center sm:text-left">
+            <p className="text-sm font-bold uppercase tracking-widest text-wow-600">
+              Install
+            </p>
+            <h2 className="mt-1 text-2xl font-extrabold tracking-tight text-ink">
+              Get wow on your machine
+            </h2>
+            <p className="mt-2 max-w-xs text-sm text-muted">
+              One command. No Rust needed. Binaries for every platform.
+            </p>
+            <a
+              href="https://github.com/wow-language/wow/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-wow-200 bg-paper px-4 py-2 text-sm font-semibold text-wow-700 transition-colors hover:bg-wow-100"
+            >
+              ↓ Download binary
+            </a>
+          </div>
+
+          {/* Right: tabs + command */}
+          <div className="w-full min-w-0 flex-1">
+            {/* OS tabs */}
+            <div className="flex gap-2">
+              {installOptions.map((o) => (
+                <button
+                  key={o.id}
+                  onClick={() => setActive(o.id)}
+                  className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-semibold transition-colors ${
+                    active === o.id
+                      ? "bg-wow-600 text-white shadow"
+                      : "border border-wow-200 bg-paper text-muted hover:bg-wow-50"
+                  }`}
+                >
+                  <span>{o.emoji}</span>
+                  {o.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Commands */}
+            <div className="mt-4 space-y-3">
+              {option.steps.map((step) => (
+                <div key={step.caption}>
+                  <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-muted">
+                    {step.caption}
+                  </p>
+                  <div className="flex items-center gap-2 overflow-x-auto rounded-xl border border-wow-200 bg-ink px-4 py-3">
+                    <span className="select-none text-wow-400">$</span>
+                    <code className="flex-1 font-[family-name:var(--font-mono)] text-sm text-green-300">
+                      {step.cmd}
+                    </code>
+                    <CopyButton text={step.cmd} />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="mt-3 text-xs text-muted">
+              After install, run{" "}
+              <code className="rounded bg-wow-100 px-1 py-0.5 font-[family-name:var(--font-mono)] text-wow-700">
+                wow --help
+              </code>{" "}
+              to verify.{" "}
+              <a
+                href={option.guide}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-wow-700 underline decoration-wow-200 underline-offset-2"
+              >
+                Full install guide →
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    });
+  };
+  return (
+    <button
+      onClick={copy}
+      title="Copy"
+      className="shrink-0 rounded-md px-2 py-1 text-xs font-semibold text-wow-400 transition-colors hover:bg-white/10 hover:text-white"
+    >
+      {copied ? "Copied!" : "Copy"}
+    </button>
+  );
+}
 
 export function Landing() {
   const { lang } = useLang();
@@ -85,6 +227,9 @@ export function Landing() {
           </div>
         </div>
       </section>
+
+      {/* Install */}
+      <InstallSection />
 
       {/* Targets */}
       <section className="mx-auto max-w-6xl px-5 py-12">
