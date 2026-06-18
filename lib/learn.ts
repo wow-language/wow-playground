@@ -24,7 +24,7 @@ export type Block =
 
 export type Chapter = {
   slug: string;
-  emoji: string;
+  icon: string;
   title: Loc;
   concept: Loc;
   blocks: Block[];
@@ -33,7 +33,7 @@ export type Chapter = {
 export const chapters: Chapter[] = [
   {
     slug: "what-is-a-program",
-    emoji: "🧠",
+    icon: "Brain",
     title: L("What is a program?", "Program kya hai?", "پروگرام کیا ہے؟"),
     concept: L(
       "A program is just a list of instructions a computer follows.",
@@ -91,7 +91,7 @@ bol "Step 3: eat breakfast"`,
   },
   {
     slug: "saying-things",
-    emoji: "💬",
+    icon: "MessageSquare",
     title: L(
       "Telling the computer to speak",
       "Computer ko bolna sikhao",
@@ -158,7 +158,7 @@ bol "Salam {naam}, kaise ho?"`,
   },
   {
     slug: "variables",
-    emoji: "📦",
+    icon: "Archive",
     title: L("Boxes that remember", "Dabbe jo yaad rakhte hain", "ڈبے جو یاد رکھتے ہیں"),
     concept: L(
       "Variables store a value so you can use it later.",
@@ -210,7 +210,7 @@ bol "Agle saal: {umar}"`,
   },
   {
     slug: "making-choices",
-    emoji: "🔀",
+    icon: "GitBranch",
     title: L("Making choices", "Faisle karna", "فیصلے کرنا"),
     concept: L(
       "Use agar / warna to do different things in different situations.",
@@ -280,7 +280,7 @@ agar score > 90 {
   },
   {
     slug: "loops",
-    emoji: "🔁",
+    icon: "RefreshCw",
     title: L("Doing things again and again", "Baar baar kaam karna", "بار بار کام کرنا"),
     concept: L(
       "Loops repeat work so you don't copy-paste.",
@@ -352,7 +352,7 @@ har p mein phal {
   },
   {
     slug: "functions",
-    emoji: "🛠️",
+    icon: "Hammer",
     title: L(
       "Teaching the computer new tricks",
       "Computer ko naye gur sikhana",
@@ -430,7 +430,7 @@ bol "Total: {total}"`,
   },
   {
     slug: "lists-and-auzaar",
-    emoji: "🧰",
+    icon: "Wrench",
     title: L("Lists and your toolbox", "Lists aur aap ka auzaar", "lists اور آپ کا اوزار"),
     concept: L(
       "Hold many values in a list and shape them with auzaar.",
@@ -491,7 +491,7 @@ bol bade`,
   },
   {
     slug: "pipelines",
-    emoji: "➡️",
+    icon: "Workflow",
     title: L("Pipelines with phir", "phir ke saath pipelines", "phir کے ساتھ pipelines"),
     concept: L(
       "Chain steps left-to-right so they read like a sentence.",
@@ -546,7 +546,7 @@ bol nateeja`,
   },
   {
     slug: "when-things-go-wrong",
-    emoji: "🛟",
+    icon: "LifeBuoy",
     title: L("When things go wrong", "Jab kuch ghalat ho jaye", "جب کچھ غلط ہو جائے"),
     concept: L(
       "Catch errors with koshish / pakro instead of crashing.",
@@ -599,7 +599,7 @@ bol nateeja`,
   },
   {
     slug: "objects",
-    emoji: "📦",
+    icon: "Package",
     title: L("Objects — grouping things together", "Objects — cheezein saath rakhna", "آبجیکٹس — چیزیں ساتھ رکھنا"),
     concept: L(
       "An object groups related values under one name so you can describe a thing — a person, a card, a score — in one place.",

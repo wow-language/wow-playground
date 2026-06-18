@@ -2,7 +2,7 @@ export type Example = {
   id: string;
   title: string;
   blurb: string;
-  emoji: string;
+  icon: string;
   code: string;
   output: string;
 };
@@ -17,7 +17,7 @@ export const examples: Example[] = [
     id: "salam",
     title: "Salam Duniya",
     blurb: "Your very first wow program.",
-    emoji: "👋",
+    icon: "Hand",
     code: `bol "Salam Duniya!"
 bol "wow mein khush aamdeed."`,
     output: `Salam Duniya!
@@ -27,7 +27,7 @@ wow mein khush aamdeed.`,
     id: "ginti",
     title: "Ginti karo",
     blurb: "Loop from one number to another.",
-    emoji: "🔢",
+    icon: "Hash",
     code: `har i 1 se 5 tak {
     bol "Ginti: {i}"
 }`,
@@ -41,7 +41,7 @@ Ginti: 5`,
     id: "agar",
     title: "Agar warna",
     blurb: "Make a decision with a condition.",
-    emoji: "🤔",
+    icon: "GitBranch",
     code: `umar = 12
 
 agar umar > 10 {
@@ -55,7 +55,7 @@ agar umar > 10 {
     id: "auzaar",
     title: "Auzaar toolbox",
     blurb: "Pick the big numbers, then sort them.",
-    emoji: "🧰",
+    icon: "Wrench",
     code: `numbers = [1, 5, 3, 8, 2, 9]
 
 bade = numbers phir chuno(x > 4) phir tarteeb
@@ -71,7 +71,7 @@ mila: 9`,
     id: "banao",
     title: "Function banao",
     blurb: "Write a function and call it.",
-    emoji: "🛠️",
+    icon: "Hammer",
     code: `banao salam(naam = "dost") {
     bol "Salam {naam}! Kaise ho?"
 }
@@ -85,7 +85,7 @@ Salam dost! Kaise ho?`,
     id: "shaks",
     title: "Objects (shaks)",
     blurb: "Group related values and access them safely.",
-    emoji: "📦",
+    icon: "Package",
     code: `shaks = { naam: "Ahmad", umar: 14, shahar: "Karachi" }
 
 bol "Salam {shaks.naam}!"
