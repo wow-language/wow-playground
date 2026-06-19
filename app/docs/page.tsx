@@ -76,12 +76,12 @@ bol "You are {umar} years old."`}
           Over a range, over a list, or just a fixed number of times.
         </p>
         <CodeBlock
-          code={`har i 1 se 5 tak {
+          code={`1 se 5 tak har i {
     bol "Count: {i}"
 }
 
 fruits = ["aam", "kela", "seb"]
-har f mein fruits {
+har fruits mein f {
     bol "Fruit: {f}"
 }
 
@@ -171,7 +171,7 @@ log = [
     { naam: "Ahmad", umar: 10 },
     { naam: "Sara",  umar: 12 },
 ]
-har p mein log {
+har log mein p {
     bol "{p.naam}: {p ka umar} saal"
 }`}
         />
