@@ -41,7 +41,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-wow-100/50 py-4 text-center text-xs text-muted">
-        {f.credit}
+        {t.en.footer.credit}
       </div>
     </footer>
   );
