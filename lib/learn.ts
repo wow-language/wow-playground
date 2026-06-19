@@ -1,11 +1,11 @@
 /*
-  The "Learn" track — a friendly, kid-first path through programming
+  The "Learn" track, a friendly, kid-first path through programming
   using wow. Each chapter teaches one programming CONCEPT (not just a
   keyword) with a plain-language explanation, a real example, and a
   small challenge to try in the playground.
 
   Content is authored in English, Roman Urdu, and Urdu. Code samples are
-  shared across all three — only the prose changes.
+  shared across all three, only the prose changes.
 */
 
 import type { Lang } from "./i18n";
@@ -44,9 +44,9 @@ export const chapters: Chapter[] = [
       {
         t: "p",
         text: L(
-          "Imagine writing down steps for a friend to make a sandwich: get the bread, add the filling, close it. A computer program is exactly that — a list of clear steps, in order, that the computer follows one at a time, top to bottom.",
-          "Socho aap apne dost ke liye sandwich banane ke steps likh rahe hain: bread lo, filling dalo, band karo. Computer program bilkul aisa hi hai — saaf steps ki ek list, tarteeb se, jise computer ek ek kar ke upar se neeche follow karta hai.",
-          "تصور کرو آپ اپنے دوست کے لیے سینڈوچ بنانے کے اسٹیپ لکھ رہے ہو: بریڈ لو، فلنگ ڈالو، بند کرو۔ کمپیوٹر پروگرام بالکل ایسا ہی ہے — صاف اسٹیپس کی ایک فہرست، ترتیب سے، جسے کمپیوٹر ایک ایک کر کے اوپر سے نیچے فالو کرتا ہے۔"
+          "Imagine writing down steps for a friend to make a sandwich: get the bread, add the filling, close it. A computer program is exactly that, a list of clear steps, in order, that the computer follows one at a time, top to bottom.",
+          "Socho aap apne dost ke liye sandwich banane ke steps likh rahe hain: bread lo, filling dalo, band karo. Computer program bilkul aisa hi hai, saaf steps ki ek list, tarteeb se, jise computer ek ek kar ke upar se neeche follow karta hai.",
+          "تصور کرو آپ اپنے دوست کے لیے سینڈوچ بنانے کے اسٹیپ لکھ رہے ہو: بریڈ لو، فلنگ ڈالو، بند کرو۔ کمپیوٹر پروگرام بالکل ایسا ہی ہے، صاف اسٹیپس کی ایک فہرست، ترتیب سے، جسے کمپیوٹر ایک ایک کر کے اوپر سے نیچے فالو کرتا ہے۔"
         ),
       },
       {
@@ -67,22 +67,22 @@ export const chapters: Chapter[] = [
       },
       {
         t: "code",
-        code: `bol "Step 1: wake up"
-bol "Step 2: brush teeth"
-bol "Step 3: eat breakfast"`,
+        code: `likho "Step 1: wake up"
+likho "Step 2: brush teeth"
+likho "Step 3: eat breakfast"`,
       },
       {
         t: "p",
         text: L(
-          'When you press Run, the computer reads line 1, does it, then line 2, then line 3. That word bol means "say" — it tells the computer to show something on the screen.',
-          'Jab aap Run dabate hain, computer line 1 parhta hai, use karta hai, phir line 2, phir line 3. Lafz bol ka matlab hai "kaho" — yeh computer ko kuch screen par dikhane ko kehta hai.',
-          'جب آپ Run دباتے ہیں، کمپیوٹر لائن 1 پڑھتا ہے، اسے کرتا ہے، پھر لائن 2، پھر لائن 3۔ لفظ bol کا مطلب ہے "کہو" — یہ کمپیوٹر کو کچھ اسکرین پر دکھانے کو کہتا ہے۔'
+          'When you press Run, the computer reads line 1, does it, then line 2, then line 3. That word likho means "write", it tells the computer to show something on the screen.',
+          'Jab aap Run dabate hain, computer line 1 parhta hai, use karta hai, phir line 2, phir line 3. Lafz likho ka matlab hai "likhna", yeh computer ko kuch screen par dikhane ko kehta hai.',
+          'جب آپ Run دباتے ہیں، کمپیوٹر لائن 1 پڑھتا ہے، اسے کرتا ہے، پھر لائن 2، پھر لائن 3۔ لفظ likho کا مطلب ہے "لکھو"، یہ کمپیوٹر کو کچھ اسکرین پر دکھانے کو کہتا ہے۔'
         ),
       },
       {
         t: "try",
         text: L(
-          "Add a fourth step of your own. What happens if you move a line to the top — does the order of the output change?",
+          "Add a fourth step of your own. What happens if you move a line to the top, does the order of the output change?",
           "Apna chautha step shamil karo. Agar aap koi line sab se upar le jayein to kya output ki tarteeb badal jati hai?",
           "اپنا چوتھا اسٹیپ شامل کرو۔ اگر آپ کوئی لائن سب سے اوپر لے جائیں تو کیا آؤٹ پٹ کی ترتیب بدل جاتی ہے؟"
         ),
@@ -93,36 +93,36 @@ bol "Step 3: eat breakfast"`,
     slug: "saying-things",
     icon: "MessageSquare",
     title: L(
-      "Telling the computer to speak",
-      "Computer ko bolna sikhao",
-      "کمپیوٹر کو بولنا سکھاؤ"
+      "Telling the computer to write",
+      "Computer ko likhna sikhao",
+      "کمپیوٹر کو لکھنا سکھاؤ"
     ),
     concept: L(
-      "Use bol to print words and numbers.",
-      "Lafz aur number print karne ke liye bol use karo.",
-      "الفاظ اور نمبر پرنٹ کرنے کے لیے bol استعمال کرو۔"
+      "Use likho to print words and numbers.",
+      "Lafz aur number print karne ke liye likho use karo.",
+      "الفاظ اور نمبر پرنٹ کرنے کے لیے likho استعمال کرو۔"
     ),
     blocks: [
       {
         t: "p",
         text: L(
-          "The most common thing a beginner does is make the computer show something. In wow that word is bol (say). Whatever you put after it shows up in the output.",
-          "Shuruaat mein sab se aam kaam yeh hai ke computer kuch dikhaye. wow mein woh lafz hai bol (kaho). Iske baad jo bhi likhein woh output mein nazar aata hai.",
-          "شروعات میں سب سے عام کام یہ ہے کہ کمپیوٹر کچھ دکھائے۔ wow میں وہ لفظ ہے bol (کہو)۔ اس کے بعد جو بھی لکھیں وہ آؤٹ پٹ میں نظر آتا ہے۔"
+          "The most common thing a beginner does is make the computer show something. In wow that word is likho (write). Whatever you put after it shows up in the output.",
+          "Shuruaat mein sab se aam kaam yeh hai ke computer kuch dikhaye. wow mein woh lafz hai likho (likhna). Iske baad jo bhi likhein woh output mein nazar aata hai.",
+          "شروعات میں سب سے عام کام یہ ہے کہ کمپیوٹر کچھ دکھائے۔ wow میں وہ لفظ ہے likho (لکھو)۔ اس کے بعد جو بھی لکھیں وہ آؤٹ پٹ میں نظر آتا ہے۔"
         ),
       },
       {
         t: "code",
-        code: `bol "Salam Duniya!"
-bol 7
-bol 2 + 3`,
+        code: `likho "Salam Duniya!"
+likho 7
+likho 2 + 3`,
       },
       {
         t: "p",
         text: L(
-          'Text goes inside quotes: "like this". Numbers do not need quotes. And the computer can do the math for you — the last line prints 5, not "2 + 3".',
-          'Text quotes ke andar aata hai: "is tarah". Numbers ko quotes ki zaroorat nahi. Aur computer aap ke liye hisaab bhi kar sakta hai — aakhri line 5 print karti hai, "2 + 3" nahi.',
-          'ٹیکسٹ کوٹس کے اندر آتا ہے: "اس طرح"۔ نمبرز کو کوٹس کی ضرورت نہیں۔ اور کمپیوٹر آپ کے لیے حساب بھی کر سکتا ہے — آخری لائن 5 پرنٹ کرتی ہے، "2 + 3" نہیں۔'
+          'Text goes inside quotes: "like this". Numbers do not need quotes. And the computer can do the math for you, the last line prints 5, not "2 + 3".',
+          'Text quotes ke andar aata hai: "is tarah". Numbers ko quotes ki zaroorat nahi. Aur computer aap ke liye hisaab bhi kar sakta hai, aakhri line 5 print karti hai, "2 + 3" nahi.',
+          'ٹیکسٹ کوٹس کے اندر آتا ہے: "اس طرح"۔ نمبرز کو کوٹس کی ضرورت نہیں۔ اور کمپیوٹر آپ کے لیے حساب بھی کر سکتا ہے، آخری لائن 5 پرنٹ کرتی ہے، "2 + 3" نہیں۔'
         ),
       },
       {
@@ -136,15 +136,15 @@ bol 2 + 3`,
       {
         t: "p",
         text: L(
-          'You can drop a value right into a sentence using curly braces { }. This is called string interpolation — a fancy name for "fill in the blank".',
-          'Aap curly braces { } se kisi value ko seedha jumle mein daal sakte hain. Ise string interpolation kehte hain — "khaali jagah bharo" ka mushkil naam.',
-          'آپ curly braces { } سے کسی ویلیو کو سیدھا جملے میں ڈال سکتے ہیں۔ اسے string interpolation کہتے ہیں — "خالی جگہ بھرو" کا مشکل نام۔'
+          'You can drop a value right into a sentence using curly braces { }. This is called string interpolation, a fancy name for "fill in the blank".',
+          'Aap curly braces { } se kisi value ko seedha jumle mein daal sakte hain. Ise string interpolation kehte hain, "khaali jagah bharo" ka mushkil naam.',
+          'آپ curly braces { } سے کسی ویلیو کو سیدھا جملے میں ڈال سکتے ہیں۔ اسے string interpolation کہتے ہیں، "خالی جگہ بھرو" کا مشکل نام۔'
         ),
       },
       {
         t: "code",
         code: `naam = "Ayesha"
-bol "Salam {naam}, kaise ho?"`,
+likho "Salam {naam}, kaise ho?"`,
       },
       {
         t: "try",
@@ -177,10 +177,10 @@ bol "Salam {naam}, kaise ho?"`,
       {
         t: "code",
         code: `umar = 12
-bol "Aap ki umar {umar} hai"
+likho "Aap ki umar {umar} hai"
 
 umar = umar + 1
-bol "Agle saal: {umar}"`,
+likho "Agle saal: {umar}"`,
       },
       {
         t: "p",
@@ -193,9 +193,9 @@ bol "Agle saal: {umar}"`,
       {
         t: "tip",
         text: L(
-          "Pick names that describe what is inside — score, naam, total. Future-you (and your friends) will thank you when reading the code.",
-          "Aise naam chuno jo bataayein andar kya hai — score, naam, total. Baad mein aap (aur aap ke dost) code parhte waqt shukar guzaar honge.",
-          "ایسے نام چنو جو بتائیں اندر کیا ہے — score، naam، total۔ بعد میں آپ (اور آپ کے دوست) کوڈ پڑھتے وقت شکر گزار ہوں گے۔"
+          "Pick names that describe what is inside, score, naam, total. Future-you (and your friends) will thank you when reading the code.",
+          "Aise naam chuno jo bataayein andar kya hai, score, naam, total. Baad mein aap (aur aap ke dost) code parhte waqt shukar guzaar honge.",
+          "ایسے نام چنو جو بتائیں اندر کیا ہے، score، naam، total۔ بعد میں آپ (اور آپ کے دوست) کوڈ پڑھتے وقت شکر گزار ہوں گے۔"
         ),
       },
       {
@@ -231,9 +231,9 @@ bol "Agle saal: {umar}"`,
         code: `umar = 12
 
 agar umar > 10 {
-    bol "You're a big kid!"
+    likho "You're a big kid!"
 } warna {
-    bol "You're a little one."
+    likho "You're a little one."
 }`,
       },
       {
@@ -253,11 +253,11 @@ agar umar > 10 {
         code: `score = 75
 
 agar score > 90 {
-    bol "Shaandaar!"
+    likho "Shaandaar!"
 } warna agar score > 50 {
-    bol "Acha kaam!"
+    likho "Acha kaam!"
 } warna {
-    bol "Koshish jari rakho."
+    likho "Koshish jari rakho."
 }`,
       },
       {
@@ -271,9 +271,9 @@ agar score > 90 {
       {
         t: "try",
         text: L(
-          'Write a check that prints "Even" or "Odd" for a number. Hint: an even number has no remainder when divided by 2 — try the % operator.',
-          'Aisa check likho jo kisi number ke liye "Even" ya "Odd" print kare. Ishaara: even number ko 2 se taqseem karne par baqi nahi bachta — % operator try karo.',
-          'ایسا چیک لکھو جو کسی نمبر کے لیے "Even" یا "Odd" پرنٹ کرے۔ اشارہ: even نمبر کو 2 سے تقسیم کرنے پر باقی نہیں بچتا — % operator آزماؤ۔'
+          'Write a check that prints "Even" or "Odd" for a number. Hint: an even number has no remainder when divided by 2, try the % operator.',
+          'Aisa check likho jo kisi number ke liye "Even" ya "Odd" print kare. Ishaara: even number ko 2 se taqseem karne par baqi nahi bachta, % operator try karo.',
+          'ایسا چیک لکھو جو کسی نمبر کے لیے "Even" یا "Odd" پرنٹ کرے۔ اشارہ: even نمبر کو 2 سے تقسیم کرنے پر باقی نہیں بچتا، % operator آزماؤ۔'
         ),
       },
     ],
@@ -303,15 +303,15 @@ agar score > 90 {
       {
         t: "code",
         code: `1 se 5 tak har i {
-    bol "Number {i}"
+    likho "Number {i}"
 }`,
       },
       {
         t: "p",
         text: L(
-          'This runs the block for i = 1, 2, 3, 4, 5. The range comes first — "1 se 5 tak" — then har names the counter variable. Both ends are included.',
-          'Yeh block i = 1, 2, 3, 4, 5 ke liye chalta hai. Range pehle aati hai — "1 se 5 tak" — phir har counter variable ka naam deta hai. Dono siray shamil hain.',
-          'یہ بلاک i = 1، 2، 3، 4، 5 کے لیے چلتا ہے۔ range پہلے آتی ہے — "1 se 5 tak" — پھر har کاؤنٹر متغیر کا نام دیتا ہے۔ دونوں سرے شامل ہیں۔'
+          'This runs the block for i = 1, 2, 3, 4, 5. The range comes first, "1 se 5 tak", then har names the counter variable. Both ends are included.',
+          'Yeh block i = 1, 2, 3, 4, 5 ke liye chalta hai. Range pehle aati hai, "1 se 5 tak", phir har counter variable ka naam deta hai. Dono siray shamil hain.',
+          'یہ بلاک i = 1، 2، 3، 4، 5 کے لیے چلتا ہے۔ range پہلے آتی ہے، "1 se 5 tak", پھر har کاؤنٹر متغیر کا نام دیتا ہے۔ دونوں سرے شامل ہیں۔'
         ),
       },
       {
@@ -323,7 +323,7 @@ agar score > 90 {
         code: `phal = ["aam", "kela", "seb"]
 
 har phal mein p {
-    bol "I like {p}"
+    likho "I like {p}"
 }`,
       },
       {
@@ -337,7 +337,7 @@ har phal mein p {
       {
         t: "code",
         code: `3 baar {
-    bol "wow!"
+    likho "wow!"
 }`,
       },
       {
@@ -367,9 +367,9 @@ har phal mein p {
       {
         t: "p",
         text: L(
-          'A function is a set of steps you give a name to. Once it is named, you can run all those steps again just by calling the name — like teaching a dog the trick "sit" and then saying "sit" whenever you want.',
-          'Function steps ka ek set hai jise aap naam dete hain. Naam milne ke baad, sirf naam bula kar woh saare steps dobara chala sakte hain — jaise kutte ko "baith" sikhana aur phir jab chaaho "baith" kehna.',
-          'function اسٹیپس کا ایک سیٹ ہے جسے آپ نام دیتے ہیں۔ نام ملنے کے بعد، صرف نام بلا کر وہ سارے اسٹیپس دوبارہ چلا سکتے ہیں — جیسے کتے کو "بیٹھ" سکھانا اور پھر جب چاہو "بیٹھ" کہنا۔'
+          'A function is a set of steps you give a name to. Once it is named, you can run all those steps again just by calling the name, like teaching a dog the trick "sit" and then saying "sit" whenever you want.',
+          'Function steps ka ek set hai jise aap naam dete hain. Naam milne ke baad, sirf naam bula kar woh saare steps dobara chala sakte hain, jaise kutte ko "baith" sikhana aur phir jab chaaho "baith" kehna.',
+          'function اسٹیپس کا ایک سیٹ ہے جسے آپ نام دیتے ہیں۔ نام ملنے کے بعد، صرف نام بلا کر وہ سارے اسٹیپس دوبارہ چلا سکتے ہیں، جیسے کتے کو "بیٹھ" سکھانا اور پھر جب چاہو "بیٹھ" کہنا۔'
         ),
       },
       {
@@ -383,7 +383,7 @@ har phal mein p {
       {
         t: "code",
         code: `banao salam(naam) {
-    bol "Salam {naam}! Kaise ho?"
+    likho "Salam {naam}! Kaise ho?"
 }
 
 salam("Ahmad")
@@ -392,9 +392,9 @@ salam("Sara")`,
       {
         t: "p",
         text: L(
-          'Here salam is the trick\'s name, and naam is an input — the function uses whatever name you hand it. Calling salam("Sara") runs the steps with naam set to "Sara".',
-          'Yahan salam gur ka naam hai, aur naam ek input hai — function jo bhi naam aap dein wahi istemaal karta hai. salam("Sara") bulane par steps naam = "Sara" ke saath chalte hain.',
-          'یہاں salam گُر کا نام ہے، اور naam ایک input ہے — function جو بھی نام آپ دیں وہی استعمال کرتا ہے۔ salam("Sara") بلانے پر اسٹیپس naam = "Sara" کے ساتھ چلتے ہیں۔'
+          'Here salam is the trick\'s name, and naam is an input, the function uses whatever name you hand it. Calling salam("Sara") runs the steps with naam set to "Sara".',
+          'Yahan salam gur ka naam hai, aur naam ek input hai, function jo bhi naam aap dein wahi istemaal karta hai. salam("Sara") bulane par steps naam = "Sara" ke saath chalte hain.',
+          'یہاں salam گُر کا نام ہے، اور naam ایک input ہے، function جو بھی نام آپ دیں وہی استعمال کرتا ہے۔ salam("Sara") بلانے پر اسٹیپس naam = "Sara" کے ساتھ چلتے ہیں۔'
         ),
       },
       {
@@ -408,7 +408,7 @@ salam("Sara")`,
 }
 
 total = jama(3, 4)
-bol "Total: {total}"`,
+likho "Total: {total}"`,
       },
       {
         t: "tip",
@@ -429,13 +429,13 @@ bol "Total: {total}"`,
     ],
   },
   {
-    slug: "lists-and-auzaar",
+    slug: "lists-and-tools",
     icon: "Wrench",
-    title: L("Lists and your toolbox", "Lists aur aap ka auzaar", "lists اور آپ کا اوزار"),
+    title: L("Lists and your toolbox", "Lists aur aap ka toolbox", "lists اور آپ کا toolbox"),
     concept: L(
-      "Hold many values in a list and shape them with auzaar.",
-      "Bohat si values ek list mein rakho aur auzaar se unhe sanwaaro.",
-      "بہت سی ویلیوز ایک list میں رکھو اور auzaar سے انہیں سنوارو۔"
+      "Hold many values in a list and shape them with your toolbox.",
+      "Bohat si values ek list mein rakho aur toolbox se unhe sanwaaro.",
+      "بہت سی ویلیوز ایک list میں رکھو اور toolbox سے انہیں سنوارو۔"
     ),
     blocks: [
       {
@@ -449,15 +449,15 @@ bol "Total: {total}"`,
       {
         t: "code",
         code: `numbers = [4, 8, 15, 16, 23, 42]
-bol "There are {ginti(numbers)} numbers"
-bol "Their total is {jama(numbers)}"`,
+likho "There are {ginti(numbers)} numbers"
+likho "Their total is {jama(numbers)}"`,
       },
       {
         t: "p",
         text: L(
-          "wow comes with a built-in toolbox called auzaar (tools). It is always available — no import needed. ginti counts items, jama adds them up, tarteeb sorts them, and many more.",
-          "wow ke saath ek built-in toolbox aata hai jise auzaar kehte hain. Yeh hamesha mojood hai — import ki zaroorat nahi. ginti items ginta hai, jama unhe jorta hai, tarteeb unhe tarteeb deta hai, aur bohat kuch.",
-          "wow کے ساتھ ایک built-in toolbox آتا ہے جسے auzaar کہتے ہیں۔ یہ ہمیشہ موجود ہے — import کی ضرورت نہیں۔ ginti آئٹمز گنتا ہے، jama انہیں جوڑتا ہے، tarteeb انہیں ترتیب دیتا ہے، اور بہت کچھ۔"
+          "wow comes with a built-in toolbox. It is always available, no import needed. ginti counts items, jama adds them up, tarteeb sorts them, and many more.",
+          "wow ke saath ek built-in toolbox aata hai. Yeh hamesha mojood hai, import ki zaroorat nahi. ginti items ginta hai, jama unhe jorta hai, tarteeb unhe tarteeb deta hai, aur bohat kuch.",
+          "wow کے ساتھ ایک built-in toolbox آتا ہے۔ یہ ہمیشہ موجود ہے، import کی ضرورت نہیں۔ ginti آئٹمز گنتا ہے، jama انہیں جوڑتا ہے، tarteeb انہیں ترتیب دیتا ہے، اور بہت کچھ۔"
         ),
       },
       {
@@ -469,7 +469,7 @@ bol "Their total is {jama(numbers)}"`,
         code: `numbers = [4, 8, 15, 16, 23, 42]
 
 bade = chuno(numbers, x > 15)
-bol bade`,
+likho bade`,
       },
       {
         t: "p",
@@ -502,9 +502,9 @@ bol bade`,
       {
         t: "p",
         text: L(
-          "Sometimes you want to do several things to a list one after another: filter it, then sort it, then take the first item. You could use a box for each step — or you can connect them with phir (then).",
-          "Kabhi aap ek list ke saath kai kaam yake baad deegre karna chahte hain: filter karo, phir tarteeb do, phir pehla item lo. Har step ke liye dabba use kar sakte hain — ya unhe phir (then) se jod sakte hain.",
-          "کبھی آپ ایک list کے ساتھ کئی کام یکے بعد دیگرے کرنا چاہتے ہیں: فلٹر کرو، پھر ترتیب دو، پھر پہلا آئٹم لو۔ ہر اسٹیپ کے لیے ڈبہ استعمال کر سکتے ہیں — یا انہیں phir (then) سے جوڑ سکتے ہیں۔"
+          "Sometimes you want to do several things to a list one after another: filter it, then sort it, then take the first item. You could use a box for each step, or you can connect them with phir (then).",
+          "Kabhi aap ek list ke saath kai kaam yake baad deegre karna chahte hain: filter karo, phir tarteeb do, phir pehla item lo. Har step ke liye dabba use kar sakte hain, ya unhe phir (then) se jod sakte hain.",
+          "کبھی آپ ایک list کے ساتھ کئی کام یکے بعد دیگرے کرنا چاہتے ہیں: فلٹر کرو، پھر ترتیب دو، پھر پہلا آئٹم لو۔ ہر اسٹیپ کے لیے ڈبہ استعمال کر سکتے ہیں، یا انہیں phir (then) سے جوڑ سکتے ہیں۔"
         ),
       },
       {
@@ -516,7 +516,7 @@ nateeja = numbers
     phir tarteeb
     phir pehla
 
-bol nateeja`,
+likho nateeja`,
       },
       {
         t: "p",
@@ -557,26 +557,26 @@ bol nateeja`,
       {
         t: "p",
         text: L(
-          "Everyone makes mistakes — even computers hit situations they can't handle, like dividing a number by zero. Instead of letting the whole program stop, you can try something risky and catch the problem if it happens.",
-          "Har koi ghalti karta hai — computer bhi aise mauqe se takrata hai jinhe woh handle nahi kar sakta, jaise kisi number ko sifr se taqseem karna. Poore program ko rukne dene ke bajaye, aap koi khatre wala kaam koshish kar sakte hain aur masla hone par use pakad sakte hain.",
-          "ہر کوئی غلطی کرتا ہے — کمپیوٹر بھی ایسے موقع سے ٹکراتا ہے جنہیں وہ ہینڈل نہیں کر سکتا، جیسے کسی نمبر کو صفر سے تقسیم کرنا۔ پورے پروگرام کو رکنے دینے کے بجائے، آپ کوئی خطرے والا کام koshish کر سکتے ہیں اور مسئلہ ہونے پر اسے پکڑ سکتے ہیں۔"
+          "Everyone makes mistakes, even computers hit situations they can't handle, like dividing a number by zero. Instead of letting the whole program stop, you can try something risky and catch the problem if it happens.",
+          "Har koi ghalti karta hai, computer bhi aise mauqe se takrata hai jinhe woh handle nahi kar sakta, jaise kisi number ko sifr se taqseem karna. Poore program ko rukne dene ke bajaye, aap koi khatre wala kaam koshish kar sakte hain aur masla hone par use pakad sakte hain.",
+          "ہر کوئی غلطی کرتا ہے، کمپیوٹر بھی ایسے موقع سے ٹکراتا ہے جنہیں وہ ہینڈل نہیں کر سکتا، جیسے کسی نمبر کو صفر سے تقسیم کرنا۔ پورے پروگرام کو رکنے دینے کے بجائے، آپ کوئی خطرے والا کام koshish کر سکتے ہیں اور مسئلہ ہونے پر اسے پکڑ سکتے ہیں۔"
         ),
       },
       {
         t: "code",
         code: `koshish {
     natija = 10 / 0
-    bol natija
+    likho natija
 } pakro ghalti {
-    bol "Oops: {ghalti}"
+    likho "Oops: {ghalti}"
 }`,
       },
       {
         t: "p",
         text: L(
-          'koshish (try) runs the risky steps. If anything goes wrong, the pakro (catch) block runs instead, and ghalti holds a message describing what happened — here, "sifr se taqseem nahi ho sakta" (you can\'t divide by zero).',
-          'koshish (try) khatre wale steps chalata hai. Agar kuch ghalat ho, to uski jagah pakro (catch) block chalta hai, aur ghalti ek paighaam rakhta hai jo bataata hai kya hua — yahan, "sifr se taqseem nahi ho sakta".',
-          'koshish (try) خطرے والے اسٹیپس چلاتا ہے۔ اگر کچھ غلط ہو، تو اس کی جگہ pakro (catch) بلاک چلتا ہے، اور ghalti ایک پیغام رکھتا ہے جو بتاتا ہے کیا ہوا — یہاں، "sifr se taqseem nahi ho sakta"۔'
+          'koshish (try) runs the risky steps. If anything goes wrong, the pakro (catch) block runs instead, and ghalti holds a message describing what happened, here, "sifr se taqseem nahi ho sakta" (you can\'t divide by zero).',
+          'koshish (try) khatre wale steps chalata hai. Agar kuch ghalat ho, to uski jagah pakro (catch) block chalta hai, aur ghalti ek paighaam rakhta hai jo bataata hai kya hua, yahan, "sifr se taqseem nahi ho sakta".',
+          'koshish (try) خطرے والے اسٹیپس چلاتا ہے۔ اگر کچھ غلط ہو، تو اس کی جگہ pakro (catch) بلاک چلتا ہے، اور ghalti ایک پیغام رکھتا ہے جو بتاتا ہے کیا ہوا، یہاں، "sifr se taqseem nahi ho sakta"۔'
         ),
       },
       {
@@ -600,27 +600,27 @@ bol nateeja`,
   {
     slug: "objects",
     icon: "Package",
-    title: L("Objects — grouping things together", "Objects — cheezein saath rakhna", "آبجیکٹس — چیزیں ساتھ رکھنا"),
+    title: L("Objects, grouping things together", "Objects, cheezein saath rakhna", "آبجیکٹس، چیزیں ساتھ رکھنا"),
     concept: L(
-      "An object groups related values under one name so you can describe a thing — a person, a card, a score — in one place.",
-      "Object mutaalliq values ko ek naam ke neeche jama karta hai taake aap ek cheez — insaan, card, score — ko ek jagah bayan kar sakein.",
-      "آبجیکٹ متعلق ویلیوز کو ایک نام کے نیچے جمع کرتا ہے تاکہ آپ ایک چیز — انسان، کارڈ، اسکور — کو ایک جگہ بیان کر سکیں۔"
+      "An object groups related values under one name so you can describe a thing, a person, a card, a score, in one place.",
+      "Object mutaalliq values ko ek naam ke neeche jama karta hai taake aap ek cheez, insaan, card, score, ko ek jagah bayan kar sakein.",
+      "آبجیکٹ متعلق ویلیوز کو ایک نام کے نیچے جمع کرتا ہے تاکہ آپ ایک چیز، انسان، کارڈ، اسکور، کو ایک جگہ بیان کر سکیں۔"
     ),
     blocks: [
       {
         t: "p",
         text: L(
-          "So far we have stored one thing in a box — a number, a word, a list. But sometimes one thing has many parts: a person has a name, an age, and a city. An object lets you keep all of those together under one name.",
-          "Ab tak hum ek dabbe mein ek cheez rakhte aaye hain — number, lafz, list. Lekin kabhi ek cheez ke kai hisse hote hain: ek insaan ka naam, umar, aur shahar hota hai. Object yeh sab ek naam ke neeche rakhne deta hai.",
-          "اب تک ہم ایک ڈبے میں ایک چیز رکھتے آئے ہیں — نمبر، لفظ، list۔ لیکن کبھی ایک چیز کے کئی حصے ہوتے ہیں: ایک انسان کا نام، عمر، اور شہر ہوتا ہے۔ آبجیکٹ یہ سب ایک نام کے نیچے رکھنے دیتا ہے۔"
+          "So far we have stored one thing in a box, a number, a word, a list. But sometimes one thing has many parts: a person has a name, an age, and a city. An object lets you keep all of those together under one name.",
+          "Ab tak hum ek dabbe mein ek cheez rakhte aaye hain, number, lafz, list. Lekin kabhi ek cheez ke kai hisse hote hain: ek insaan ka naam, umar, aur shahar hota hai. Object yeh sab ek naam ke neeche rakhne deta hai.",
+          "اب تک ہم ایک ڈبے میں ایک چیز رکھتے آئے ہیں، نمبر، لفظ، list۔ لیکن کبھی ایک چیز کے کئی حصے ہوتے ہیں: ایک انسان کا نام، عمر، اور شہر ہوتا ہے۔ آبجیکٹ یہ سب ایک نام کے نیچے رکھنے دیتا ہے۔"
         ),
       },
       {
         t: "code",
         code: `shaks = { naam: "Ahmad", umar: 14, shahar: "Karachi" }
 
-bol shaks.naam
-bol shaks.umar`,
+likho shaks.naam
+likho shaks.umar`,
       },
       {
         t: "p",
@@ -640,18 +640,18 @@ bol shaks.umar`,
 
 # Update an existing property
 shaks.umar = 15
-bol "Agla saal: {shaks.umar}"
+likho "Agla saal: {shaks.umar}"
 
 # Add a new property that didn't exist before
 shaks.email = "ahmad@example.com"
-bol shaks.email`,
+likho shaks.email`,
       },
       {
         t: "p",
         text: L(
-          "You can update or add any property the same way you set a regular variable — just write shaks.something = value.",
-          "Aap kisi bhi property ko waise hi update ya add kar sakte hain jaise regular variable set karte hain — bas shaks.kuch = value likho.",
-          "آپ کسی بھی property کو ویسے ہی اپ ڈیٹ یا شامل کر سکتے ہیں جیسے regular ویری ایبل سیٹ کرتے ہیں — بس shaks.kuch = value لکھو۔"
+          "You can update or add any property the same way you set a regular variable, just write shaks.something = value.",
+          "Aap kisi bhi property ko waise hi update ya add kar sakte hain jaise regular variable set karte hain, bas shaks.kuch = value likho.",
+          "آپ کسی بھی property کو ویسے ہی اپ ڈیٹ یا شامل کر سکتے ہیں جیسے regular ویری ایبل سیٹ کرتے ہیں، بس shaks.kuch = value لکھو۔"
         ),
       },
       {
@@ -671,21 +671,21 @@ bol shaks.email`,
         code: `shaks = { naam: "Ahmad", umar: 14 }
 
 # Safe: returns khali if the key doesn't exist
-bol shaks ka email
+likho shaks ka email
 
-# Safe dot — same thing, different style
-bol shaks?.email
+# Safe dot, same thing, different style
+likho shaks?.email
 
 # Only assign if currently khali
 shaks.email ?= "ahmad@example.com"
-bol shaks.email`,
+likho shaks.email`,
       },
       {
         t: "tip",
         text: L(
-          "ka is masculine, ki is feminine, kay is plural or general. They all do the same thing in code — pick the one that reads most naturally in the sentence.",
-          "ka mard ke liye, ki aurat ke liye, kay jamah ya aam ke liye. Sab code mein ek hi kaam karte hain — jo jumle mein sabse qudrati lage woh chunein.",
-          "ka مذکر کے لیے، ki مؤنث کے لیے، kay جمع یا عام کے لیے۔ سب کوڈ میں ایک ہی کام کرتے ہیں — جو جملے میں سب سے قدرتی لگے وہ چنیں۔"
+          "ka is masculine, ki is feminine, kay is plural or general. They all do the same thing in code, pick the one that reads most naturally in the sentence.",
+          "ka mard ke liye, ki aurat ke liye, kay jamah ya aam ke liye. Sab code mein ek hi kaam karte hain, jo jumle mein sabse qudrati lage woh chunein.",
+          "ka مذکر کے لیے، ki مؤنث کے لیے، kay جمع یا عام کے لیے۔ سب کوڈ میں ایک ہی کام کرتے ہیں، جو جملے میں سب سے قدرتی لگے وہ چنیں۔"
         ),
       },
       {
@@ -695,9 +695,9 @@ bol shaks.email`,
       {
         t: "p",
         text: L(
-          "One of the most useful patterns in programming is a list of objects — for example, a class roll with each student's name and score.",
-          "Programming mein sab se mufeed pattern object ki list hai — maslan, class roll jisme har student ka naam aur score ho.",
-          "پروگرامنگ میں سب سے مفید pattern آبجیکٹ کی list ہے — مثلاً، کلاس رول جس میں ہر اسٹوڈنٹ کا نام اور اسکور ہو۔"
+          "One of the most useful patterns in programming is a list of objects, for example, a class roll with each student's name and score.",
+          "Programming mein sab se mufeed pattern object ki list hai, maslan, class roll jisme har student ka naam aur score ho.",
+          "پروگرامنگ میں سب سے مفید pattern آبجیکٹ کی list ہے، مثلاً، کلاس رول جس میں ہر اسٹوڈنٹ کا نام اور اسکور ہو۔"
         ),
       },
       {
@@ -709,24 +709,24 @@ bol shaks.email`,
 ]
 
 har log mein taliba {
-    bol "{taliba.naam}: {taliba.score}"
+    likho "{taliba.naam}: {taliba.score}"
 }`,
       },
       {
         t: "h",
-        text: L("Object auzaar", "Object ke auzaar", "آبجیکٹ کے اوزار"),
+        text: L("Object toolbox", "Object ka toolbox", "آبجیکٹ کا toolbox"),
       },
       {
         t: "code",
         code: `shaks = { naam: "Ahmad", umar: 14, shahar: "Karachi" }
 
-bol mafta(shaks)            # keys
-bol qeemtain(shaks)         # values
-bol key_hai(shaks, "naam")  # sahi
-bol key_hai(shaks, "email") # ghalat
+likho mafta(shaks)            # keys
+likho qeemtain(shaks)         # values
+likho key_hai(shaks, "naam")  # sahi
+likho key_hai(shaks, "email") # ghalat
 
 naya = hata(shaks, "umar")
-bol mafta(naya)             # naam aur shahar — umar hata diya`,
+likho mafta(naya)             # naam aur shahar, umar hata diya`,
       },
       {
         t: "try",
@@ -769,7 +769,7 @@ export const learnUi: Record<
     kicker: "Learn · for kids",
     heroTitle: "Learn to code with wow",
     heroSub:
-      'A gentle path from "what even is a program?" to writing your own. Each lesson explains one idea in plain words, shows a real example, and gives you something to try. No experience needed — just curiosity.',
+      'A gentle path from "what even is a program?" to writing your own. Each lesson explains one idea in plain words, shows a real example, and gives you something to try. No experience needed, just curiosity.',
     start: "Start lesson 1 →",
     lesson: "Lesson",
     allLessons: "← All lessons",
@@ -786,7 +786,7 @@ export const learnUi: Record<
     kicker: "Seekho · bachhon ke liye",
     heroTitle: "wow ke saath coding seekho",
     heroSub:
-      '"Program aakhir hai kya?" se le kar apna program likhne tak ek aasaan raasta. Har lesson ek khayaal ko saade lafzon mein samjhaata hai, ek asli misaal dikhata hai, aur aap ko kuch karne ko deta hai. Koi tajurba nahi chahiye — bas thori si dilchaspi.',
+      '"Program aakhir hai kya?" se le kar apna program likhne tak ek aasaan raasta. Har lesson ek khayaal ko saade lafzon mein samjhaata hai, ek asli misaal dikhata hai, aur aap ko kuch karne ko deta hai. Koi tajurba nahi chahiye, bas thori si dilchaspi.',
     start: "Lesson 1 shuru karo →",
     lesson: "Lesson",
     allLessons: "← Saare lessons",
@@ -803,7 +803,7 @@ export const learnUi: Record<
     kicker: "سیکھو · بچوں کے لیے",
     heroTitle: "wow کے ساتھ کوڈنگ سیکھو",
     heroSub:
-      '"پروگرام آخر ہے کیا؟" سے لے کر اپنا پروگرام لکھنے تک ایک آسان راستہ۔ ہر سبق ایک خیال کو سادے لفظوں میں سمجھاتا ہے، ایک اصلی مثال دکھاتا ہے، اور آپ کو کچھ کرنے کو دیتا ہے۔ کوئی تجربہ نہیں چاہیے — بس تھوڑی سی دلچسپی۔',
+      '"پروگرام آخر ہے کیا؟" سے لے کر اپنا پروگرام لکھنے تک ایک آسان راستہ۔ ہر سبق ایک خیال کو سادے لفظوں میں سمجھاتا ہے، ایک اصلی مثال دکھاتا ہے، اور آپ کو کچھ کرنے کو دیتا ہے۔ کوئی تجربہ نہیں چاہیے، بس تھوڑی سی دلچسپی۔',
     start: "سبق 1 شروع کرو →",
     lesson: "سبق",
     allLessons: "← تمام اسباق",

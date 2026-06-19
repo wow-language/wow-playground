@@ -5,12 +5,12 @@ import { Footer } from "@/components/Footer";
 import { LanguageProvider } from "@/components/LanguageProvider";
 
 export const metadata: Metadata = {
-  title: "wow — Code likho. Wow bolo.",
+  title: "wow: Code likho. Wow bolo.",
   description:
     "wow is a programming language with Roman Urdu keywords, built to get kids in Pakistan into coding. Write one .wow file, run it on desktop, Arduino, or the web.",
   metadataBase: new URL("https://wow-lang.dev"),
   openGraph: {
-    title: "wow — Code likho. Wow bolo.",
+    title: "wow: Code likho. Wow bolo.",
     description:
       "A Roman Urdu programming language for kids. Learn, read the docs, and try it right in your browser.",
     type: "website",
