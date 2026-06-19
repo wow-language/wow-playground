@@ -3,7 +3,7 @@
   ------------------------------------------------------------------
   The whole site defaults to English. A kid can switch the chrome to
   Roman Urdu or Urdu (اردو, right-to-left) from the toggle in the nav.
-  The wow keywords and the code itself never change — only the
+  The wow keywords and the code itself never change, only the
   surrounding labels and helper text. (The docs reference and Learn
   lessons are authored in English for now.)
 */
@@ -72,19 +72,19 @@ export const t: Record<Lang, Dict> = {
       t2word: "wow",
       t2post: ".",
       leadRest:
-        " is a programming language with Roman Urdu keywords — built to get kids in Pakistan into coding. Write three lines and watch an LED blink or a webpage open.",
+        " is a programming language with Roman Urdu keywords, built to get kids in Pakistan into coding. Write three lines and watch an LED blink or a webpage open.",
       btnPlayground: "Open the playground →",
       btnDocs: "Read the docs",
       targetsLabel: "One language · three targets",
       featuresHeading: "Made for kids, the way kids think",
       features: [
-        { title: "In your own words", body: "Keywords in Roman Urdu — bol, agar, har, banao. Write code the way you speak." },
-        { title: "One file, three places", body: "The same code runs on desktop, an Arduino board, and the web — without rewriting your logic." },
+        { title: "In your own words", body: "Keywords in Roman Urdu: likho, agar, har, banao. Write code the way you speak." },
+        { title: "One file, three places", body: "The same code runs on desktop, an Arduino board, and the web, without rewriting your logic." },
         { title: "Errors you understand", body: "Mistakes are explained in plain Roman Urdu, right at the spot, so kids can fix them themselves." },
-        { title: "Batteries included", body: "Counting, sorting, choosing, summing — everyday tasks are one short word away, no library needed." },
+        { title: "Batteries included", body: "Counting, sorting, choosing, summing, everyday tasks are one short word away, no library needed." },
       ],
       ctaHeading: "Ready? Write your first program.",
-      ctaSub: "Nothing to install — write and run right in your browser.",
+      ctaSub: "Nothing to install, write and run right in your browser.",
       ctaBtn: "Let's get started →",
     },
     pg: {
@@ -95,16 +95,16 @@ export const t: Record<Lang, Dict> = {
       fileName: "my_code.wow",
       outputTab: "Output",
       targetsTab: "C / Arduino / Web",
-      runHint: "Hit {run} or press {Ctrl} + {Enter} — your output appears here.",
+      runHint: "Hit {run} or press {Ctrl} + {Enter}, your output appears here.",
       noOutput: "(no output)",
       errorLabel: "Error",
       targetsIntro:
         "This playground runs on a preview interpreter that executes wow's core language right in your browser.",
       targetsBody:
-        "The full compiler — which turns the same .wow file into C, Arduino, and Node.js — is written in Rust and is on its way here via WebAssembly. This tab will then show the generated code for each target.",
+        "The full compiler, which turns the same .wow file into C, Arduino, and Node.js, is written in Rust and is on its way here via WebAssembly. This tab will then show the generated code for each target.",
       soon: "soon",
       footerNote:
-        "The preview interpreter runs the core language (bol, agar/warna, loops, banao/bhejo, auzaar, phir). The full compiler — with all three targets — is coming via WASM.",
+        "The preview interpreter runs the core language (likho, agar/warna, loops, banao/bhejo, tools, phir). The full compiler, with all three targets, is coming via WASM.",
     },
   },
 
@@ -122,19 +122,19 @@ export const t: Record<Lang, Dict> = {
       t2word: "Wow",
       t2post: " bolo.",
       leadRest:
-        " ek programming language hai Roman Urdu lafzon ke saath — Pakistan ke bachhon ko coding sikhane ke liye. Teen lines likho, aur LED jhilmilaye ya webpage khule.",
+        " ek programming language hai Roman Urdu lafzon ke saath, Pakistan ke bachhon ko coding sikhane ke liye. Teen lines likho, aur LED jhilmilaye ya webpage khule.",
       btnPlayground: "Playground kholo →",
       btnDocs: "Docs parho",
       targetsLabel: "Ek zubaan · teen targets",
       featuresHeading: "Bachhon ke liye, bachhon ki tarah",
       features: [
-        { title: "Roman Urdu mein", body: "Keywords aap ki zubaan mein — bol, agar, har, banao. Jaise aap baat karte hain, waise hi code likhein." },
+        { title: "Roman Urdu mein", body: "Keywords aap ki zubaan mein: likho, agar, har, banao. Jaise aap baat karte hain, waise hi code likhein." },
         { title: "Ek file, teen jagah", body: "Wahi code desktop par, Arduino board par, aur web par chalta hai. Logic dobara likhne ki zaroorat nahi." },
-        { title: "Ghalti samajh aati hai", body: "Error messages Roman Urdu mein, seedha point par — taake bachhe khud apni ghalti theek kar sakein." },
-        { title: "Auzaar saath mein", body: "Ginti, tarteeb, chuno, jama — rozmarra ke kaam ek chhote lafz mein, bina kisi library ke." },
+        { title: "Ghalti samajh aati hai", body: "Error messages Roman Urdu mein, seedha point par, taake bachhe khud apni ghalti theek kar sakein." },
+        { title: "Tools saath mein", body: "Ginti, tarteeb, chuno, jama, rozmarra ke kaam ek chhote lafz mein, bina kisi library ke." },
       ],
       ctaHeading: "Tayyar ho? Pehla program likho.",
-      ctaSub: "Kuch install karne ki zaroorat nahi — seedha browser mein likho aur chalao.",
+      ctaSub: "Kuch install karne ki zaroorat nahi, seedha browser mein likho aur chalao.",
       ctaBtn: "Chalo shuru karein →",
     },
     pg: {
@@ -145,16 +145,16 @@ export const t: Record<Lang, Dict> = {
       fileName: "mera_code.wow",
       outputTab: "Output",
       targetsTab: "C / Arduino / Web",
-      runHint: "{run} dabao ya {Ctrl} + {Enter} — output yahan dikhega.",
+      runHint: "{run} dabao ya {Ctrl} + {Enter}, output yahan dikhega.",
       noOutput: "(koi output nahi)",
       errorLabel: "Ghalti",
       targetsIntro:
         "Yeh playground ek preview interpreter par chalta hai jo wow ki core language seedha browser mein chalata hai.",
       targetsBody:
-        "Mukammal compiler — jo wahi .wow file ko C, Arduino, aur Node.js mein badalta hai — Rust se banaya gaya hai aur WebAssembly ke zariye yahan aa raha hai. Tab yeh tab har target ka generated code dikhayega.",
+        "Mukammal compiler, jo wahi .wow file ko C, Arduino, aur Node.js mein badalta hai, Rust se banaya gaya hai aur WebAssembly ke zariye yahan aa raha hai. Tab yeh tab har target ka generated code dikhayega.",
       soon: "jald",
       footerNote:
-        "Preview interpreter core language chalata hai (bol, agar/warna, loops, banao/bhejo, auzaar, phir). Poora compiler — teeno targets ke saath — WASM ke zariye jald aa raha hai.",
+        "Preview interpreter core language chalata hai (likho, agar/warna, loops, banao/bhejo, tools, phir). Poora compiler, teeno targets ke saath, WASM ke zariye jald aa raha hai.",
     },
   },
 
@@ -172,19 +172,19 @@ export const t: Record<Lang, Dict> = {
       t2word: "wow",
       t2post: " بولو۔",
       leadRest:
-        " ایک پروگرامنگ زبان ہے رومن اردو الفاظ کے ساتھ — پاکستان کے بچوں کو کوڈنگ سکھانے کے لیے۔ تین لائنیں لکھو، اور LED جھلملائے یا ویب پیج کھلے۔",
+        " ایک پروگرامنگ زبان ہے رومن اردو الفاظ کے ساتھ، پاکستان کے بچوں کو کوڈنگ سکھانے کے لیے۔ تین لائنیں لکھو، اور LED جھلملائے یا ویب پیج کھلے۔",
       btnPlayground: "پلے گراؤنڈ کھولو →",
       btnDocs: "ڈاکس پڑھو",
       targetsLabel: "ایک زبان · تین ٹارگٹس",
       featuresHeading: "بچوں کے لیے، بچوں کی طرح",
       features: [
-        { title: "اپنی زبان میں", body: "کی ورڈز رومن اردو میں — bol، agar، har، banao۔ جیسے آپ بات کرتے ہیں ویسے ہی کوڈ لکھیں۔" },
-        { title: "ایک فائل، تین جگہ", body: "وہی کوڈ ڈیسک ٹاپ، Arduino بورڈ، اور ویب پر چلتا ہے — لاجک دوبارہ لکھنے کی ضرورت نہیں۔" },
-        { title: "غلطی جو سمجھ آئے", body: "غلطیاں آسان رومن اردو میں، عین اسی جگہ — تاکہ بچے خود اپنی غلطی ٹھیک کر سکیں۔" },
-        { title: "اوزار ساتھ", body: "گنتی، ترتیب، چناؤ، جوڑ — روزمرہ کے کام ایک چھوٹے لفظ میں، بغیر کسی لائبریری کے۔" },
+        { title: "اپنی زبان میں", body: "کی ورڈز رومن اردو میں: likho، agar، har، banao۔ جیسے آپ بات کرتے ہیں ویسے ہی کوڈ لکھیں۔" },
+        { title: "ایک فائل، تین جگہ", body: "وہی کوڈ ڈیسک ٹاپ، Arduino بورڈ، اور ویب پر چلتا ہے، لاجک دوبارہ لکھنے کی ضرورت نہیں۔" },
+        { title: "غلطی جو سمجھ آئے", body: "غلطیاں آسان رومن اردو میں، عین اسی جگہ، تاکہ بچے خود اپنی غلطی ٹھیک کر سکیں۔" },
+        { title: "Tools ساتھ", body: "گنتی، ترتیب، چناؤ، جوڑ، روزمرہ کے کام ایک چھوٹے لفظ میں، بغیر کسی لائبریری کے۔" },
       ],
       ctaHeading: "تیار ہو؟ پہلا پروگرام لکھو۔",
-      ctaSub: "کچھ انسٹال کرنے کی ضرورت نہیں — براہِ راست براؤزر میں لکھو اور چلاؤ۔",
+      ctaSub: "کچھ انسٹال کرنے کی ضرورت نہیں، براہِ راست براؤزر میں لکھو اور چلاؤ۔",
       ctaBtn: "چلو شروع کریں →",
     },
     pg: {
@@ -195,16 +195,16 @@ export const t: Record<Lang, Dict> = {
       fileName: "mera_code.wow",
       outputTab: "آؤٹ پٹ",
       targetsTab: "C / Arduino / Web",
-      runHint: "{run} دباؤ یا {Ctrl} + {Enter} دبائیں — آؤٹ پٹ یہاں نظر آئے گا۔",
+      runHint: "{run} دباؤ یا {Ctrl} + {Enter} دبائیں، آؤٹ پٹ یہاں نظر آئے گا۔",
       noOutput: "(کوئی آؤٹ پٹ نہیں)",
       errorLabel: "غلطی",
       targetsIntro:
         "یہ پلے گراؤنڈ ایک پری ویو انٹرپریٹر پر چلتا ہے جو wow کی بنیادی زبان کو براہِ راست براؤزر میں چلاتا ہے۔",
       targetsBody:
-        "مکمل کمپائلر — جو وہی .wow فائل کو C، Arduino، اور Node.js میں بدلتا ہے — Rust میں بنایا گیا ہے اور WebAssembly کے ذریعے یہاں آ رہا ہے۔ تب یہ ٹیب ہر ٹارگٹ کا تیار شدہ کوڈ دکھائے گا۔",
+        "مکمل کمپائلر، جو وہی .wow فائل کو C، Arduino، اور Node.js میں بدلتا ہے، Rust میں بنایا گیا ہے اور WebAssembly کے ذریعے یہاں آ رہا ہے۔ تب یہ ٹیب ہر ٹارگٹ کا تیار شدہ کوڈ دکھائے گا۔",
       soon: "جلد",
       footerNote:
-        "پری ویو انٹرپریٹر بنیادی زبان چلاتا ہے (bol، agar/warna، loops، banao/bhejo، auzaar، phir)۔ مکمل کمپائلر — تینوں ٹارگٹس کے ساتھ — WASM کے ذریعے جلد آ رہا ہے۔",
+        "پری ویو انٹرپریٹر بنیادی زبان چلاتا ہے (likho، agar/warna، loops، banao/bhejo، tools، phir)۔ مکمل کمپائلر، تینوں ٹارگٹس کے ساتھ، WASM کے ذریعے جلد آ رہا ہے۔",
     },
   },
 };
@@ -226,10 +226,10 @@ export const exampleMeta: Record<string, Record<Lang, { title: string; blurb: st
     roman: { title: "Agar warna", blurb: "Shart ke saath faisla karo." },
     ur: { title: "اگر ورنہ", blurb: "شرط کے ساتھ فیصلہ کرو۔" },
   },
-  auzaar: {
-    en: { title: "The auzaar toolbox", blurb: "Pick the big numbers, then sort them." },
-    roman: { title: "Auzaar toolbox", blurb: "Bare numbers chuno, phir tarteeb do." },
-    ur: { title: "اوزار", blurb: "بڑے نمبر چنو، پھر ترتیب دو۔" },
+  tools: {
+    en: { title: "Tools", blurb: "Pick the big numbers, then sort them." },
+    roman: { title: "Tools", blurb: "Bare numbers chuno, phir tarteeb do." },
+    ur: { title: "Tools", blurb: "بڑے نمبر چنو، پھر ترتیب دو۔" },
   },
   banao: {
     en: { title: "Make a function", blurb: "Write a function and call it." },

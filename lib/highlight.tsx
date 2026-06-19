@@ -1,7 +1,7 @@
 import { Fragment, type ReactNode } from "react";
 
 const KEYWORDS = new Set([
-  "bol", "rakho", "agar", "warna", "har", "se", "tak", "baar", "jabtak",
+  "likho", "rakho", "agar", "warna", "har", "se", "tak", "baar", "jabtak",
   "roko", "aage", "banao", "bhejo", "sahi", "ghalat", "khali", "aur", "ya",
   "nahi", "lao", "koshish", "pakro", "pucho", "mein", "phir", "shuru",
   "chalao", "pin_set", "pin_likho", "pin_parho", "intezar", "server",
@@ -13,7 +13,7 @@ const KEYWORDS = new Set([
 
 /**
  * A deliberately small, forgiving highlighter for wow source. It is not the
- * real lexer — just enough to give code on the page some friendly colour.
+ * real lexer, just enough to give code on the page some friendly colour.
  * Order matters: comments and strings are pulled out before we look at words.
  */
 export function highlight(code: string): ReactNode {

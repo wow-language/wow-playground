@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 /**
- * The wow wordmark. The glyph is the Urdu letter و (wow / waw) — the
+ * The wow wordmark. The glyph is the Urdu letter و (wow / waw), the
  * letter the language is named after, set in a Nastaliq face so it
  * keeps its calligraphic personality.
  */

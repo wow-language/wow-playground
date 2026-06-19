@@ -11,14 +11,14 @@ import {
   stringRows,
   mathRows,
   objectRows,
-  objectAuzaarRows,
+  objectToolsRows,
   esp32Rows,
 } from "@/lib/docs";
 
 export const metadata: Metadata = {
-  title: "Docs — wow",
+  title: "Docs · wow",
   description:
-    "The wow language reference: keywords, operators, the auzaar toolbox, the three targets, and error messages.",
+    "The wow language reference: keywords, operators, the built-in tools, the three targets, and error messages.",
 };
 
 export default function DocsPage() {
@@ -32,7 +32,7 @@ export default function DocsPage() {
           Overview
         </h1>
         <p className="mt-3 max-w-2xl text-lg text-muted">
-          The whole language at a glance — every keyword, operator, and built-in
+          The whole language at a glance: every keyword, operator, and built-in
           tool. New to coding? Start with the{" "}
           <Link href="/docs/learn" className="font-semibold text-wow-700 underline decoration-wow-200 underline-offset-2">
             Learn track
@@ -44,7 +44,7 @@ export default function DocsPage() {
       <Section id="getting-started" title="Getting started">
         <p className="text-muted">
           Every line is one instruction, and the most useful one is{" "}
-          <Code>bol</Code> — it prints to the screen. You can drop any value into
+          <Code>likho</Code>: it prints to the screen. You can drop any value into
           text with curly braces <Code>{"{ }"}</Code>.
         </p>
         <CodeBlock
@@ -52,8 +52,8 @@ export default function DocsPage() {
           code={`naam = "Ahmad"
 umar = 12
 
-bol "Salam {naam}!"
-bol "You are {umar} years old."`}
+likho "Salam {naam}!"
+likho "You are {umar} years old."`}
         />
       </Section>
 
@@ -66,7 +66,7 @@ bol "You are {umar} years old."`}
 
       <Section id="operators" title="Operators">
         <p className="text-muted">
-          Words for logic, symbols for maths — whichever reads more clearly.
+          Words for logic, symbols for maths, whichever reads more clearly.
         </p>
         <RefTable rows={operatorRows} head={["wow", "Meaning"]} />
       </Section>
@@ -77,16 +77,16 @@ bol "You are {umar} years old."`}
         </p>
         <CodeBlock
           code={`1 se 5 tak har i {
-    bol "Count: {i}"
+    likho "Count: {i}"
 }
 
 fruits = ["aam", "kela", "seb"]
 har fruits mein f {
-    bol "Fruit: {f}"
+    likho "Fruit: {f}"
 }
 
 3 baar {
-    bol "wow!"
+    likho "wow!"
 }`}
         />
       </Section>
@@ -101,8 +101,8 @@ har fruits mein f {
     bhejo a + b
 }
 
-bol jama(3, 4)
-bol jama(10)`}
+likho jama(3, 4)
+likho jama(10)`}
         />
       </Section>
 
@@ -119,13 +119,13 @@ result = numbers
     phir tarteeb
     phir pehla
 
-bol result`}
+likho result`}
         />
       </Section>
 
-      <Section id="auzaar" title="auzaar — built-in toolbox">
+      <Section id="tools" title="Built-in tools">
         <p className="text-muted">
-          <Code>auzaar</Code> loads automatically — no <Code>lao</Code> needed.
+          The tools load automatically, no <Code>lao</Code> needed.
           Everyday operations are one short word away.
         </p>
         <h3 className="pt-2 text-lg font-bold text-ink">Collections</h3>
@@ -136,7 +136,7 @@ bol result`}
         <RefTable rows={mathRows} head={["wow", "What it does"]} />
       </Section>
 
-      <Section id="objects" title="Objects — structured data">
+      <Section id="objects" title="Objects: structured data">
         <p className="text-muted">
           Objects group related values under named keys. Use dot access or
           the Urdu possessives <Code>ka</Code> / <Code>ki</Code> / <Code>kay</Code>{" "}
@@ -148,23 +148,23 @@ bol result`}
           caption="shaks.wow"
           code={`shaks = { naam: "Ahmad", umar: 14, shahar: "Karachi" }
 
-bol "Salam {shaks.naam}!"
-bol "Umar: {shaks ka umar}"
+likho "Salam {shaks.naam}!"
+likho "Umar: {shaks ka umar}"
 
 shaks.umar = 15
-bol "Agla saal: {shaks.umar}"
+likho "Agla saal: {shaks.umar}"
 
-# Safe access — returns khali if key doesn't exist
-bol shaks ka email
+# Safe access, returns khali if key doesn't exist
+likho shaks ka email
 
 # Only assigns if currently khali
 shaks.email ?= "ahmad@example.com"
-bol shaks.email
+likho shaks.email
 
 # Nested objects
 shaks.adres = { shahar: "Karachi", gali: "Model Town" }
-bol shaks.adres.shahar
-bol shaks ka adres ka gali
+likho shaks.adres.shahar
+likho shaks ka adres ka gali
 
 # List of objects
 log = [
@@ -172,21 +172,21 @@ log = [
     { naam: "Sara",  umar: 12 },
 ]
 har log mein p {
-    bol "{p.naam}: {p ka umar} saal"
+    likho "{p.naam}: {p ka umar} saal"
 }`}
         />
         <h3 className="pt-2 text-lg font-bold text-ink">Syntax quick-reference</h3>
         <RefTable rows={objectRows} head={["wow", "What it does"]} />
-        <h3 className="pt-2 text-lg font-bold text-ink">Object auzaar</h3>
+        <h3 className="pt-2 text-lg font-bold text-ink">Object tools</h3>
         <p className="text-muted text-sm">
           These four functions work on C and Node targets. On Arduino, objects are not supported.
         </p>
-        <RefTable rows={objectAuzaarRows} head={["wow", "What it does"]} />
+        <RefTable rows={objectToolsRows} head={["wow", "What it does"]} />
       </Section>
 
       <Section id="targets" title="Three targets">
         <p className="text-muted">
-          The same <Code>.wow</Code> file can run in three places — just change
+          The same <Code>.wow</Code> file can run in three places, just change
           the target.
         </p>
         <div className="overflow-hidden rounded-xl border border-wow-200">
@@ -222,13 +222,13 @@ har log mein p {
         <p className="text-muted">
           The Arduino target supports both classic Arduino boards and ESP32
           modules. On an ESP32 you get six extra built-ins for WiFi and a
-          built-in web server — no libraries to import, wow handles it
+          built-in web server, no libraries to import, wow handles it
           automatically.
         </p>
         <RefTable rows={esp32Rows} head={["wow", "What it does"]} />
         <p className="text-muted text-sm">
           When your sketch uses any WiFi built-in, wow automatically emits{" "}
-          <Code>#define AUZAAR_ESP32</Code> at the top of the generated{" "}
+          <Code>#define WOW_ESP32</Code> at the top of the generated{" "}
           <Code>.ino</Code> file so the runtime header picks up the right WiFi
           and WebServer code regardless of toolchain settings.
         </p>
@@ -243,8 +243,8 @@ banao ghar() {
 
 banao shuru() {
     wifi_jodo(SSID, PASSWORD)
-    bol("Jud gaya! IP:")
-    bol(wifi_ip())
+    likho("Jud gaya! IP:")
+    likho(wifi_ip())
     server_rasta("/", ghar)
     server_shuru(80)
 }

@@ -9,7 +9,7 @@ import { useLang } from "@/components/LanguageProvider";
 import { t, dir } from "@/lib/i18n";
 
 const heroCode = `banao salam(naam = "dost") {
-    bol "Salam {naam}! Kaise ho?"
+    likho "Salam {naam}! Kaise ho?"
 }
 
 numbers = [1, 5, 3, 8, 2, 9]
@@ -17,7 +17,7 @@ numbers = [1, 5, 3, 8, 2, 9]
 bade = numbers phir chuno(x > 4) phir tarteeb
 
 har bade mein n {
-    bol "mila: {n}"
+    likho "mila: {n}"
 }
 
 salam("Ahmad")`;

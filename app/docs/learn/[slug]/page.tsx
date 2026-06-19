@@ -14,8 +14,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const ch = chapterBySlug(slug);
-  if (!ch) return { title: "Learn — wow" };
-  return { title: `${ch.title.en} — Learn wow`, description: ch.concept.en };
+  if (!ch) return { title: "Learn · wow" };
+  return { title: `${ch.title.en} · Learn wow`, description: ch.concept.en };
 }
 
 export default async function ChapterPage({

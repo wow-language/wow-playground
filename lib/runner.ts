@@ -3,11 +3,11 @@
   ------------------------------------------------------------------
   This is a PREVIEW runner so the playground gives kids the instant
   "type code, see output" loop today. It covers the core language:
-  bol, variables, math, agar/warna, the loops, banao/bhejo, a useful set
-  of auzaar tools, string interpolation, phir pipelines, and — since
-  Phase 7 — objects with dot / possessive (ka / ki / kay) access.
+  likho, variables, math, agar/warna, the loops, banao/bhejo, a useful set
+  of tools, string interpolation, phir pipelines, and (since
+  Phase 7) objects with dot / possessive (ka / ki / kay) access.
 
-  It is NOT the real compiler. The production path — per the plan — is
+  It is NOT the real compiler. The production path (per the plan) is
   the Rust toolchain compiled to WebAssembly, which compiles a .wow
   file to C / Arduino / Node. When that lands it replaces this file.
 
@@ -39,7 +39,7 @@ export function runWow(source: string): RunResult {
   };
   const emit = (line: string) => {
     if (out.length >= MAX_OUTPUT_LINES)
-      throw new WowError("Bohat zyada output — kuch kam karo.");
+      throw new WowError("Bohat zyada output, kuch kam karo.");
     out.push(line);
   };
 
@@ -92,7 +92,7 @@ function stripComment(line: string): string {
 type Param = { name: string; def: string | null };
 
 type Stmt =
-  | { kind: "bol"; expr: string }
+  | { kind: "likho"; expr: string }
   | { kind: "assign"; targets: string[]; expr: string }
   | { kind: "propAssign"; objExpr: string; prop: string; expr: string }
   | { kind: "propNullAssign"; objExpr: string; prop: string; expr: string }
@@ -126,7 +126,7 @@ function parseUntilClose(
       i++;
       continue;
     }
-    // A line ending with { is a block head — UNLESS it looks like an object literal
+    // A line ending with { is a block head, UNLESS it looks like an object literal
     // assignment (e.g. `x = { ... }` where the whole line ends with `}`).
     // Real block heads only end with `{` and have no matching `}` on the same line.
     if (text.endsWith("{") && !isSingleLineObject(text)) {
@@ -181,7 +181,7 @@ function parseHead(
     return { stmt: { kind: "if", branches }, next: idx + 1 };
   }
 
-  // `1 se 5 tak har i { }` — range first, variable last
+  // `1 se 5 tak har i { }`: range first, variable last
   const rangeLoop = head.match(/^(.+?)\s+se\s+(.+?)\s+tak\s+har\s+(\w+)$/);
   if (rangeLoop)
     return {
@@ -191,7 +191,7 @@ function parseHead(
 
   if (head.startsWith("har ")) {
     const rest = head.slice(4).trim();
-    // `har phal mein p { }` — collection first, variable last
+    // `har phal mein p { }`: collection first, variable last
     const each = rest.match(/^(.+?)\s+mein\s+(\w+)$/);
     if (each)
       return {
@@ -244,8 +244,8 @@ function findNullCoalesce(text: string): number {
 function parseSimple(text: string): Stmt {
   if (text === "roko") return { kind: "roko" };
   if (text === "aage") return { kind: "aage" };
-  if (text.startsWith("bol ")) return { kind: "bol", expr: text.slice(4).trim() };
-  if (text === "bol") return { kind: "bol", expr: '""' };
+  if (text.startsWith("likho ")) return { kind: "likho", expr: text.slice(6).trim() };
+  if (text === "likho") return { kind: "likho", expr: '""' };
   if (text.startsWith("bhejo ")) return { kind: "bhejo", expr: text.slice(6).trim() };
 
   // ?= null-coalescing assign (must be checked before = to avoid false match)
@@ -320,7 +320,7 @@ function execBlock(stmts: Stmt[], scope: Scope, ctx: Ctx) {
 function execStmt(s: Stmt, scope: Scope, ctx: Ctx) {
   ctx.tick();
   switch (s.kind) {
-    case "bol":
+    case "likho":
       ctx.emit(wowStr(evalExpr(s.expr, scope, ctx)));
       return;
     case "assign": {
@@ -616,7 +616,7 @@ class Parser {
         left = truthy(left) ? left : r;
         continue;
       }
-      // Urdu possessive safe-access: `shaks ka naam` — right side is the key name
+      // Urdu possessive safe-access: `shaks ka naam`: right side is the key name
       if (op === "ka" || op === "ki" || op === "kay") {
         const keyTok = this.peek();
         if (!keyTok || keyTok.t !== "id")
@@ -644,7 +644,7 @@ class Parser {
       if (!fnTok || fnTok.t !== "id") throw new WowError("'phir' ke baad function chahiye.");
       let args: ArgSpec[] = [];
       if (this.peek()?.v === "(") args = this.readArgs();
-      left = callAuzaar(fnTok.v, [{ kind: "value", value: left }, ...args], this.scope, this.ctx);
+      left = callTools(fnTok.v, [{ kind: "value", value: left }, ...args], this.scope, this.ctx);
     }
     return left;
   }
@@ -745,7 +745,7 @@ class Parser {
   }
 
   // read raw argument specs: each is either an evaluated value or a
-  // predicate expression (token slice) for higher-order auzaar tools.
+  // predicate expression (token slice) for higher-order tools.
   readArgs(): ArgSpec[] {
     this.next(); // (
     const args: ArgSpec[] = [];
@@ -783,7 +783,7 @@ class Parser {
       const vals = args.map((a) => resolveArg(a));
       return callKaam(userFn, vals, this.scope, this.ctx);
     }
-    return callAuzaar(name, args, this.scope, this.ctx);
+    return callTools(name, args, this.scope, this.ctx);
   }
 }
 
@@ -860,9 +860,9 @@ function interpolate(raw: string, scope: Scope, ctx: Ctx): string {
   return out;
 }
 
-/* ---- auzaar toolbox (the realistic in-browser subset) ---- */
+/* ---- tools (the realistic in-browser subset) ---- */
 
-function callAuzaar(name: string, args: ArgSpec[], scope: Scope, ctx: Ctx): unknown {
+function callTools(name: string, args: ArgSpec[], scope: Scope, ctx: Ctx): unknown {
   const v = (i: number) => resolveArg(args[i]);
   const list = (i: number): unknown[] => {
     const x = resolveArg(args[i]);

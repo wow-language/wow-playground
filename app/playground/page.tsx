@@ -116,7 +116,7 @@ export default function Playground() {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        {/* editor — always left-to-right */}
+        {/* editor, always left-to-right */}
         <div className="code-card flex flex-col overflow-hidden shadow-xl shadow-wow-900/10 ring-1 ring-white/5">
           <div className="flex items-center justify-between border-b border-white/5 px-4 py-2.5">
             <span className="font-[family-name:var(--font-mono)] text-xs text-white/50">
@@ -137,7 +137,7 @@ export default function Playground() {
             spellCheck={false}
             dir="ltr"
             className="h-[26rem] w-full resize-none bg-transparent p-5 font-[family-name:var(--font-mono)] text-sm leading-relaxed text-[#e7f5ee] outline-none placeholder:text-white/30"
-            placeholder={'bol "Salam Duniya!"'}
+            placeholder={'likho "Salam Duniya!"'}
           />
         </div>
 
