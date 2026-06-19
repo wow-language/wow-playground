@@ -2,11 +2,21 @@
 
 import { Fragment, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { Monitor, Globe } from "lucide-react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import { runWow } from "@/lib/runner";
 import { examples, defaultExample } from "@/lib/examples";
 import { t, exampleMeta, dir } from "@/lib/i18n";
 import { useLang } from "@/components/LanguageProvider";
 import { WowIcon, ArduinoIcon } from "@/components/BrandIcon";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(useGSAP);
+}
+
+const reduced = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 type Tab = "output" | "targets";
 
@@ -36,7 +46,11 @@ export default function Playground() {
   const [ran, setRan] = useState(false);
   const [activeId, setActiveId] = useState(defaultExample.id);
   const [tab, setTab] = useState<Tab>("output");
+  const [runSeq, setRunSeq] = useState(0);
   const taRef = useRef<HTMLTextAreaElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const runBtnRef = useRef<HTMLButtonElement>(null);
+  const outRef = useRef<HTMLDivElement>(null);
 
   const L = t[lang].pg;
   const d = dir(lang);
@@ -47,7 +61,60 @@ export default function Playground() {
     setError(res.error);
     setRan(true);
     setTab("output");
+    setRunSeq((n) => n + 1);
+    if (runBtnRef.current && !reduced()) {
+      gsap.fromTo(
+        runBtnRef.current,
+        { scale: 0.88 },
+        { scale: 1, duration: 0.45, ease: "elastic.out(1, 0.5)" }
+      );
+    }
   }, [code]);
+
+  // Entrance: header, example chips, and the two panels glide in on mount.
+  useGSAP(
+    () => {
+      if (reduced()) return;
+      const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+      tl.from(".pg-head", { opacity: 0, y: 18, duration: 0.5 })
+        .from(
+          ".pg-chip",
+          { opacity: 0, y: 12, stagger: 0.05, duration: 0.4 },
+          "-=0.25"
+        )
+        .from(
+          ".pg-panel",
+          { opacity: 0, y: 24, scale: 0.985, stagger: 0.12, duration: 0.5 },
+          "-=0.2"
+        );
+    },
+    { scope: rootRef }
+  );
+
+  // On each run, stagger the output lines in — and shake on error.
+  useGSAP(
+    () => {
+      if (!ran || reduced()) return;
+      if (error) {
+        gsap.fromTo(
+          outRef.current,
+          { x: -8 },
+          { x: 0, duration: 0.5, ease: "elastic.out(1, 0.4)" }
+        );
+      }
+      const lines = gsap.utils.toArray<HTMLElement>(".out-line");
+      if (lines.length) {
+        gsap.from(lines, {
+          opacity: 0,
+          y: 8,
+          duration: 0.32,
+          stagger: 0.04,
+          ease: "power2.out",
+        });
+      }
+    },
+    { dependencies: [runSeq], scope: rootRef }
+  );
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -86,8 +153,8 @@ export default function Playground() {
   const runWord = <strong className="font-bold text-wow-700">{L.subtitleRunWord}</strong>;
 
   return (
-    <div className="mx-auto max-w-6xl px-5 py-8">
-      <header className="mb-6" dir={d}>
+    <div className="mx-auto max-w-6xl px-5 py-8" ref={rootRef}>
+      <header className="pg-head mb-6" dir={d}>
         <h1 className="text-3xl font-extrabold tracking-tight text-ink">
           {L.title}
         </h1>
@@ -102,7 +169,7 @@ export default function Playground() {
             <button
               key={ex.id}
               onClick={() => loadExample(ex.id)}
-              className={`rounded-full px-3.5 py-1.5 text-sm font-semibold transition-colors ${
+              className={`pg-chip rounded-full px-3.5 py-1.5 text-sm font-semibold transition-colors ${
                 activeId === ex.id
                   ? "bg-wow-600 text-white shadow-sm shadow-wow-600/30"
                   : "border border-wow-200 bg-paper text-wow-700 hover:bg-wow-50"
@@ -117,12 +184,13 @@ export default function Playground() {
 
       <div className="grid gap-4 lg:grid-cols-2">
         {/* editor, always left-to-right */}
-        <div className="code-card flex flex-col overflow-hidden shadow-xl shadow-wow-900/10 ring-1 ring-white/5">
+        <div className="pg-panel code-card flex flex-col overflow-hidden shadow-xl shadow-wow-900/10 ring-1 ring-white/5">
           <div className="flex items-center justify-between border-b border-white/5 px-4 py-2.5">
             <span className="font-[family-name:var(--font-mono)] text-xs text-white/50">
               {L.fileName}
             </span>
             <button
+              ref={runBtnRef}
               onClick={run}
               className="rounded-full bg-wow-500 px-4 py-1.5 text-sm font-bold text-white transition-colors hover:bg-wow-400"
             >
@@ -142,7 +210,7 @@ export default function Playground() {
         </div>
 
         {/* output */}
-        <div className="flex flex-col overflow-hidden rounded-3xl border border-wow-100 bg-paper shadow-xl shadow-wow-900/5">
+        <div className="pg-panel flex flex-col overflow-hidden rounded-3xl border border-wow-100 bg-paper shadow-xl shadow-wow-900/5">
           <div className="flex gap-1 border-b border-wow-100 px-3 py-2" dir={d}>
             <TabButton active={tab === "output"} onClick={() => setTab("output")}>
               {L.outputTab}
@@ -153,7 +221,7 @@ export default function Playground() {
           </div>
 
           {tab === "output" ? (
-            <div className="flex-1 overflow-auto p-5">
+            <div className="flex-1 overflow-auto p-5" ref={outRef}>
               {!ran ? (
                 <p className="text-sm text-muted" dir={d}>
                   {fill(L.runHint, {
@@ -164,12 +232,20 @@ export default function Playground() {
                 </p>
               ) : (
                 <>
-                  <pre className="whitespace-pre-wrap font-[family-name:var(--font-mono)] text-sm leading-relaxed text-ink">
-                    {output || (error ? "" : L.noOutput)}
-                  </pre>
+                  <div className="font-[family-name:var(--font-mono)] text-sm leading-relaxed text-ink">
+                    {output ? (
+                      output.split("\n").map((line, i) => (
+                        <div key={i} className="out-line whitespace-pre-wrap">
+                          {line === "" ? " " : line}
+                        </div>
+                      ))
+                    ) : (
+                      <span className="out-line">{error ? "" : L.noOutput}</span>
+                    )}
+                  </div>
                   {error && (
                     <div
-                      className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 font-[family-name:var(--font-mono)] text-sm text-red-700"
+                      className="out-line mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 font-[family-name:var(--font-mono)] text-sm text-red-700"
                       dir={d}
                     >
                       {L.errorLabel}: {error}

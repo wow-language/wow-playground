@@ -1,19 +1,61 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
 import { Lightbulb, Rocket } from "lucide-react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CodeBlock } from "@/components/CodeBlock";
+import { Walkthrough } from "@/components/Walkthrough";
+import { HistoryNote } from "@/components/HistoryNote";
 import { WowIcon } from "@/components/BrandIcon";
 import { chapters, chapterBySlug, learnUi, type Block } from "@/lib/learn";
 import { useLang } from "./LanguageProvider";
 import { dir, type Lang } from "@/lib/i18n";
 
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
+}
+
 export function ChapterView({ slug }: { slug: string }) {
   const { lang } = useLang();
   const ui = learnUi[lang];
   const d = dir(lang);
+  const rootRef = useRef<HTMLElement>(null);
 
   const ch = chapterBySlug(slug);
+
+  useGSAP(
+    () => {
+      if (!ch) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      gsap.from(".ch-head", {
+        opacity: 0,
+        y: 16,
+        duration: 0.5,
+        ease: "power2.out",
+      });
+
+      const blocks = gsap.utils.toArray<HTMLElement>(".reveal");
+      blocks.forEach((el) => {
+        gsap.from(el, {
+          opacity: 0,
+          y: 24,
+          duration: 0.5,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 90%",
+            toggleActions: "play none none none",
+          },
+        });
+      });
+    },
+    { scope: rootRef, dependencies: [slug, lang] }
+  );
+
   if (!ch) return null;
 
   const idx = chapters.findIndex((c) => c.slug === slug);
@@ -21,7 +63,7 @@ export function ChapterView({ slug }: { slug: string }) {
   const next = idx < chapters.length - 1 ? chapters[idx + 1] : null;
 
   return (
-    <article className="max-w-2xl" dir={d}>
+    <article className="max-w-2xl" dir={d} ref={rootRef}>
       <Link
         href="/docs/learn"
         className="text-sm font-semibold text-wow-600 hover:text-wow-700"
@@ -29,7 +71,7 @@ export function ChapterView({ slug }: { slug: string }) {
         {ui.allLessons}
       </Link>
 
-      <header className="mt-4 flex items-start gap-4">
+      <header className="ch-head mt-4 flex items-start gap-4">
         <WowIcon name={ch.icon} size={36} className="text-wow-600 shrink-0" />
         <div>
           <p className="text-xs font-bold uppercase tracking-widest text-wow-400">
@@ -44,7 +86,9 @@ export function ChapterView({ slug }: { slug: string }) {
 
       <div className="mt-8 space-y-5">
         {ch.blocks.map((b, i) => (
-          <BlockView key={i} block={b} lang={lang} ui={ui} />
+          <div className="reveal" key={i}>
+            <BlockView block={b} lang={lang} ui={ui} />
+          </div>
         ))}
       </div>
 
@@ -104,6 +148,22 @@ function BlockView({
         <div dir="ltr">
           <CodeBlock code={block.code} />
         </div>
+      );
+    case "walk":
+      return (
+        <Walkthrough
+          steps={block.steps}
+          intro={block.intro?.[lang]}
+          ui={ui}
+        />
+      );
+    case "history":
+      return (
+        <HistoryNote
+          label={ui.historyLabel}
+          title={block.title[lang]}
+          text={block.text[lang]}
+        />
       );
     case "tip":
       return (

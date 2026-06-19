@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Link from "next/link";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import { Languages, Target, MessageCircle, Wrench, Monitor, Globe } from "lucide-react";
 import { CodeBlock } from "@/components/CodeBlock";
 import { AppleIcon, LinuxIcon, WindowsIcon, ArduinoIcon } from "@/components/BrandIcon";
@@ -175,21 +177,44 @@ export function Landing() {
   const { lang } = useLang();
   const h = t[lang].home;
   const d = dir(lang);
+  const heroRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      gsap.from(".hero-item", {
+        opacity: 0,
+        y: 22,
+        duration: 0.55,
+        stagger: 0.1,
+        ease: "power2.out",
+      });
+      gsap.from(".hero-code", {
+        opacity: 0,
+        y: 30,
+        scale: 0.97,
+        duration: 0.7,
+        ease: "power3.out",
+        delay: 0.15,
+      });
+    },
+    { scope: heroRef }
+  );
 
   return (
     <>
       {/* Hero */}
-      <section className="glow-bg">
+      <section className="glow-bg" ref={heroRef}>
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 sm:py-24 lg:grid-cols-2 lg:gap-14">
           <div dir={d}>
-            <span className="inline-flex items-center gap-2 rounded-full border border-wow-200 bg-wow-50 px-3.5 py-1.5 text-sm font-semibold text-wow-700">
+            <span className="hero-item inline-flex items-center gap-2 rounded-full border border-wow-200 bg-wow-50 px-3.5 py-1.5 text-sm font-semibold text-wow-700">
               <span className="font-[family-name:var(--font-urdu)] text-base leading-none">
                 و
               </span>
               {h.badge}
             </span>
 
-            <h1 className="mt-6 text-5xl font-extrabold leading-[1.05] tracking-tight text-ink sm:text-6xl">
+            <h1 className="hero-item mt-6 text-5xl font-extrabold leading-[1.05] tracking-tight text-ink sm:text-6xl">
               {h.title1}
               <br />
               {h.t2pre}
@@ -197,12 +222,12 @@ export function Landing() {
               {h.t2post}
             </h1>
 
-            <p className="mt-5 max-w-md text-lg leading-relaxed text-muted">
+            <p className="hero-item mt-5 max-w-md text-lg leading-relaxed text-muted">
               <strong className="font-bold text-ink">wow</strong>
               {h.leadRest}
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="hero-item mt-8 flex flex-wrap gap-3">
               <Link
                 href="/playground"
                 className="rounded-full bg-wow-600 px-6 py-3 text-base font-bold text-white shadow-lg shadow-wow-600/30 transition-transform hover:scale-[1.03] hover:bg-wow-700"
@@ -218,7 +243,7 @@ export function Landing() {
             </div>
           </div>
 
-          <div className="relative">
+          <div className="hero-code relative">
             <span
               aria-hidden
               className="animate-floaty pointer-events-none absolute -right-4 -top-16 select-none font-[family-name:var(--font-urdu)] text-[10rem] leading-none text-wow-600/10 sm:text-[14rem]"
