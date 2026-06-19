@@ -1,10 +1,12 @@
 "use client";
 
 import { Fragment, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { Monitor, Globe } from "lucide-react";
 import { runWow } from "@/lib/runner";
 import { examples, defaultExample } from "@/lib/examples";
 import { t, exampleMeta, dir } from "@/lib/i18n";
 import { useLang } from "@/components/LanguageProvider";
+import { WowIcon, ArduinoIcon } from "@/components/BrandIcon";
 
 type Tab = "output" | "targets";
 
@@ -106,7 +108,7 @@ export default function Playground() {
                   : "border border-wow-200 bg-paper text-wow-700 hover:bg-wow-50"
               }`}
             >
-              <span className="mr-1">{ex.emoji}</span>
+              <WowIcon name={ex.icon} size={14} className="inline mr-1.5 -mt-0.5 text-wow-500" />
               {meta.title}
             </button>
           );
@@ -181,12 +183,17 @@ export default function Playground() {
               <p>{L.targetsIntro}</p>
               <p>{L.targetsBody}</p>
               <div className="grid grid-cols-3 gap-2 pt-1" dir="ltr">
-                {["🖥️ C", "🔌 Arduino", "🌐 Node.js"].map((tg) => (
+                {[
+                  { label: "C", Icon: Monitor },
+                  { label: "Arduino", Icon: ArduinoIcon },
+                  { label: "Node.js", Icon: Globe },
+                ].map(({ label, Icon }) => (
                   <div
-                    key={tg}
+                    key={label}
                     className="rounded-xl border border-dashed border-wow-200 bg-wow-50/50 py-4 text-center text-xs font-semibold text-wow-700"
                   >
-                    {tg}
+                    <Icon className="mx-auto h-5 w-5 mb-1" />
+                    {label}
                     <div className="mt-1 font-normal text-muted">{L.soon}</div>
                   </div>
                 ))}

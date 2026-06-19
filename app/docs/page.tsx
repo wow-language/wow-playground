@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Monitor, Globe } from "lucide-react";
 import { CodeBlock } from "@/components/CodeBlock";
 import { RefTable } from "@/components/RefTable";
+import { ArduinoIcon } from "@/components/BrandIcon";
 import {
   keywordRows,
   operatorRows,
@@ -200,17 +202,17 @@ har p mein log {
               <tr className="border-t border-wow-100">
                 <td className="px-4 py-3">wow build x.wow</td>
                 <td className="px-4 py-3">C program</td>
-                <td className="px-4 py-3">Desktop 🖥️</td>
+                <td className="px-4 py-3">Desktop <Monitor className="inline w-4 h-4 ml-1 align-text-bottom" /></td>
               </tr>
               <tr className="border-t border-wow-100 bg-wow-50/50">
                 <td className="px-4 py-3">--target arduino</td>
                 <td className="px-4 py-3">.ino sketch</td>
-                <td className="px-4 py-3">Arduino / ESP32 🔌</td>
+                <td className="px-4 py-3">Arduino / ESP32 <ArduinoIcon className="inline w-4 h-4 ml-1 align-text-bottom" /></td>
               </tr>
               <tr className="border-t border-wow-100">
                 <td className="px-4 py-3">--target node</td>
                 <td className="px-4 py-3">Node.js app</td>
-                <td className="px-4 py-3">Web 🌐</td>
+                <td className="px-4 py-3">Web <Globe className="inline w-4 h-4 ml-1 align-text-bottom" /></td>
               </tr>
             </tbody>
           </table>

@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { Lightbulb, Rocket } from "lucide-react";
 import { CodeBlock } from "@/components/CodeBlock";
+import { WowIcon } from "@/components/BrandIcon";
 import { chapters, chapterBySlug, learnUi, type Block } from "@/lib/learn";
 import { useLang } from "./LanguageProvider";
 import { dir, type Lang } from "@/lib/i18n";
@@ -28,7 +30,7 @@ export function ChapterView({ slug }: { slug: string }) {
       </Link>
 
       <header className="mt-4 flex items-start gap-4">
-        <span className="text-4xl">{ch.emoji}</span>
+        <WowIcon name={ch.icon} size={36} className="text-wow-600 shrink-0" />
         <div>
           <p className="text-xs font-bold uppercase tracking-widest text-wow-400">
             {ui.lesson} {idx + 1}
@@ -54,7 +56,7 @@ export function ChapterView({ slug }: { slug: string }) {
           >
             <div className="text-xs font-semibold text-muted">← {ui.previous}</div>
             <div className="font-bold text-ink">
-              {prev.emoji} {prev.title[lang]}
+              <WowIcon name={prev.icon} size={16} className="inline mr-1 text-wow-500" />{prev.title[lang]}
             </div>
           </Link>
         ) : (
@@ -67,7 +69,7 @@ export function ChapterView({ slug }: { slug: string }) {
           >
             <div className="text-xs font-semibold text-muted">{ui.next} →</div>
             <div className="font-bold text-ink">
-              {next.title[lang]} {next.emoji}
+              {next.title[lang]}<WowIcon name={next.icon} size={16} className="inline ml-1 text-wow-500" />
             </div>
           </Link>
         ) : (
@@ -106,7 +108,7 @@ function BlockView({
     case "tip":
       return (
         <div className="rounded-xl border border-wow-200 bg-wow-50/60 p-4">
-          <div className="mb-1 text-sm font-bold text-wow-700">💡 {ui.goodToKnow}</div>
+          <div className="mb-1 text-sm font-bold text-wow-700"><Lightbulb className="inline w-4 h-4 mr-1" />{ui.goodToKnow}</div>
           <p className="text-sm leading-relaxed text-ink/80">{block.text[lang]}</p>
         </div>
       );
@@ -114,7 +116,7 @@ function BlockView({
       return (
         <div className="rounded-xl border border-spark-300 bg-spark-300/15 p-4">
           <div className="mb-1 flex items-center justify-between gap-2">
-            <span className="text-sm font-bold text-spark-600">🚀 {ui.tryIt}</span>
+            <span className="text-sm font-bold text-spark-600"><Rocket className="inline w-4 h-4 mr-1" />{ui.tryIt}</span>
             <Link
               href="/playground"
               className="rounded-full bg-spark-500 px-3 py-1 text-xs font-bold text-white transition-colors hover:bg-spark-600"

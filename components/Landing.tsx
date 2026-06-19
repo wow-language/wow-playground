@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import { Languages, Target, MessageCircle, Wrench, Monitor, Globe } from "lucide-react";
 import { CodeBlock } from "@/components/CodeBlock";
+import { AppleIcon, LinuxIcon, WindowsIcon, ArduinoIcon } from "@/components/BrandIcon";
 import { useLang } from "@/components/LanguageProvider";
 import { t, dir } from "@/lib/i18n";
 
@@ -20,15 +22,15 @@ har n mein bade {
 
 salam("Ahmad")`;
 
-const featureEmojis = ["🇵🇰", "🎯", "💬", "🧰"];
+const featureIcons = [Languages, Target, MessageCircle, Wrench];
 
 type OsId = "mac" | "linux" | "windows";
 
-const installOptions: { id: OsId; label: string; emoji: string; steps: { caption: string; cmd: string }[]; guide: string }[] = [
+const installOptions: { id: OsId; label: string; icon: React.ComponentType<{ className?: string }>; steps: { caption: string; cmd: string }[]; guide: string }[] = [
   {
     id: "mac",
     label: "macOS",
-    emoji: "🍎",
+    icon: AppleIcon,
     steps: [
       { caption: "Homebrew (recommended)", cmd: "brew install wow-language/tap/wow" },
       { caption: "or via curl", cmd: "curl -fsSL https://raw.githubusercontent.com/wow-language/wow/main/install.sh | sh" },
@@ -38,7 +40,7 @@ const installOptions: { id: OsId; label: string; emoji: string; steps: { caption
   {
     id: "linux",
     label: "Linux",
-    emoji: "🐧",
+    icon: LinuxIcon,
     steps: [
       { caption: "curl one-liner", cmd: "curl -fsSL https://raw.githubusercontent.com/wow-language/wow/main/install.sh | sh" },
     ],
@@ -47,7 +49,7 @@ const installOptions: { id: OsId; label: string; emoji: string; steps: { caption
   {
     id: "windows",
     label: "Windows",
-    emoji: "🪟",
+    icon: WindowsIcon,
     steps: [
       { caption: "PowerShell", cmd: "irm https://raw.githubusercontent.com/wow-language/wow/main/install.ps1 | iex" },
     ],
@@ -56,9 +58,9 @@ const installOptions: { id: OsId; label: string; emoji: string; steps: { caption
 ];
 
 const targets = [
-  { emoji: "🖥️", name: "Desktop", sub: "C program", tint: "from-wow-100 to-wow-50" },
-  { emoji: "🔌", name: "Arduino", sub: ".ino sketch", tint: "from-spark-300/40 to-spark-300/10" },
-  { emoji: "🌐", name: "Web", sub: "Node.js server", tint: "from-wow-100 to-wow-50" },
+  { Icon: Monitor, name: "Desktop", sub: "C program", tint: "from-wow-100 to-wow-50" },
+  { Icon: ArduinoIcon, name: "Arduino", sub: ".ino sketch", tint: "from-spark-300/40 to-spark-300/10" },
+  { Icon: Globe, name: "Web", sub: "Node.js server", tint: "from-wow-100 to-wow-50" },
 ];
 
 function InstallSection() {
@@ -104,7 +106,7 @@ function InstallSection() {
                       : "border border-wow-200 bg-paper text-muted hover:bg-wow-50"
                   }`}
                 >
-                  <span>{o.emoji}</span>
+                  <o.icon className="h-4 w-4" />
                   {o.label}
                 </button>
               ))}
@@ -242,7 +244,7 @@ export function Landing() {
               key={tg.name}
               className={`rounded-2xl bg-gradient-to-br ${tg.tint} p-6 text-center ring-1 ring-wow-100`}
             >
-              <div className="text-4xl">{tg.emoji}</div>
+              <tg.Icon className="h-10 w-10 mx-auto text-wow-600" />
               <h3 className="mt-3 text-lg font-bold text-ink">{tg.name}</h3>
               <p className="font-[family-name:var(--font-mono)] text-sm text-muted">
                 {tg.sub}
@@ -258,16 +260,19 @@ export function Landing() {
           {h.featuresHeading}
         </h2>
         <div className="mt-10 grid gap-5 sm:grid-cols-2">
-          {h.features.map((f, i) => (
+          {h.features.map((f, i) => {
+            const Icon = featureIcons[i];
+            return (
             <div
               key={f.title}
               className="rounded-2xl border border-wow-100 bg-paper p-6 transition-shadow hover:shadow-lg hover:shadow-wow-900/5"
             >
-              <div className="text-3xl">{featureEmojis[i]}</div>
+              <Icon className="h-8 w-8 text-wow-600" />
               <h3 className="mt-3 text-xl font-bold text-ink">{f.title}</h3>
               <p className="mt-2 leading-relaxed text-muted">{f.body}</p>
             </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
