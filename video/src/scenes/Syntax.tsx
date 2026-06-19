@@ -62,8 +62,8 @@ const SNIPPETS: SnippetData[] = [
     lines: [
       'shaks = { naam: "Sara", umar: 14 }',
       "",
-      "likho shaks.naam",
-      "likho shaks ka umar",
+      "likho shaks ka naam",
+      "likho shaks ki umar",
     ],
     gloss: { word: "ka · ki · kay", meaning: "safely read a property" },
     output: ["Sara", "14"],
