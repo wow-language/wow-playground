@@ -2,15 +2,15 @@
 
 > *"Code likho. Wow bolo."*
 
-The web home for [**wow**](https://github.com/wow-language/wow) — a programming
+The web home for [**wow**](https://github.com/wow-language/wow) is a programming
 language with Roman Urdu keywords, built to get kids in Pakistan into coding.
 
 This is a [Next.js](https://nextjs.org) app with three sections:
 
-- **Landing** (`/`) — what wow is, in a glance.
-- **Docs** (`/docs`) — the full language reference: keywords, operators, the
-  `auzaar` toolbox, and the three targets.
-- **Playground** (`/playground`) — type wow and see output instantly.
+- **Landing** (`/`): what wow is, in a glance.
+- **Docs** (`/docs`): the full language reference: keywords, operators, the
+  `tools`, and the three targets.
+- **Playground** (`/playground`): type wow and see output instantly.
 
 ## Getting started
 
@@ -27,8 +27,8 @@ npm start        # serve the build
 ## How the playground runs code
 
 Today the playground runs a small **preview interpreter** (`lib/runner.ts`)
-that executes wow's *core* language directly in the browser — `bol`, variables,
-math, `agar` / `warna`, the loops, `kaam` / `do`, a useful subset of `auzaar`,
+that executes wow's *core* language directly in the browser: `likho`, variables,
+math, `agar` / `warna`, the loops, `kaam` / `do`, a useful subset of `tools`,
 string interpolation, and `phir` pipelines. It gives kids the instant
 "type code, see output" loop without a backend.
 

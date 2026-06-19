@@ -96,7 +96,7 @@ export function ChapterView({ slug }: { slug: string }) {
         {prev ? (
           <Link
             href={`/docs/learn/${prev.slug}`}
-            className="flex-1 rounded-xl border border-wow-100 bg-paper p-4 transition-colors hover:bg-wow-50"
+            className="flex-1 rounded-3xl border border-wow-100 bg-paper p-4 transition-colors hover:bg-wow-50"
           >
             <div className="text-xs font-semibold text-muted">← {ui.previous}</div>
             <div className="font-bold text-ink">
@@ -109,7 +109,7 @@ export function ChapterView({ slug }: { slug: string }) {
         {next ? (
           <Link
             href={`/docs/learn/${next.slug}`}
-            className="flex-1 rounded-xl border border-wow-100 bg-paper p-4 text-right transition-colors hover:bg-wow-50"
+            className="flex-1 rounded-3xl border border-wow-100 bg-paper p-4 text-right transition-colors hover:bg-wow-50"
           >
             <div className="text-xs font-semibold text-muted">{ui.next} →</div>
             <div className="font-bold text-ink">
@@ -167,14 +167,14 @@ function BlockView({
       );
     case "tip":
       return (
-        <div className="rounded-xl border border-wow-200 bg-wow-50/60 p-4">
+        <div className="rounded-3xl border border-wow-200 bg-wow-50/60 p-4">
           <div className="mb-1 text-sm font-bold text-wow-700"><Lightbulb className="inline w-4 h-4 mr-1" />{ui.goodToKnow}</div>
           <p className="text-sm leading-relaxed text-ink/80">{block.text[lang]}</p>
         </div>
       );
     case "try":
       return (
-        <div className="rounded-xl border border-spark-300 bg-spark-300/15 p-4">
+        <div className="rounded-3xl border border-spark-300 bg-spark-300/15 p-4">
           <div className="mb-1 flex items-center justify-between gap-2">
             <span className="text-sm font-bold text-spark-600"><Rocket className="inline w-4 h-4 mr-1" />{ui.tryIt}</span>
             <Link

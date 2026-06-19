@@ -39,6 +39,7 @@
 
   --radius-xl: 1.25rem;
   --radius-2xl: 1.75rem;
+  --radius-3xl: 2.25rem;
 }
 
 html {
@@ -85,7 +86,7 @@ body {
 .code-card {
   background: #0b2018;
   color: #e7f5ee;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-3xl);
 }
 
 /* tiny wow-style syntax tint helpers (used by the static highlighter) */

@@ -8,14 +8,14 @@ export const overviewSections = [
   { id: "loops", label: "Loops" },
   { id: "functions", label: "Functions" },
   { id: "phir", label: "phir pipelines" },
-  { id: "auzaar", label: "auzaar toolbox" },
+  { id: "tools", label: "Tools" },
   { id: "objects", label: "Objects" },
   { id: "targets", label: "Targets" },
   { id: "errors", label: "Error messages" },
 ];
 
 export const keywordRows: Row[] = [
-  { code: 'bol "..."', meaning: "Print something to the screen" },
+  { code: 'likho "..."', meaning: "Print something to the screen" },
   { code: "rakho", meaning: "Declare a variable (optional)" },
   { code: "agar x > 5 { }", meaning: "if" },
   { code: "warna { }", meaning: "else" },
@@ -45,19 +45,19 @@ export const operatorRows: Row[] = [
 ];
 
 export const collectionRows: Row[] = [
-  { code: "badlo(list, fn)", meaning: "map — transform every item" },
-  { code: "chuno(list, fn)", meaning: "filter — keep items that pass a test" },
-  { code: "joro(list, fn, start)", meaning: "reduce — combine into one value" },
-  { code: "dhundo(list, fn)", meaning: "find — first item that matches" },
-  { code: "shamil(list, item)", meaning: "includes — is the item present" },
-  { code: "ginti(list)", meaning: "length — how many items" },
+  { code: "badlo(list, fn)", meaning: "map: transform every item" },
+  { code: "chuno(list, fn)", meaning: "filter: keep items that pass a test" },
+  { code: "joro(list, fn, start)", meaning: "reduce: combine into one value" },
+  { code: "dhundo(list, fn)", meaning: "find: first item that matches" },
+  { code: "shamil(list, item)", meaning: "includes: is the item present" },
+  { code: "ginti(list)", meaning: "length: how many items" },
   { code: "jama(list)", meaning: "sum of all numbers" },
   { code: "max(list) / min(list)", meaning: "largest / smallest value" },
   { code: "tarteeb(list)", meaning: "sort in order" },
   { code: "ulta(list)", meaning: "reverse" },
-  { code: "alag(list)", meaning: "uniq — remove duplicates" },
+  { code: "alag(list)", meaning: "uniq: remove duplicates" },
   { code: "pehla(list) / aakhri(list)", meaning: "first / last item" },
-  { code: "silsila(start, end)", meaning: "range — make a list of numbers" },
+  { code: "silsila(start, end)", meaning: "range: make a list of numbers" },
 ];
 
 export const stringRows: Row[] = [
@@ -81,15 +81,15 @@ export const mathRows: Row[] = [
 
 export const objectRows: Row[] = [
   { code: 'shaks = { naam: "Ahmad", umar: 14 }', meaning: "Create an object with key-value pairs" },
-  { code: "shaks.naam", meaning: "Dot access — crashes if shaks is khali" },
-  { code: "shaks ka naam", meaning: "Safe possessive access — returns khali if missing (use ki / kay for feminine / plural)" },
-  { code: "shaks?.naam", meaning: "Safe dot — same as ka / ki / kay" },
+  { code: "shaks.naam", meaning: "Dot access, crashes if shaks is khali" },
+  { code: "shaks ka naam", meaning: "Safe possessive access, returns khali if missing (use ki / kay for feminine / plural)" },
+  { code: "shaks?.naam", meaning: "Safe dot, same as ka / ki / kay" },
   { code: "shaks.umar = 15", meaning: "Update a property in place" },
   { code: 'shaks.email ?= "default"', meaning: "Only assign if the property is currently khali" },
   { code: "shaks ka adres ka gali", meaning: "Chain safe access through nested objects" },
 ];
 
-export const objectAuzaarRows: Row[] = [
+export const objectToolsRows: Row[] = [
   { code: "mafta(obj)", meaning: "List of all keys" },
   { code: "qeemtain(obj)", meaning: "List of all values" },
   { code: 'key_hai(obj, "naam")', meaning: "sahi if the key exists, ghalat otherwise" },
@@ -99,8 +99,8 @@ export const objectAuzaarRows: Row[] = [
 export const esp32Rows: Row[] = [
   { code: "wifi_jodo(ssid, password)", meaning: "Connect to a WiFi network" },
   { code: "wifi_ip()", meaning: "Get the board's IP address as a string" },
-  { code: "server_rasta(path, handler)", meaning: "Register a GET route — handler is a banao function" },
+  { code: "server_rasta(path, handler)", meaning: "Register a GET route, handler is a banao function" },
   { code: "server_shuru(port)", meaning: "Start the web server on the given port" },
-  { code: "server_parho()", meaning: "Process incoming requests — call this inside chalao" },
+  { code: "server_parho()", meaning: "Process incoming requests, call this inside chalao" },
   { code: "jawab_bhejo(code, type, body)", meaning: "Send an HTTP response (status code, content-type, body)" },
 ];

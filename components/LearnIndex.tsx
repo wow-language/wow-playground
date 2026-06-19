@@ -34,7 +34,7 @@ export function LearnIndex() {
           <li key={c.slug}>
             <Link
               href={`/docs/learn/${c.slug}`}
-              className="group flex h-full gap-4 rounded-2xl border border-wow-100 bg-paper p-5 transition-shadow hover:shadow-lg hover:shadow-wow-900/5"
+              className="group flex h-full gap-4 rounded-3xl border border-wow-100 bg-paper p-5 transition-shadow hover:shadow-lg hover:shadow-wow-900/5"
             >
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-wow-50 text-wow-600"><WowIcon name={c.icon} size={22} /></div>
               <div className="min-w-0">
