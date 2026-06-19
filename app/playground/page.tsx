@@ -142,7 +142,7 @@ export default function Playground() {
         </div>
 
         {/* output */}
-        <div className="flex flex-col overflow-hidden rounded-[1.25rem] border border-wow-100 bg-paper shadow-xl shadow-wow-900/5">
+        <div className="flex flex-col overflow-hidden rounded-3xl border border-wow-100 bg-paper shadow-xl shadow-wow-900/5">
           <div className="flex gap-1 border-b border-wow-100 px-3 py-2" dir={d}>
             <TabButton active={tab === "output"} onClick={() => setTab("output")}>
               {L.outputTab}

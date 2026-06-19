@@ -189,7 +189,7 @@ har log mein p {
           The same <Code>.wow</Code> file can run in three places, just change
           the target.
         </p>
-        <div className="overflow-hidden rounded-xl border border-wow-200">
+        <div className="overflow-hidden rounded-3xl border border-wow-200">
           <table className="w-full text-left text-sm">
             <thead className="bg-wow-700 text-white">
               <tr>

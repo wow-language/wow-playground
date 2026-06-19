@@ -2,7 +2,7 @@ import type { Row } from "@/lib/docs";
 
 export function RefTable({ rows, head }: { rows: Row[]; head: [string, string] }) {
   return (
-    <div className="overflow-hidden rounded-xl border border-wow-200">
+    <div className="overflow-hidden rounded-3xl border border-wow-200">
       <table className="w-full text-left text-sm">
         <thead className="bg-wow-700 text-white">
           <tr>

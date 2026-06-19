@@ -88,7 +88,7 @@ function InstallSection() {
               rel="noopener noreferrer"
               className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-wow-200 bg-paper px-4 py-2 text-sm font-semibold text-wow-700 transition-colors hover:bg-wow-100"
             >
-              ↓ Download binary
+              Download binary
             </a>
           </div>
 
@@ -119,7 +119,7 @@ function InstallSection() {
                   <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-muted">
                     {step.caption}
                   </p>
-                  <div className="flex items-center gap-2 overflow-x-auto rounded-xl border border-wow-200 bg-ink px-4 py-3">
+                  <div className="flex items-center gap-2 overflow-x-auto rounded-3xl bg-ink px-4 py-3">
                     <span className="select-none text-wow-400">$</span>
                     <code className="flex-1 font-[family-name:var(--font-mono)] text-sm text-green-300">
                       {step.cmd}
@@ -242,7 +242,7 @@ export function Landing() {
           {targets.map((tg) => (
             <div
               key={tg.name}
-              className={`rounded-2xl bg-gradient-to-br ${tg.tint} p-6 text-center ring-1 ring-wow-100`}
+              className={`rounded-3xl bg-gradient-to-br ${tg.tint} p-6 text-center ring-1 ring-wow-100`}
             >
               <tg.Icon className="h-10 w-10 mx-auto text-wow-600" />
               <h3 className="mt-3 text-lg font-bold text-ink">{tg.name}</h3>
@@ -265,7 +265,7 @@ export function Landing() {
             return (
             <div
               key={f.title}
-              className="rounded-2xl border border-wow-100 bg-paper p-6 transition-shadow hover:shadow-lg hover:shadow-wow-900/5"
+              className="rounded-3xl border border-wow-100 bg-paper p-6 transition-shadow hover:shadow-lg hover:shadow-wow-900/5"
             >
               <Icon className="h-8 w-8 text-wow-600" />
               <h3 className="mt-3 text-xl font-bold text-ink">{f.title}</h3>
