@@ -15,12 +15,22 @@ type Loc = Record<Lang, string>;
 // compact helper: L(english, romanUrdu, urdu)
 const L = (en: string, roman: string, ur: string): Loc => ({ en, roman, ur });
 
+// One line of an interactive walkthrough. `code` is the exact line shown
+// (kept left-to-right, highlighted). `text` is the plain-language meaning —
+// when present the line becomes tappable and reveals the explanation. Lines
+// without text (blank lines, closing braces) are shown but not interactive.
+export type WalkStep = { code: string; text?: Loc };
+
 export type Block =
   | { t: "p"; text: Loc }
   | { t: "h"; text: Loc }
   | { t: "code"; code: string }
   | { t: "tip"; text: Loc }
-  | { t: "try"; text: Loc };
+  | { t: "try"; text: Loc }
+  // A collapsible "where this comes from" note — the story behind an idea.
+  | { t: "history"; title: Loc; text: Loc }
+  // An interactive, line-by-line breakdown of a snippet.
+  | { t: "walk"; intro?: Loc; steps: WalkStep[] };
 
 export type Chapter = {
   slug: string;
@@ -66,10 +76,38 @@ export const chapters: Chapter[] = [
         ),
       },
       {
-        t: "code",
-        code: `bol "Step 1: wake up"
-bol "Step 2: brush teeth"
-bol "Step 3: eat breakfast"`,
+        t: "walk",
+        intro: L(
+          "Here are three steps the computer runs in order. Tap each line to see what it does.",
+          "Yeh teen steps computer tarteeb se chalata hai. Har line par tap kar ke dekho woh kya karti hai.",
+          "یہ تین اسٹیپ کمپیوٹر ترتیب سے چلاتا ہے۔ ہر لائن پر ٹیپ کر کے دیکھو وہ کیا کرتی ہے۔"
+        ),
+        steps: [
+          {
+            code: `bol "Step 1: wake up"`,
+            text: L(
+              'The very first instruction. bol means "say", and everything in the quotes is shown on screen — so this prints Step 1: wake up.',
+              'Sab se pehli hidayat. bol ka matlab "kaho", aur quotes ke andar jo bhi ho woh screen par dikhta hai — to yeh Step 1: wake up print karta hai.',
+              'سب سے پہلی ہدایت۔ bol کا مطلب "کہو"، اور quotes کے اندر جو بھی ہو وہ اسکرین پر دکھتا ہے — تو یہ Step 1: wake up پرنٹ کرتا ہے۔'
+            ),
+          },
+          {
+            code: `bol "Step 2: brush teeth"`,
+            text: L(
+              "Only after the first line is finished does the computer move to this one. Order matters: top to bottom, one at a time.",
+              "Pehli line khatam hone ke baad hi computer is par aata hai. Tarteeb ahem hai: upar se neeche, ek ek kar ke.",
+              "پہلی لائن ختم ہونے کے بعد ہی کمپیوٹر اس پر آتا ہے۔ ترتیب اہم ہے: اوپر سے نیچے، ایک ایک کر کے۔"
+            ),
+          },
+          {
+            code: `bol "Step 3: eat breakfast"`,
+            text: L(
+              "The last step. When the computer reaches the bottom and there is nothing left, the program is finished.",
+              "Aakhri step. Jab computer sab se neeche pohanch jata hai aur kuch baqi nahi rehta, program khatam ho jata hai.",
+              "آخری اسٹیپ۔ جب کمپیوٹر سب سے نیچے پہنچ جاتا ہے اور کچھ باقی نہیں رہتا، پروگرام ختم ہو جاتا ہے۔"
+            ),
+          },
+        ],
       },
       {
         t: "p",
@@ -77,6 +115,19 @@ bol "Step 3: eat breakfast"`,
           'When you press Run, the computer reads line 1, does it, then line 2, then line 3. That word bol means "say" — it tells the computer to show something on the screen.',
           'Jab aap Run dabate hain, computer line 1 parhta hai, use karta hai, phir line 2, phir line 3. Lafz bol ka matlab hai "kaho" — yeh computer ko kuch screen par dikhane ko kehta hai.',
           'جب آپ Run دباتے ہیں، کمپیوٹر لائن 1 پڑھتا ہے، اسے کرتا ہے، پھر لائن 2، پھر لائن 3۔ لفظ bol کا مطلب ہے "کہو" — یہ کمپیوٹر کو کچھ اسکرین پر دکھانے کو کہتا ہے۔'
+        ),
+      },
+      {
+        t: "history",
+        title: L(
+          "The first programmer",
+          "Sab se pehli programmer",
+          "سب سے پہلی پروگرامر"
+        ),
+        text: L(
+          "The idea of a written list of instructions for a machine is almost 200 years old. In the 1840s, Ada Lovelace wrote what many call the first computer program — a list of steps for a machine that was never even finished being built (Charles Babbage's Analytical Engine). She saw, long before anyone else, that a machine could follow steps to do far more than just arithmetic. Every program you will ever write is a descendant of that one idea: a clear list of steps.",
+          "Kisi machine ke liye likhi hui hidayaat ki list ka khayaal taqreeban 200 saal purana hai. 1840 ki dahai mein, Ada Lovelace ne woh likha jise bohat se log pehla computer program kehte hain — ek machine ke liye steps ki list jo kabhi mukammal bani hi nahi (Charles Babbage ka Analytical Engine). Usne sab se pehle yeh dekha ke machine sirf hisaab se kahin zyada kaam steps follow kar ke kar sakti hai. Aap jo bhi program likhenge woh isi ek khayaal ki aulaad hai: saaf steps ki ek list.",
+          "کسی مشین کے لیے لکھی ہوئی ہدایات کی فہرست کا خیال تقریباً 200 سال پرانا ہے۔ 1840 کی دہائی میں، Ada Lovelace نے وہ لکھا جسے بہت سے لوگ پہلا کمپیوٹر پروگرام کہتے ہیں — ایک مشین کے لیے اسٹیپس کی فہرست جو کبھی مکمل بنی ہی نہیں (Charles Babbage کا Analytical Engine)۔ اس نے سب سے پہلے یہ دیکھا کہ مشین صرف حساب سے کہیں زیادہ کام اسٹیپس فالو کر کے کر سکتی ہے۔ آپ جو بھی پروگرام لکھیں گے وہ اسی ایک خیال کی اولاد ہے: صاف اسٹیپس کی ایک فہرست۔"
         ),
       },
       {
@@ -112,10 +163,33 @@ bol "Step 3: eat breakfast"`,
         ),
       },
       {
-        t: "code",
-        code: `bol "Salam Duniya!"
-bol 7
-bol 2 + 3`,
+        t: "walk",
+        steps: [
+          {
+            code: `bol "Salam Duniya!"`,
+            text: L(
+              'Prints the words exactly as written between the quotes — Salam Duniya! The quotes tell wow "this is text, show it letter for letter."',
+              'Quotes ke darmiyan jo likha hai bilkul wahi print karta hai — Salam Duniya! Quotes wow ko batate hain "yeh text hai, ise harf ba harf dikhao."',
+              'quotes کے درمیان جو لکھا ہے بالکل وہی پرنٹ کرتا ہے — Salam Duniya! quotes wow کو بتاتے ہیں "یہ text ہے، اسے حرف بہ حرف دکھاؤ۔"'
+            ),
+          },
+          {
+            code: `bol 7`,
+            text: L(
+              "No quotes here, so 7 is a number, not text. It prints the number 7.",
+              "Yahan quotes nahi, to 7 ek number hai, text nahi. Yeh number 7 print karta hai.",
+              "یہاں quotes نہیں، تو 7 ایک نمبر ہے، text نہیں۔ یہ نمبر 7 پرنٹ کرتا ہے۔"
+            ),
+          },
+          {
+            code: `bol 2 + 3`,
+            text: L(
+              'These are numbers too, so wow does the maths first and then prints the answer: 5 — not the text "2 + 3".',
+              'Yeh bhi numbers hain, to wow pehle hisaab karta hai phir jawab print karta hai: 5 — text "2 + 3" nahi.',
+              'یہ بھی نمبرز ہیں، تو wow پہلے حساب کرتا ہے پھر جواب پرنٹ کرتا ہے: 5 — text "2 + 3" نہیں۔'
+            ),
+          },
+        ],
       },
       {
         t: "p",
@@ -147,6 +221,19 @@ bol 2 + 3`,
 bol "Salam {naam}, kaise ho?"`,
       },
       {
+        t: "history",
+        title: L(
+          'Why "Hello, World!"',
+          '"Hello, World!" kyun',
+          '"Hello, World!" کیوں'
+        ),
+        text: L(
+          'For almost 50 years, the very first program people write in a new language just prints "Hello, World!" on the screen. The tradition started in 1972 with a programmer named Brian Kernighan, and it stuck because printing a message is the smallest program that proves everything works. In wow we say it in Urdu — "Salam Duniya!" — but it is the same friendly first step millions of programmers have taken.',
+          'Taqreeban 50 saal se, kisi nayi zaban mein logon ka sab se pehla program sirf "Hello, World!" screen par print karta hai. Yeh riwayat 1972 mein Brian Kernighan naami programmer se shuru hui, aur is liye qaim rahi ke ek paighaam print karna sab se chhota program hai jo sabit karta hai ke sab theek chal raha hai. wow mein hum ise Urdu mein kehte hain — "Salam Duniya!" — lekin yeh wahi dostana pehla qadam hai jo lakhon programmers utha chuke hain.',
+          'تقریباً 50 سال سے، کسی نئی زبان میں لوگوں کا سب سے پہلا پروگرام صرف "Hello, World!" اسکرین پر پرنٹ کرتا ہے۔ یہ روایت 1972 میں Brian Kernighan نامی پروگرامر سے شروع ہوئی، اور اس لیے قائم رہی کہ ایک پیغام پرنٹ کرنا سب سے چھوٹا پروگرام ہے جو ثابت کرتا ہے کہ سب ٹھیک چل رہا ہے۔ wow میں ہم اسے اردو میں کہتے ہیں — "Salam Duniya!" — لیکن یہ وہی دوستانہ پہلا قدم ہے جو لاکھوں پروگرامرز اٹھا چکے ہیں۔'
+        ),
+      },
+      {
         t: "try",
         text: L(
           "Print a sentence that says how old you are, using a number inside the text.",
@@ -175,12 +262,42 @@ bol "Salam {naam}, kaise ho?"`,
         ),
       },
       {
-        t: "code",
-        code: `umar = 12
-bol "Aap ki umar {umar} hai"
-
-umar = umar + 1
-bol "Agle saal: {umar}"`,
+        t: "walk",
+        steps: [
+          {
+            code: `umar = 12`,
+            text: L(
+              'Make a box named umar and put the number 12 inside it. The = does not mean "equals" — it means "store this".',
+              'umar naam ka ek dabba banao aur usme number 12 rakho. = ka matlab "barabar" nahi — iska matlab "yeh rakho".',
+              'umar نام کا ایک ڈبہ بناؤ اور اس میں نمبر 12 رکھو۔ = کا مطلب "برابر" نہیں — اس کا مطلب "یہ رکھو"۔'
+            ),
+          },
+          {
+            code: `bol "Aap ki umar {umar} hai"`,
+            text: L(
+              "Print a sentence. The {umar} part is replaced with whatever is in the box right now — 12 — so it reads Aap ki umar 12 hai.",
+              "Ek jumla print karo. {umar} wala hissa is waqt dabbe mein jo hai usse badal jata hai — 12 — to yeh banta hai Aap ki umar 12 hai.",
+              "ایک جملہ پرنٹ کرو۔ {umar} والا حصہ اس وقت ڈبے میں جو ہے اس سے بدل جاتا ہے — 12 — تو یہ بنتا ہے Aap ki umar 12 hai۔"
+            ),
+          },
+          { code: `` },
+          {
+            code: `umar = umar + 1`,
+            text: L(
+              "Open the box (12), add one to get 13, and put 13 back in the same box. The old value is gone — the box now holds 13.",
+              "Dabba kholo (12), ek joro to 13 milta hai, aur 13 wapas usi dabbe mein rakho. Purani value chali gayi — dabbe mein ab 13 hai.",
+              "ڈبہ کھولو (12)، ایک جوڑو تو 13 ملتا ہے، اور 13 واپس اسی ڈبے میں رکھو۔ پرانی ویلیو چلی گئی — ڈبے میں اب 13 ہے۔"
+            ),
+          },
+          {
+            code: `bol "Agle saal: {umar}"`,
+            text: L(
+              "Print again. This time the box holds 13, so it reads Agle saal: 13. Same line of code, different value — because the box changed.",
+              "Dobara print karo. Is dafa dabbe mein 13 hai, to yeh banta hai Agle saal: 13. Wahi code ki line, alag value — kyunke dabba badal gaya.",
+              "دوبارہ پرنٹ کرو۔ اس دفعہ ڈبے میں 13 ہے، تو یہ بنتا ہے Agle saal: 13۔ وہی کوڈ کی لائن، الگ ویلیو — کیونکہ ڈبہ بدل گیا۔"
+            ),
+          },
+        ],
       },
       {
         t: "p",
@@ -196,6 +313,19 @@ bol "Agle saal: {umar}"`,
           "Pick names that describe what is inside — score, naam, total. Future-you (and your friends) will thank you when reading the code.",
           "Aise naam chuno jo bataayein andar kya hai — score, naam, total. Baad mein aap (aur aap ke dost) code parhte waqt shukar guzaar honge.",
           "ایسے نام چنو جو بتائیں اندر کیا ہے — score، naam، total۔ بعد میں آپ (اور آپ کے دوست) کوڈ پڑھتے وقت شکر گزار ہوں گے۔"
+        ),
+      },
+      {
+        t: "history",
+        title: L(
+          "Where the word comes from",
+          "Yeh lafz kahan se aaya",
+          "یہ لفظ کہاں سے آیا"
+        ),
+        text: L(
+          'The word "variable" comes from mathematics, where it means "a value that can vary" — change. Inside a real computer, a variable is a tiny labelled spot in the machine\'s memory. When you write umar = 12, the computer reserves a spot, writes 12 there, and remembers the name umar so it can find it again. Memory used to be made of tiny magnetic rings threaded by hand in the 1950s and 60s; today it is billions of microscopic switches — but the idea is unchanged: a named place to keep a value.',
+          'Lafz "variable" riyazi se aaya hai, jahan iska matlab hai "aisi value jo badal sake". Asli computer ke andar, variable machine ki memory mein ek chhoti si naam wali jagah hai. Jab aap likhte hain umar = 12, computer ek jagah mehfooz karta hai, wahan 12 likhta hai, aur naam umar yaad rakhta hai taake dobara dhoond sake. 1950 aur 60 ki dahai mein memory chhote magnetic chhallon se banti thi jo haath se piroye jate the; aaj yeh arabon microscopic switches hai — lekin khayaal wahi hai: value rakhne ki ek naam wali jagah.',
+          'لفظ "variable" ریاضی سے آیا ہے، جہاں اس کا مطلب ہے "ایسی ویلیو جو بدل سکے"۔ اصلی کمپیوٹر کے اندر، variable مشین کی memory میں ایک چھوٹی سی نام والی جگہ ہے۔ جب آپ لکھتے ہیں umar = 12، کمپیوٹر ایک جگہ محفوظ کرتا ہے، وہاں 12 لکھتا ہے، اور نام umar یاد رکھتا ہے تاکہ دوبارہ ڈھونڈ سکے۔ 1950 اور 60 کی دہائی میں memory چھوٹے magnetic چھلوں سے بنتی تھی جو ہاتھ سے پروئے جاتے تھے؛ آج یہ اربوں microscopic switches ہے — لیکن خیال وہی ہے: ویلیو رکھنے کی ایک نام والی جگہ۔'
         ),
       },
       {
@@ -227,14 +357,58 @@ bol "Agle saal: {umar}"`,
         ),
       },
       {
-        t: "code",
-        code: `umar = 12
-
-agar umar > 10 {
-    bol "You're a big kid!"
-} warna {
-    bol "You're a little one."
-}`,
+        t: "walk",
+        steps: [
+          {
+            code: `umar = 12`,
+            text: L(
+              "Put 12 in a box called umar, so we have something to ask a question about.",
+              "umar naam ke dabbe mein 12 rakho, taake hamare paas sawaal poochne ke liye kuch ho.",
+              "umar نام کے ڈبے میں 12 رکھو، تاکہ ہمارے پاس سوال پوچھنے کے لیے کچھ ہو۔"
+            ),
+          },
+          { code: `` },
+          {
+            code: `agar umar > 10 {`,
+            text: L(
+              'Ask a yes/no question: is umar bigger than 10? The { opens the block that runs only when the answer is yes. Here 12 > 10 is true.',
+              'Ek haan/nahi sawaal: kya umar 10 se bari hai? { woh block kholta hai jo sirf tab chalta hai jab jawab haan ho. Yahan 12 > 10 sahi hai.',
+              'ایک ہاں/نہیں سوال: کیا umar 10 سے بڑی ہے؟ { وہ بلاک کھولتا ہے جو صرف تب چلتا ہے جب جواب ہاں ہو۔ یہاں 12 > 10 صحیح ہے۔'
+            ),
+          },
+          {
+            code: `    bol "You're a big kid!"`,
+            text: L(
+              "This line is indented because it lives inside the agar block. It only runs when the question was true — which it is, so this prints.",
+              "Yeh line andar ki taraf hai kyunke yeh agar block ke andar hai. Yeh sirf tab chalti hai jab sawaal sahi ho — jo hai, to yeh print hoti hai.",
+              "یہ لائن اندر کی طرف ہے کیونکہ یہ agar بلاک کے اندر ہے۔ یہ صرف تب چلتی ہے جب سوال صحیح ہو — جو ہے، تو یہ پرنٹ ہوتی ہے۔"
+            ),
+          },
+          {
+            code: `} warna {`,
+            text: L(
+              'warna means "otherwise". The block after it runs only when the question was false. Since our answer was true, the computer skips this part entirely.',
+              'warna ka matlab "warna/otherwise". iske baad wala block sirf tab chalta hai jab sawaal ghalat ho. Hamara jawab sahi tha, is liye computer is hisse ko bilkul chhor deta hai.',
+              'warna کا مطلب "otherwise"۔ اس کے بعد والا بلاک صرف تب چلتا ہے جب سوال غلط ہو۔ ہمارا جواب صحیح تھا، اس لیے کمپیوٹر اس حصے کو بالکل چھوڑ دیتا ہے۔'
+            ),
+          },
+          {
+            code: `    bol "You're a little one."`,
+            text: L(
+              "Skipped this time — it would only run if umar were 10 or less.",
+              "Is dafa chhor diya — yeh sirf tab chalti agar umar 10 ya us se kam hoti.",
+              "اس دفعہ چھوڑ دیا — یہ صرف تب چلتی اگر umar 10 یا اس سے کم ہوتی۔"
+            ),
+          },
+          {
+            code: `}`,
+            text: L(
+              "The closing brace marks the end of the whole choice. After this, the program carries on as normal.",
+              "Band hone wala brace poore faisle ka anjaam hai. Iske baad program aam tor par aage barhta hai.",
+              "بند ہونے والا brace پورے فیصلے کا انجام ہے۔ اس کے بعد پروگرام عام طور پر آگے بڑھتا ہے۔"
+            ),
+          },
+        ],
       },
       {
         t: "p",
@@ -266,6 +440,19 @@ agar score > 90 {
           "Comparisons you'll use a lot: > bigger, < smaller, == exactly equal. Note ==, the double equals, asks a question; a single = puts a value in a box.",
           "Aksar use hone wale comparison: > bara, < chota, == bilkul barabar. Yaad rahe == (double equals) sawaal poochta hai; ek = value dabbe mein rakhta hai.",
           "اکثر استعمال ہونے والے comparison: > بڑا، < چھوٹا، == بالکل برابر۔ یاد رہے == (ڈبل برابر) سوال پوچھتا ہے؛ ایک = ویلیو ڈبے میں رکھتا ہے۔"
+        ),
+      },
+      {
+        t: "history",
+        title: L(
+          "True, false, and a man named Boole",
+          "Sahi, ghalat, aur ek shakhs Boole",
+          "صحیح، غلط، اور ایک شخص Boole"
+        ),
+        text: L(
+          "Every choice a computer makes comes down to true or false. That whole system of reasoning was worked out in the 1850s by an English mathematician, George Boole, long before any computer existed. He showed that logic — and, or, not — could be written like algebra. Almost a hundred years later, engineers realised electrical switches that are on or off are a perfect match for Boole's true and false. That is why, deep down, every app, game and website is just billions of tiny yes/no decisions, exactly like your agar.",
+          "Computer ka har faisla sahi ya ghalat tak aata hai. Yeh poora nizaam-e-fikr 1850 ki dahai mein ek angrez riyazidaan George Boole ne tarteeb diya, kisi computer ke wujood mein aane se bohat pehle. Usne dikhaya ke mantiq — aur (and), ya (or), nahi (not) — algebra ki tarah likhi ja sakti hai. Taqreeban sau saal baad, engineers ko ehsaas hua ke electric switches jo on ya off hote hain Boole ke sahi aur ghalat se bilkul mel khate hain. Isi liye, andar se, har app, game aur website sirf arabon chhote haan/nahi faisle hai, bilkul aap ke agar ki tarah.",
+          "کمپیوٹر کا ہر فیصلہ صحیح یا غلط تک آتا ہے۔ یہ پورا نظامِ فکر 1850 کی دہائی میں ایک انگریز ریاضی دان George Boole نے ترتیب دیا، کسی کمپیوٹر کے وجود میں آنے سے بہت پہلے۔ اس نے دکھایا کہ منطق — اور (and)، یا (or)، نہیں (not) — algebra کی طرح لکھی جا سکتی ہے۔ تقریباً سو سال بعد، انجینئرز کو احساس ہوا کہ electric switches جو on یا off ہوتے ہیں Boole کے صحیح اور غلط سے بالکل میل کھاتے ہیں۔ اسی لیے، اندر سے، ہر app، game اور website صرف اربوں چھوٹے ہاں/نہیں فیصلے ہے، بالکل آپ کے agar کی طرح۔"
         ),
       },
       {
@@ -301,10 +488,33 @@ agar score > 90 {
         text: L("Counting with a range", "Range se ginti", "range سے گنتی"),
       },
       {
-        t: "code",
-        code: `1 se 5 tak har i {
-    bol "Number {i}"
-}`,
+        t: "walk",
+        steps: [
+          {
+            code: `1 se 5 tak har i {`,
+            text: L(
+              'Read it as "from 1 to 5, for each i". wow makes a counter box called i and will run the block once for each value: first 1, then 2, all the way to 5.',
+              'Ise parho "1 se 5 tak, har i ke liye". wow i naam ka counter dabba banata hai aur block ko har value ke liye ek baar chalata hai: pehle 1, phir 2, 5 tak.',
+              'اسے پڑھو "1 se 5 tak, ہر i کے لیے"۔ wow i نام کا counter ڈبہ بناتا ہے اور بلاک کو ہر ویلیو کے لیے ایک بار چلاتا ہے: پہلے 1، پھر 2، 5 تک۔'
+            ),
+          },
+          {
+            code: `    bol "Number {i}"`,
+            text: L(
+              "The body of the loop. Each time round, {i} holds the current count — so this prints Number 1, then Number 2, and so on. One line of code, five lines of output.",
+              "Loop ka jism. Har chakkar mein {i} maujooda ginti rakhta hai — to yeh print karta hai Number 1, phir Number 2, waghaira. Ek line code, paanch line output.",
+              "loop کا جسم۔ ہر چکر میں {i} موجودہ گنتی رکھتا ہے — تو یہ پرنٹ کرتا ہے Number 1، پھر Number 2، وغیرہ۔ ایک لائن کوڈ، پانچ لائن آؤٹ پٹ۔"
+            ),
+          },
+          {
+            code: `}`,
+            text: L(
+              "The closing brace sends the computer back up to the top to take the next value of i. When i goes past 5, the loop stops and the program moves on.",
+              "Band brace computer ko wapas upar bhej deta hai taake i ki agli value le. Jab i 5 se aage nikal jata hai, loop ruk jata hai aur program aage barhta hai.",
+              "بند brace کمپیوٹر کو واپس اوپر بھیج دیتا ہے تاکہ i کی اگلی ویلیو لے۔ جب i 5 سے آگے نکل جاتا ہے، loop رک جاتا ہے اور پروگرام آگے بڑھتا ہے۔"
+            ),
+          },
+        ],
       },
       {
         t: "p",
@@ -339,6 +549,19 @@ har phal mein p {
         code: `3 baar {
     bol "wow!"
 }`,
+      },
+      {
+        t: "history",
+        title: L(
+          "Loops older than computers",
+          "Computer se purane loops",
+          "کمپیوٹر سے پرانے loops"
+        ),
+        text: L(
+          "The idea of repeating a stored pattern is older than electronics. In 1804 a Frenchman, Joseph-Marie Jacquard, built a weaving loom that read stiff cards with holes punched in them; the same cards could be fed in again and again to repeat a pattern in the cloth. Those punched cards inspired the first computers a century later — programs were literally loops of cards. Today a loop spares you from copy-pasting, but it carries the same old magic: write the pattern once, repeat it as many times as you like.",
+          "Mehfooz pattern ko dohraane ka khayaal electronics se purana hai. 1804 mein ek Francisi, Joseph-Marie Jacquard, ne aisa karghah banaya jo sakht cards parhta tha jin mein suraakh hote the; wahi cards baar baar daal kar kapre mein pattern dohraya ja sakta tha. Unhi punched cards ne ek sadi baad pehle computers ko mutaasir kiya — programs sachmuch cards ke loops the. Aaj loop aap ko copy-paste se bachata hai, lekin ismein wahi purana jaadu hai: pattern ek baar likho, jitni baar chaho dohrao.",
+          "محفوظ pattern کو دہرانے کا خیال electronics سے پرانا ہے۔ 1804 میں ایک فرانسیسی، Joseph-Marie Jacquard، نے ایسا کرگھا بنایا جو سخت cards پڑھتا تھا جن میں سوراخ ہوتے تھے؛ وہی cards بار بار ڈال کر کپڑے میں pattern دہرایا جا سکتا تھا۔ انہی punched cards نے ایک صدی بعد پہلے کمپیوٹرز کو متاثر کیا — programs سچ مچ cards کے loops تھے۔ آج loop آپ کو copy-paste سے بچاتا ہے، لیکن اس میں وہی پرانا جادو ہے: pattern ایک بار لکھو، جتنی بار چاہو دہراؤ۔"
+        ),
       },
       {
         t: "try",
@@ -381,13 +604,50 @@ har phal mein p {
         ),
       },
       {
-        t: "code",
-        code: `banao salam(naam) {
-    bol "Salam {naam}! Kaise ho?"
-}
-
-salam("Ahmad")
-salam("Sara")`,
+        t: "walk",
+        steps: [
+          {
+            code: `banao salam(naam) {`,
+            text: L(
+              'banao means "make". This names a new trick salam and says it takes one input, naam. Nothing happens yet — we are only teaching the trick, not performing it.',
+              'banao ka matlab "banao". Yeh ek naya gur salam naam deta hai aur kehta hai ke ise ek input chahiye, naam. Abhi kuch nahi hota — hum sirf gur sikha rahe hain, kar nahi rahe.',
+              'banao کا مطلب "بناؤ"۔ یہ ایک نیا گُر salam نام دیتا ہے اور کہتا ہے کہ اسے ایک input چاہیے، naam۔ ابھی کچھ نہیں ہوتا — ہم صرف گُر سکھا رہے ہیں، کر نہیں رہے۔'
+            ),
+          },
+          {
+            code: `    bol "Salam {naam}! Kaise ho?"`,
+            text: L(
+              "These are the steps inside the trick. {naam} will be filled in with whatever name is handed over when the trick is performed.",
+              "Yeh gur ke andar ke steps hain. {naam} us naam se bhar jayega jo gur karte waqt diya jayega.",
+              "یہ گُر کے اندر کے اسٹیپس ہیں۔ {naam} اس نام سے بھر جائے گا جو گُر کرتے وقت دیا جائے گا۔"
+            ),
+          },
+          {
+            code: `}`,
+            text: L(
+              "End of the trick's definition. The computer now remembers salam, ready to use, but has not run it even once yet.",
+              "Gur ki tareef khatam. Computer ab salam yaad rakhta hai, istemaal ke liye tayar, lekin abhi tak ek baar bhi nahi chalaya.",
+              "گُر کی تعریف ختم۔ کمپیوٹر اب salam یاد رکھتا ہے، استعمال کے لیے تیار، لیکن ابھی تک ایک بار بھی نہیں چلایا۔"
+            ),
+          },
+          { code: `` },
+          {
+            code: `salam("Ahmad")`,
+            text: L(
+              'Now we perform the trick — this is called "calling" the function. naam becomes "Ahmad", and the steps run, printing Salam Ahmad! Kaise ho?',
+              'Ab hum gur karte hain — ise function "call karna" kehte hain. naam ban jata hai "Ahmad", aur steps chalte hain, print karte hue Salam Ahmad! Kaise ho?',
+              'اب ہم گُر کرتے ہیں — اسے function "call کرنا" کہتے ہیں۔ naam بن جاتا ہے "Ahmad"، اور اسٹیپس چلتے ہیں، پرنٹ کرتے ہوئے Salam Ahmad! Kaise ho?'
+            ),
+          },
+          {
+            code: `salam("Sara")`,
+            text: L(
+              "The same trick again, with a different input. We wrote the steps once but use them as many times as we like — that is the whole point of a function.",
+              "Wahi gur dobara, alag input ke saath. Humne steps ek baar likhe lekin jitni baar chahein istemaal karte hain — yahi function ka asal maqsad hai.",
+              "وہی گُر دوبارہ، الگ input کے ساتھ۔ ہم نے اسٹیپس ایک بار لکھے لیکن جتنی بار چاہیں استعمال کرتے ہیں — یہی function کا اصل مقصد ہے۔"
+            ),
+          },
+        ],
       },
       {
         t: "p",
@@ -419,6 +679,19 @@ bol "Total: {total}"`,
         ),
       },
       {
+        t: "history",
+        title: L(
+          "Reuse: the programmer's superpower",
+          "Dobara istemaal: programmer ki superpower",
+          "دوبارہ استعمال: programmer کی superpower"
+        ),
+        text: L(
+          "In the 1940s the first programmers noticed they were writing the same sequences of steps over and over. Grace Hopper, a US Navy officer and one of computing's great pioneers, championed the idea of writing a useful chunk of code once, giving it a name, and reusing it everywhere — what we now call functions (or subroutines). She also helped invent the idea that programs could be written in words humans understand instead of raw numbers. wow stands on her shoulders: banao lets you bottle up steps once and pour them out whenever you need them.",
+          "1940 ki dahai mein pehle programmers ne dekha ke woh ek hi tarkeeb baar baar likh rahe hain. Grace Hopper, US Navy ki officer aur computing ki ek bari pioneer, ne yeh khayaal aam kiya ke kaam ka ek tukra ek baar likho, use naam do, aur har jagah dobara istemaal karo — jise hum ab functions (ya subroutines) kehte hain. Usne yeh khayaal bhi diya ke programs insaani lafzon mein likhe ja sakte hain, khaalis numbers ke bajaye. wow usi ke kandhon par khara hai: banao aap ko steps ek baar bottle mein band karne deta hai aur jab zaroorat ho undel dene deta hai.",
+          "1940 کی دہائی میں پہلے programmers نے دیکھا کہ وہ ایک ہی ترکیب بار بار لکھ رہے ہیں۔ Grace Hopper، US Navy کی آفیسر اور computing کی ایک بڑی pioneer، نے یہ خیال عام کیا کہ کام کا ایک ٹکڑا ایک بار لکھو، اسے نام دو، اور ہر جگہ دوبارہ استعمال کرو — جسے ہم اب functions (یا subroutines) کہتے ہیں۔ اس نے یہ خیال بھی دیا کہ programs انسانی لفظوں میں لکھے جا سکتے ہیں، خالص numbers کے بجائے۔ wow اسی کے کندھوں پر کھڑا ہے: banao آپ کو اسٹیپس ایک بار bottle میں بند کرنے دیتا ہے اور جب ضرورت ہو انڈیل دینے دیتا ہے۔"
+        ),
+      },
+      {
         t: "try",
         text: L(
           "Write a function double(n) that sends back n times 2, then print double(21).",
@@ -447,10 +720,33 @@ bol "Total: {total}"`,
         ),
       },
       {
-        t: "code",
-        code: `numbers = [4, 8, 15, 16, 23, 42]
-bol "There are {ginti(numbers)} numbers"
-bol "Their total is {jama(numbers)}"`,
+        t: "walk",
+        steps: [
+          {
+            code: `numbers = [4, 8, 15, 16, 23, 42]`,
+            text: L(
+              "The square brackets make a list, and the commas separate its items. The whole list — all six numbers — goes into one box called numbers.",
+              "Square brackets ek list banate hain, aur commas iske items ko alag karte hain. Poori list — chhwo ke chhe numbers — ek dabbe numbers mein jaati hai.",
+              "square brackets ایک list بناتے ہیں، اور commas اس کے items کو الگ کرتے ہیں۔ پوری list — چھ کے چھ numbers — ایک ڈبے numbers میں جاتی ہے۔"
+            ),
+          },
+          {
+            code: `bol "There are {ginti(numbers)} numbers"`,
+            text: L(
+              "ginti is a tool that counts how many items are in a list. ginti(numbers) gives 6, which drops into the sentence: There are 6 numbers.",
+              "ginti ek tool hai jo ginta hai ke list mein kitne items hain. ginti(numbers) 6 deta hai, jo jumle mein girta hai: There are 6 numbers.",
+              "ginti ایک tool ہے جو گنتا ہے کہ list میں کتنے items ہیں۔ ginti(numbers) 6 دیتا ہے، جو جملے میں گرتا ہے: There are 6 numbers۔"
+            ),
+          },
+          {
+            code: `bol "Their total is {jama(numbers)}"`,
+            text: L(
+              "jama is another tool — it adds every number in the list together. One short word does what would otherwise take a whole loop.",
+              "jama ek aur tool hai — yeh list ke har number ko jama kar deta hai. Ek chhota lafz woh kaam karta hai jis ke liye warna poora loop chahiye hota.",
+              "jama ایک اور tool ہے — یہ list کے ہر number کو جمع کر دیتا ہے۔ ایک چھوٹا لفظ وہ کام کرتا ہے جس کے لیے ورنہ پورا loop چاہیے ہوتا۔"
+            ),
+          },
+        ],
       },
       {
         t: "p",
@@ -477,6 +773,19 @@ bol bade`,
           "chuno (choose) keeps only the items that pass a test. Here x stands for each item in turn, and we keep the ones bigger than 15.",
           "chuno (chuno) sirf woh items rakhta hai jo test paas karein. Yahan x baari baari har item ko zaahir karta hai, aur hum 15 se bare wale rakhte hain.",
           "chuno صرف وہ آئٹمز رکھتا ہے جو ٹیسٹ پاس کریں۔ یہاں x باری باری ہر آئٹم کو ظاہر کرتا ہے، اور ہم 15 سے بڑے والے رکھتے ہیں۔"
+        ),
+      },
+      {
+        t: "history",
+        title: L(
+          "Standing on a shared toolbox",
+          "Ek mushtarka toolbox par",
+          "ایک مشترکہ toolbox پر"
+        ),
+        text: L(
+          "Early programmers had to write every small tool — sorting, counting, searching — from scratch, every single time. It was slow and full of mistakes. Over the decades, programmers began collecting these common tools into shared libraries that come built into the language, so nobody has to reinvent them. wow's auzaar is exactly that: a ready-made box of well-tested tools. Learning to reach for the right tool instead of rebuilding it is one of the biggest leaps from beginner to real programmer.",
+          "Pehle programmers ko har chhota tool — tarteeb, ginti, talaash — har baar shuru se likhna parta tha. Yeh sust aur ghaltiyon se bhara tha. Dahaiyon mein, programmers ne in aam tools ko mushtarka libraries mein jama karna shuru kiya jo zaban ke andar aati hain, taake kisi ko inhe dobara banana na pare. wow ka auzaar bilkul yahi hai: achhi tarah aazmaye gaye tools ka tayaar dabba. Sahi tool uthana seekhna, usse dobara banane ke bajaye, beginner se asli programmer banne ki sab se bari chhalaang hai.",
+          "پہلے programmers کو ہر چھوٹا tool — ترتیب، گنتی، تلاش — ہر بار شروع سے لکھنا پڑتا تھا۔ یہ سست اور غلطیوں سے بھرا تھا۔ دہائیوں میں، programmers نے ان عام tools کو مشترکہ libraries میں جمع کرنا شروع کیا جو زبان کے اندر آتی ہیں، تاکہ کسی کو انہیں دوبارہ بنانا نہ پڑے۔ wow کا auzaar بالکل یہی ہے: اچھی طرح آزمائے گئے tools کا تیار ڈبہ۔ صحیح tool اٹھانا سیکھنا، اسے دوبارہ بنانے کے بجائے، beginner سے اصلی programmer بننے کی سب سے بڑی چھلانگ ہے۔"
         ),
       },
       {
@@ -508,15 +817,59 @@ bol bade`,
         ),
       },
       {
-        t: "code",
-        code: `numbers = [1, 5, 3, 8, 2, 9]
-
-nateeja = numbers
-    phir chuno(x > 4)
-    phir tarteeb
-    phir pehla
-
-bol nateeja`,
+        t: "walk",
+        steps: [
+          {
+            code: `numbers = [1, 5, 3, 8, 2, 9]`,
+            text: L(
+              "Start with a list of six numbers in a box. This is the raw material the pipeline will work on.",
+              "Ek dabbe mein chhe numbers ki list se shuru karo. Yeh woh kachcha maal hai jis par pipeline kaam karega.",
+              "ایک ڈبے میں چھ numbers کی list سے شروع کرو۔ یہ وہ کچا مال ہے جس پر pipeline کام کرے گا۔"
+            ),
+          },
+          { code: `` },
+          {
+            code: `nateeja = numbers`,
+            text: L(
+              "Begin the pipeline. The value flowing through it starts as the whole list, and the final result will be stored in nateeja.",
+              "Pipeline shuru karo. Ismein behne wali value poori list se shuru hoti hai, aur aakhri nateeja nateeja mein mehfooz hoga.",
+              "pipeline شروع کرو۔ اس میں بہنے والی ویلیو پوری list سے شروع ہوتی ہے، اور آخری نتیجہ nateeja میں محفوظ ہوگا۔"
+            ),
+          },
+          {
+            code: `    phir chuno(x > 4)`,
+            text: L(
+              'phir means "then". Take the list and keep only the items where x > 4. After this step the value flowing on is [5, 8, 9].',
+              'phir ka matlab "phir". List lo aur sirf woh items rakho jahan x > 4 ho. Is step ke baad aage behne wali value [5, 8, 9] hai.',
+              'phir کا مطلب "پھر"۔ list لو اور صرف وہ items رکھو جہاں x > 4 ہو۔ اس step کے بعد آگے بہنے والی ویلیو [5, 8, 9] ہے۔'
+            ),
+          },
+          {
+            code: `    phir tarteeb`,
+            text: L(
+              "Then sort what is flowing through into order: [5, 8, 9]. Each phir takes the result of the line above and hands it to the next tool.",
+              "Phir jo beh raha hai use tarteeb mein lagao: [5, 8, 9]. Har phir upar wali line ka nateeja le kar agle tool ko de deta hai.",
+              "پھر جو بہہ رہا ہے اسے ترتیب میں لگاؤ: [5, 8, 9]۔ ہر phir اوپر والی لائن کا نتیجہ لے کر اگلے tool کو دے دیتا ہے۔"
+            ),
+          },
+          {
+            code: `    phir pehla`,
+            text: L(
+              "Finally take just the first item of the sorted list: 5. That single value is what lands in nateeja.",
+              "Aakhir mein tarteeb shuda list ka sirf pehla item lo: 5. Wahi ek value nateeja mein aati hai.",
+              "آخر میں ترتیب شدہ list کا صرف پہلا item لو: 5۔ وہی ایک ویلیو nateeja میں آتی ہے۔"
+            ),
+          },
+          { code: `` },
+          {
+            code: `bol nateeja`,
+            text: L(
+              "Print the end of the pipeline: 5. Four small, clear steps chained into one readable flow.",
+              "Pipeline ka anjaam print karo: 5. Chaar chhote, saaf steps ek parhne layak behao mein jude.",
+              "pipeline کا انجام پرنٹ کرو: 5۔ چار چھوٹے، صاف اسٹیپس ایک پڑھنے لائق بہاؤ میں جڑے۔"
+            ),
+          },
+        ],
       },
       {
         t: "p",
@@ -532,6 +885,19 @@ bol nateeja`,
           "Pipelines shine when each step is small and clear. If a chain gets hard to read, it is fine to break it back into named boxes.",
           "Pipelines tab achi lagti hain jab har step chhota aur saaf ho. Agar chain parhna mushkil ho jaye, to use dobara naam wale dabbon mein torna theek hai.",
           "pipelines تب اچھی لگتی ہیں جب ہر اسٹیپ چھوٹا اور صاف ہو۔ اگر chain پڑھنا مشکل ہو جائے، تو اسے دوبارہ نام والے ڈبوں میں توڑنا ٹھیک ہے۔"
+        ),
+      },
+      {
+        t: "history",
+        title: L(
+          "The pipe that changed everything",
+          "Woh pipe jisne sab badal diya",
+          "وہ pipe جس نے سب بدل دیا"
+        ),
+        text: L(
+          'In 1973, while building the Unix operating system at Bell Labs, a programmer named Doug McIlroy pushed for a simple idea: let small programs each do one thing well, then connect them so the output of one flows straight into the next — a "pipe". It was added overnight and changed how software is built forever. Half a century later, that same idea lives in the command line every developer uses, and in wow\'s phir. Small pieces, clearly joined, beat one giant tangled program almost every time.',
+          '1973 mein, Bell Labs mein Unix operating system banate waqt, Doug McIlroy naami programmer ne ek saada khayaal par zor diya: chhote programs har ek ek kaam achhi tarah karein, phir unhe jodo taake ek ka output seedha agle mein behe — ek "pipe". Yeh raat-o-raat shamil hua aur software banane ka tareeqa hamesha ke liye badal diya. Aadhi sadi baad, wahi khayaal har developer ki command line mein zinda hai, aur wow ke phir mein. Chhote tukre, saaf jude hue, taqreeban har baar ek bare uljhe program ko maat dete hain.',
+          '1973 میں، Bell Labs میں Unix operating system بناتے وقت، Doug McIlroy نامی programmer نے ایک سادہ خیال پر زور دیا: چھوٹے programs ہر ایک ایک کام اچھی طرح کریں، پھر انہیں جوڑو تاکہ ایک کا output سیدھا اگلے میں بہے — ایک "pipe"۔ یہ رات و رات شامل ہوا اور software بنانے کا طریقہ ہمیشہ کے لیے بدل دیا۔ آدھی صدی بعد، وہی خیال ہر developer کی command line میں زندہ ہے، اور wow کے phir میں۔ چھوٹے ٹکڑے، صاف جڑے ہوئے، تقریباً ہر بار ایک بڑے الجھے program کو مات دیتے ہیں۔'
         ),
       },
       {
@@ -563,13 +929,49 @@ bol nateeja`,
         ),
       },
       {
-        t: "code",
-        code: `koshish {
-    natija = 10 / 0
-    bol natija
-} pakro ghalti {
-    bol "Oops: {ghalti}"
-}`,
+        t: "walk",
+        steps: [
+          {
+            code: `koshish {`,
+            text: L(
+              'koshish means "try". It opens a block of risky steps and tells wow: "attempt these, but if something breaks, do not crash the whole program."',
+              'koshish ka matlab "koshish karo". Yeh khatre wale steps ka block kholta hai aur wow se kehta hai: "inhe aazmao, lekin agar kuch toot jaye to poora program crash mat karo."',
+              'koshish کا مطلب "کوشش کرو"۔ یہ خطرے والے اسٹیپس کا بلاک کھولتا ہے اور wow سے کہتا ہے: "انہیں آزماؤ، لیکن اگر کچھ ٹوٹ جائے تو پورا program crash مت کرو۔"'
+            ),
+          },
+          {
+            code: `    natija = 10 / 0`,
+            text: L(
+              "This is the risky line. Dividing by zero is impossible, so wow raises an error right here and immediately jumps out of the koshish block.",
+              "Yeh khatre wali line hai. Sifr se taqseem namumkin hai, to wow yahin ek error uthata hai aur foran koshish block se baahar kood jata hai.",
+              "یہ خطرے والی لائن ہے۔ صفر سے تقسیم ناممکن ہے، تو wow یہیں ایک error اٹھاتا ہے اور فوراً koshish بلاک سے باہر کود جاتا ہے۔"
+            ),
+          },
+          {
+            code: `    bol natija`,
+            text: L(
+              "Never runs! Because the line above failed, wow skips straight past this one — there is no answer to print.",
+              "Kabhi nahi chalti! Upar wali line fail ho gayi, is liye wow seedha ise chhor deta hai — print karne ke liye koi jawab hai hi nahi.",
+              "کبھی نہیں چلتی! اوپر والی لائن fail ہو گئی، اس لیے wow سیدھا اسے چھوڑ دیتا ہے — پرنٹ کرنے کے لیے کوئی جواب ہے ہی نہیں۔"
+            ),
+          },
+          {
+            code: `} pakro ghalti {`,
+            text: L(
+              'pakro means "catch". When the try block breaks, control lands here, and the box ghalti is filled with a message describing what went wrong.',
+              'pakro ka matlab "pakro". Jab try block tootta hai, control yahan aata hai, aur dabba ghalti us paighaam se bhar jata hai jo bataata hai kya ghalat hua.',
+              'pakro کا مطلب "پکڑو"۔ جب try بلاک ٹوٹتا ہے، control یہاں آتا ہے، اور ڈبہ ghalti اس پیغام سے بھر جاتا ہے جو بتاتا ہے کیا غلط ہوا۔'
+            ),
+          },
+          {
+            code: `    bol "Oops: {ghalti}"`,
+            text: L(
+              "This runs instead of crashing. It prints a friendly message including ghalti — here, Oops: sifr se taqseem nahi ho sakta.",
+              "Yeh crash hone ke bajaye chalti hai. Yeh ek dostana paighaam print karti hai jismein ghalti shamil hai — yahan, Oops: sifr se taqseem nahi ho sakta.",
+              "یہ crash ہونے کے بجائے چلتی ہے۔ یہ ایک دوستانہ پیغام پرنٹ کرتی ہے جس میں ghalti شامل ہے — یہاں، Oops: sifr se taqseem nahi ho sakta۔"
+            ),
+          },
+        ],
       },
       {
         t: "p",
@@ -585,6 +987,19 @@ bol nateeja`,
           "Good error messages are a kindness to yourself. wow writes its mistakes in plain Roman Urdu and points at the exact spot, so you can fix them quickly.",
           "Achhe error messages apne aap par meharbani hain. wow apni ghaltiyan saaf Roman Urdu mein likhta hai aur theek jagah ishaara karta hai, taake aap jaldi theek kar sakein.",
           "اچھے error messages اپنے آپ پر مہربانی ہیں۔ wow اپنی غلطیاں صاف رومن اردو میں لکھتا ہے اور ٹھیک جگہ اشارہ کرتا ہے، تاکہ آپ جلدی ٹھیک کر سکیں۔"
+        ),
+      },
+      {
+        t: "history",
+        title: L(
+          "The very first computer bug",
+          "Sab se pehla computer bug",
+          "سب سے پہلا computer bug"
+        ),
+        text: L(
+          'We call mistakes in code "bugs", and there is a real bug behind the word. In 1947, a team led by Grace Hopper found that a huge early computer had stopped working — because an actual moth had got trapped in it. They taped the moth into the logbook and wrote "first actual case of bug being found." Mistakes are not a sign you are bad at coding; they are a normal, expected part of it. Even the pioneers spent their days finding and fixing them. koshish and pakro are wow\'s way of handling the bugs you can see coming.',
+          'Code ki ghaltiyon ko hum "bugs" kehte hain, aur is lafz ke peeche ek asli keera (bug) hai. 1947 mein, Grace Hopper ki team ne dekha ke ek bara purana computer ruk gaya — kyunke ek asli patanga usmein phans gaya tha. Unhone patange ko logbook mein chipka diya aur likha "bug milne ka pehla asli waqia." Ghaltiyan is baat ki nishani nahi ke aap coding mein bure hain; yeh iska aam, mutawaqqa hissa hain. Pioneers bhi apne din inhe dhoondne aur theek karne mein guzaarte the. koshish aur pakro wow ka tareeqa hai un bugs ko sambhaalne ka jo aap aate dekh sakte hain.',
+          'code کی غلطیوں کو ہم "bugs" کہتے ہیں، اور اس لفظ کے پیچھے ایک اصلی کیڑا (bug) ہے۔ 1947 میں، Grace Hopper کی team نے دیکھا کہ ایک بڑا پرانا computer رک گیا — کیونکہ ایک اصلی پتنگا اس میں پھنس گیا تھا۔ انہوں نے پتنگے کو logbook میں چپکا دیا اور لکھا "bug ملنے کا پہلا اصلی واقعہ۔" غلطیاں اس بات کی نشانی نہیں کہ آپ coding میں برے ہیں؛ یہ اس کا عام، متوقع حصہ ہیں۔ pioneers بھی اپنے دن انہیں ڈھونڈنے اور ٹھیک کرنے میں گزارتے تھے۔ koshish اور pakro wow کا طریقہ ہے ان bugs کو سنبھالنے کا جو آپ آتے دیکھ سکتے ہیں۔'
         ),
       },
       {
@@ -616,11 +1031,34 @@ bol nateeja`,
         ),
       },
       {
-        t: "code",
-        code: `shaks = { naam: "Ahmad", umar: 14, shahar: "Karachi" }
-
-bol shaks.naam
-bol shaks.umar`,
+        t: "walk",
+        steps: [
+          {
+            code: `shaks = { naam: "Ahmad", umar: 14, shahar: "Karachi" }`,
+            text: L(
+              'Build one object describing a person and store it in shaks. Each naam: value pair is a labelled fact: the name is Ahmad, the age is 14, the city is Karachi.',
+              'Ek insaan ko bayan karta object banao aur use shaks mein rakho. Har naam: value jora ek naam wali haqeeqat hai: naam Ahmad, umar 14, shahar Karachi.',
+              'ایک انسان کو بیان کرتا object بناؤ اور اسے shaks میں رکھو۔ ہر naam: value جوڑا ایک نام والی حقیقت ہے: نام Ahmad، عمر 14، شہر Karachi۔'
+            ),
+          },
+          { code: `` },
+          {
+            code: `bol shaks.naam`,
+            text: L(
+              'The dot reaches inside the object and picks one labelled part. shaks.naam means "the naam of shaks", so this prints Ahmad.',
+              'Dot object ke andar pohanch kar ek naam wala hissa nikalta hai. shaks.naam ka matlab "shaks ka naam", to yeh Ahmad print karta hai.',
+              'dot object کے اندر پہنچ کر ایک نام والا حصہ نکالتا ہے۔ shaks.naam کا مطلب "shaks کا naam"، تو یہ Ahmad پرنٹ کرتا ہے۔'
+            ),
+          },
+          {
+            code: `bol shaks.umar`,
+            text: L(
+              "The same object, a different label. shaks.umar reaches in for the age and prints 14. One box, many neatly labelled parts.",
+              "Wahi object, alag label. shaks.umar umar ke liye andar jata hai aur 14 print karta hai. Ek dabba, kai saaf naam wale hisse.",
+              "وہی object، الگ label۔ shaks.umar عمر کے لیے اندر جاتا ہے اور 14 پرنٹ کرتا ہے۔ ایک ڈبہ، کئی صاف نام والے حصے۔"
+            ),
+          },
+        ],
       },
       {
         t: "p",
@@ -729,6 +1167,19 @@ naya = hata(shaks, "umar")
 bol mafta(naya)             # naam aur shahar — umar hata diya`,
       },
       {
+        t: "history",
+        title: L(
+          "Modelling the real world",
+          "Asli duniya ka naqsha",
+          "اصلی دنیا کا نقشہ"
+        ),
+        text: L(
+          "The idea of grouping data into objects that mirror real things — a person, a car, a bank account — grew up in Norway in the 1960s, in a language called Simula built by Ole-Johan Dahl and Kristen Nygaard to simulate the real world. It was such a powerful way of thinking that it spread into almost every modern language and became known as object-oriented programming. The heart of it is simple and human: instead of loose scattered facts, you describe whole things, with all their parts kept together — just like shaks.",
+          "Maloomat ko objects mein jama karne ka khayaal — jo asli cheezon ki tarah hon: insaan, car, bank account — 1960 ki dahai mein Norway mein paida hua, ek zaban Simula mein jise Ole-Johan Dahl aur Kristen Nygaard ne asli duniya ki naqal banane ke liye banaya. Yeh sochne ka itna taqatwar tareeqa tha ke yeh taqreeban har jadeed zaban mein phail gaya aur object-oriented programming kehlaya. Iska dil saada aur insaani hai: bikhri hui haqaiq ke bajaye, aap poori cheezein bayan karte hain, un ke tamaam hisson ke saath — bilkul shaks ki tarah.",
+          "معلومات کو objects میں جمع کرنے کا خیال — جو اصلی چیزوں کی طرح ہوں: انسان، car، bank account — 1960 کی دہائی میں Norway میں پیدا ہوا، ایک زبان Simula میں جسے Ole-Johan Dahl اور Kristen Nygaard نے اصلی دنیا کی نقل بنانے کے لیے بنایا۔ یہ سوچنے کا اتنا طاقتور طریقہ تھا کہ یہ تقریباً ہر جدید زبان میں پھیل گیا اور object-oriented programming کہلایا۔ اس کا دل سادہ اور انسانی ہے: بکھری ہوئی حقائق کے بجائے، آپ پوری چیزیں بیان کرتے ہیں، ان کے تمام حصوں کے ساتھ — بالکل shaks کی طرح۔"
+        ),
+      },
+      {
         t: "try",
         text: L(
           "Make an object for your favourite book with at least three properties (title, author, year). Print a sentence like \"Title ki Author ne year mein likhi\" using those properties.",
@@ -760,6 +1211,11 @@ export const learnUi: Record<
     openPlayground: string;
     goodToKnow: string;
     tryIt: string;
+    walkthrough: string;
+    walkHint: string;
+    expandAll: string;
+    collapseAll: string;
+    historyLabel: string;
   }
 > = {
   en: {
@@ -778,6 +1234,11 @@ export const learnUi: Record<
     openPlayground: "Open playground",
     goodToKnow: "Good to know",
     tryIt: "Try it",
+    walkthrough: "Line by line",
+    walkHint: "Tap any line to see exactly what it does.",
+    expandAll: "Expand all",
+    collapseAll: "Collapse all",
+    historyLabel: "A bit of history",
   },
   roman: {
     overview: "Jaiza",
@@ -795,6 +1256,11 @@ export const learnUi: Record<
     openPlayground: "Playground kholo",
     goodToKnow: "Yaad rahe",
     tryIt: "Khud karo",
+    walkthrough: "Line ba line",
+    walkHint: "Kisi bhi line par tap karo aur dekho woh kya karti hai.",
+    expandAll: "Sab kholo",
+    collapseAll: "Sab band karo",
+    historyLabel: "Thori si tareekh",
   },
   ur: {
     overview: "جائزہ",
@@ -812,5 +1278,10 @@ export const learnUi: Record<
     openPlayground: "پلے گراؤنڈ کھولو",
     goodToKnow: "یاد رہے",
     tryIt: "خود کرو",
+    walkthrough: "لائن بہ لائن",
+    walkHint: "کسی بھی لائن پر ٹیپ کرو اور دیکھو وہ کیا کرتی ہے۔",
+    expandAll: "سب کھولو",
+    collapseAll: "سب بند کرو",
+    historyLabel: "تھوڑی سی تاریخ",
   },
 };
