@@ -16,7 +16,7 @@ numbers = [1, 5, 3, 8, 2, 9]
 
 bade = numbers phir chuno(x > 4) phir tarteeb
 
-har n mein bade {
+har bade mein n {
     bol "mila: {n}"
 }
 

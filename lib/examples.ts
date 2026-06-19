@@ -28,7 +28,7 @@ wow mein khush aamdeed.`,
     title: "Ginti karo",
     blurb: "Loop from one number to another.",
     icon: "Hash",
-    code: `har i 1 se 5 tak {
+    code: `1 se 5 tak har i {
     bol "Ginti: {i}"
 }`,
     output: `Ginti: 1
@@ -60,7 +60,7 @@ agar umar > 10 {
 
 bade = numbers phir chuno(x > 4) phir tarteeb
 
-har n mein bade {
+har bade mein n {
     bol "mila: {n}"
 }`,
     output: `mila: 5
@@ -107,7 +107,7 @@ log = [
     { naam: "Ahmad", umar: 10 },
     { naam: "Sara", umar: 12 },
 ]
-har p mein log {
+har log mein p {
     bol "{p.naam}: {p ka umar} saal"
 }
 

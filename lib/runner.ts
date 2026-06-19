@@ -181,18 +181,21 @@ function parseHead(
     return { stmt: { kind: "if", branches }, next: idx + 1 };
   }
 
+  // `1 se 5 tak har i { }` — range first, variable last
+  const rangeLoop = head.match(/^(.+?)\s+se\s+(.+?)\s+tak\s+har\s+(\w+)$/);
+  if (rangeLoop)
+    return {
+      stmt: { kind: "forRange", varName: rangeLoop[3], from: rangeLoop[1], to: rangeLoop[2], body },
+      next: closeIdx + 1,
+    };
+
   if (head.startsWith("har ")) {
     const rest = head.slice(4).trim();
-    const range = rest.match(/^(\w+)\s+(.+?)\s+se\s+(.+?)\s+tak$/);
-    if (range)
-      return {
-        stmt: { kind: "forRange", varName: range[1], from: range[2], to: range[3], body },
-        next: closeIdx + 1,
-      };
-    const each = rest.match(/^(\w+)\s+mein\s+(.+)$/);
+    // `har phal mein p { }` — collection first, variable last
+    const each = rest.match(/^(.+?)\s+mein\s+(\w+)$/);
     if (each)
       return {
-        stmt: { kind: "forEach", varName: each[1], list: each[2], body },
+        stmt: { kind: "forEach", varName: each[2], list: each[1], body },
         next: closeIdx + 1,
       };
     throw new WowError("'har' loop samajh nahi aaya.");

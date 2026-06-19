@@ -302,16 +302,16 @@ agar score > 90 {
       },
       {
         t: "code",
-        code: `har i 1 se 5 tak {
+        code: `1 se 5 tak har i {
     bol "Number {i}"
 }`,
       },
       {
         t: "p",
         text: L(
-          'This runs the block for i = 1, 2, 3, 4, 5. The word har means "each", and se ... tak means "from ... to". The range includes both ends.',
-          'Yeh block i = 1, 2, 3, 4, 5 ke liye chalta hai. Lafz har matlab "har ek", aur se ... tak matlab "se ... tak". Range dono siron ko shamil karti hai.',
-          'یہ بلاک i = 1، 2، 3، 4، 5 کے لیے چلتا ہے۔ لفظ har مطلب "ہر ایک"، اور se ... tak مطلب "سے ... تک"۔ range دونوں سروں کو شامل کرتی ہے۔'
+          'This runs the block for i = 1, 2, 3, 4, 5. The range comes first — "1 se 5 tak" — then har names the counter variable. Both ends are included.',
+          'Yeh block i = 1, 2, 3, 4, 5 ke liye chalta hai. Range pehle aati hai — "1 se 5 tak" — phir har counter variable ka naam deta hai. Dono siray shamil hain.',
+          'یہ بلاک i = 1، 2، 3، 4، 5 کے لیے چلتا ہے۔ range پہلے آتی ہے — "1 se 5 tak" — پھر har کاؤنٹر متغیر کا نام دیتا ہے۔ دونوں سرے شامل ہیں۔'
         ),
       },
       {
@@ -322,7 +322,7 @@ agar score > 90 {
         t: "code",
         code: `phal = ["aam", "kela", "seb"]
 
-har p mein phal {
+har phal mein p {
     bol "I like {p}"
 }`,
       },
@@ -708,7 +708,7 @@ bol shaks.email`,
     { naam: "Bilal", score: 72 },
 ]
 
-har taliba mein log {
+har log mein taliba {
     bol "{taliba.naam}: {taliba.score}"
 }`,
       },
