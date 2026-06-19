@@ -45,6 +45,12 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Squircle corners on all rounded elements — progressive enhancement,
+   falls back to standard border-radius in unsupporting browsers */
+*, *::before, *::after {
+  corner-shape: squircle;
+}
+
 /* Urdu (RTL) content — use the Naskh font explicitly so we don't fall back
    to whatever system Nastaliq font happens to be installed */
 [dir="rtl"] {
