@@ -110,7 +110,7 @@ export const Targets: React.FC = () => {
         <span style={{ fontFamily: SANS, fontSize: 80, fontWeight: 800, color: C.wow300 }}>
           و
         </span>
-        <span style={{ fontFamily: MONO, fontSize: 30, color: C.codeText }}>salam.wow</span>
+        <span style={{ fontFamily: MONO, fontSize: 30, color: C.codeText }}>program.wow</span>
       </div>
 
       {/* target cards */}

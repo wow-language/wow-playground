@@ -38,6 +38,51 @@ export const GlossChip: React.FC<{
   </div>
 );
 
+// A full-width "output" card (matches the code card width) that the program
+// prints. Vivid wow-green so it pulls focus once it slides in.
+export const OUTPUT_LINE_H = 44;
+export const OUTPUT_CHROME_H = 92; // padding + label + gaps
+
+export const OutputCard: React.FC<{
+  lines: string[];
+  width: number;
+  style?: React.CSSProperties;
+}> = ({ lines, width, style }) => (
+  <div
+    style={{
+      width,
+      boxSizing: "border-box",
+      padding: "22px 36px 26px",
+      background: C.wow600,
+      borderRadius: 28,
+      boxShadow: "0 30px 70px -26px rgba(4,106,56,0.7)",
+      ...style,
+    }}
+  >
+    <div
+      style={{
+        fontFamily: SANS,
+        fontSize: 17,
+        fontWeight: 700,
+        letterSpacing: 2.5,
+        textTransform: "uppercase",
+        color: C.wow100,
+        marginBottom: 10,
+      }}
+    >
+      ▶ output
+    </div>
+    {lines.map((l, i) => (
+      <div
+        key={i}
+        style={{ fontFamily: MONO, fontSize: 32, lineHeight: `${OUTPUT_LINE_H}px`, color: "#eafff2" }}
+      >
+        {l}
+      </div>
+    ))}
+  </div>
+);
+
 // A green "output" pill that the program prints.
 export const OutputBubble: React.FC<{
   lines: string[];

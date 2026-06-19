@@ -6,6 +6,7 @@ const KEYWORDS = new Set([
   "likho", "rakho", "agar", "warna", "har", "se", "tak", "baar", "jabtak",
   "roko", "aage", "banao", "bhejo", "sahi", "ghalat", "khali", "aur", "ya",
   "nahi", "lao", "koshish", "pakro", "pucho", "mein", "phir",
+  "ka", "ki", "kay",
 ]);
 
 // Built-in auzaar tools we show — tinted like functions.

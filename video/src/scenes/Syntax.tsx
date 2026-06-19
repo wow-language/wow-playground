@@ -8,22 +8,30 @@ import {
 import { fadeInOut, popProg, clampInterp } from "../anim";
 import { CodeCard } from "../components/CodeCard";
 import { CodeLine } from "../components/Code";
-import { GlossChip, OutputBubble } from "../components/Bits";
+import {
+  GlossChip,
+  OutputCard,
+  OUTPUT_LINE_H,
+  OUTPUT_CHROME_H,
+} from "../components/Bits";
 
 type SnippetData = {
   filename: string;
   lines: string[];
   gloss: { word: string; meaning: string };
   output?: string[];
-  cardWidth?: number;
+  width: number;
+  dur: number;
 };
 
 const SNIPPETS: SnippetData[] = [
   {
-    filename: "salam.wow",
-    lines: ['likho "Salam Duniya!"'],
+    filename: "hello.wow",
+    lines: ['likho "Hello, World!"'],
     gloss: { word: "likho", meaning: "print to the screen" },
-    output: ["Salam Duniya!"],
+    output: ["Hello, World!"],
+    width: 760,
+    dur: 120,
   },
   {
     filename: "faisla.wow",
@@ -38,32 +46,36 @@ const SNIPPETS: SnippetData[] = [
     ],
     gloss: { word: "agar / warna", meaning: "if / else" },
     output: ["Tum baray ho!"],
-    cardWidth: 820,
+    width: 820,
+    dur: 160,
   },
   {
     filename: "ginti.wow",
     lines: ["1 se 5 tak har i {", "    likho i", "}"],
     gloss: { word: "har … tak", meaning: "loop over a range" },
     output: ["1", "2", "3", "4", "5"],
+    width: 760,
+    dur: 120,
   },
   {
-    filename: "auzaar.wow",
+    filename: "shaks.wow",
     lines: [
-      "banao jama(a, b) {",
-      "    bhejo a + b",
-      "}",
+      'shaks = { naam: "Sara", umar: 14 }',
       "",
-      "likho jama(3, 4)",
+      "likho shaks.naam",
+      "likho shaks ka umar",
     ],
-    gloss: { word: "banao / bhejo", meaning: "make / return a value" },
-    output: ["7"],
-    cardWidth: 820,
+    gloss: { word: "ka · ki · kay", meaning: "safely read a property" },
+    output: ["Sara", "14"],
+    width: 900,
+    dur: 140,
   },
 ];
 
-const REVEAL = 16;
+const REVEAL = 15;
 const LINE_START = 10;
-const PER_LINE = 12;
+const PER_LINE = 11;
+const GAP = 36; // code card → output card
 
 const Snippet: React.FC<{ data: SnippetData }> = ({ data }) => {
   const frame = useCurrentFrame();
@@ -71,30 +83,27 @@ const Snippet: React.FC<{ data: SnippetData }> = ({ data }) => {
   const io = fadeInOut(frame, durationInFrames, 12);
   const card = popProg(frame, fps, 2);
 
-  const lastLineEnd =
-    LINE_START + (data.lines.length - 1) * PER_LINE + REVEAL + 6;
+  const lastLineEnd = LINE_START + (data.lines.length - 1) * PER_LINE + REVEAL + 6;
   const glossA = clampInterp(frame, [lastLineEnd, lastLineEnd + 16], [0, 1]);
   const outA = data.output
-    ? clampInterp(frame, [lastLineEnd + 16, lastLineEnd + 34], [0, 1])
+    ? clampInterp(frame, [lastLineEnd + 16, lastLineEnd + 40], [0, 1])
     : 0;
+
+  // Target height of the output region; the centred column grows by this,
+  // which lifts the code card up to make room.
+  const outH = data.output
+    ? GAP + OUTPUT_CHROME_H + data.output.length * OUTPUT_LINE_H
+    : 0;
+  const wrapH = outH * outA;
 
   return (
     <AbsoluteFill
-      style={{
-        justifyContent: "center",
-        alignItems: "center",
-        opacity: io,
-      }}
+      style={{ justifyContent: "center", alignItems: "center", opacity: io }}
     >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 40,
-        }}
-      >
-        <GlossChip word={data.gloss.word} meaning={data.gloss.meaning} appear={glossA} />
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div style={{ marginBottom: 28 }}>
+          <GlossChip word={data.gloss.word} meaning={data.gloss.meaning} appear={glossA} />
+        </div>
 
         <div
           style={{
@@ -105,7 +114,7 @@ const Snippet: React.FC<{ data: SnippetData }> = ({ data }) => {
             )})`,
           }}
         >
-          <CodeCard filename={data.filename} width={data.cardWidth ?? 760}>
+          <CodeCard filename={data.filename} width={data.width}>
             {data.lines.map((l, i) => {
               const start = LINE_START + i * PER_LINE;
               const reveal = clampInterp(frame, [start, start + REVEAL], [0, 1]);
@@ -115,7 +124,21 @@ const Snippet: React.FC<{ data: SnippetData }> = ({ data }) => {
         </div>
 
         {data.output && (
-          <OutputBubble lines={data.output} appear={outA} />
+          <div style={{ height: wrapH, overflow: "visible" }}>
+            <div
+              style={{
+                marginTop: GAP,
+                opacity: outA,
+                transform: `translateY(${interpolate(outA, [0, 1], [18, 0])}px) scale(${interpolate(
+                  outA,
+                  [0, 1],
+                  [0.96, 1]
+                )})`,
+              }}
+            >
+              <OutputCard lines={data.output} width={data.width} />
+            </div>
+          </div>
         )}
       </div>
     </AbsoluteFill>
@@ -123,12 +146,11 @@ const Snippet: React.FC<{ data: SnippetData }> = ({ data }) => {
 };
 
 export const Syntax: React.FC = () => {
-  // 4 snippets share the scene equally.
   return (
     <AbsoluteFill>
       <Series>
-        {SNIPPETS.map((s, i) => (
-          <Series.Sequence key={i} durationInFrames={120}>
+        {SNIPPETS.map((s) => (
+          <Series.Sequence key={s.filename} durationInFrames={s.dur}>
             <Snippet data={s} />
           </Series.Sequence>
         ))}
