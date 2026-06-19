@@ -1100,7 +1100,7 @@ likho shaks.email`,
         t: "p",
         text: L(
           "A plain dot crashes the program if the object is empty (khali). The Urdu possessives ka, ki, and kay give you a safe alternative that returns khali instead of crashing. Pick whichever sounds natural for the noun.",
-          "Saada dot program crash kar deta hai agar object khali ho. Urdu possessives ka, ki, aur kay ek safe option dete hain jo crash ki jagah khali wapas karte hain. Jo noun ke liye prakritik lage woh chunein.",
+          "Saada dot program crash kar deta hai agar object khali ho. Urdu possessives ka, ki, aur kay ek safe option dete hain jo crash ki jagah khali wapas karte hain. Jo noun ke liye theek lage woh chunein.",
           "سادہ dot پروگرام crash کر دیتا ہے اگر آبجیکٹ خالی ہو۔ اردو possessives ka، ki، اور kay ایک safe آپشن دیتے ہیں جو crash کی جگہ khali واپس کرتے ہیں۔ جو noun کے لیے فطری لگے وہ چنیں۔"
         ),
       },
