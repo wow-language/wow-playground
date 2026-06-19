@@ -34,7 +34,7 @@
   --color-spark-600: #e08a10;
 
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-urdu: "Noto Nastaliq Urdu", serif;
+  --font-urdu: "Noto Naskh Arabic", serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
 
   --radius-xl: 1.25rem;
@@ -43,6 +43,13 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Urdu (RTL) content — use the Naskh font explicitly so we don't fall back
+   to whatever system Nastaliq font happens to be installed */
+[dir="rtl"] {
+  font-family: var(--font-urdu), sans-serif;
+  line-height: 1.9;
 }
 
 body {
